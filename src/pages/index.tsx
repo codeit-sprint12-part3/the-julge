@@ -11,7 +11,7 @@ export default function Home() {
       </Head>
       <div>
         <header>헤더</header>
-        <main>메인 - 깃 세팅 테스트</main>
+        <main>메인 - 깃 세팅 테스트 1</main>
         <footer>풋터</footer>
       </div>
     </>
