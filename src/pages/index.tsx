@@ -50,19 +50,19 @@ export default function Home() {
                   <Link href="/my-shop/">내 가게 페이지</Link>
                 </li>
                 <li>
-                  <Link href="/my-shop/write">내 가게 - 정보 등록 페이지</Link>
+                  <Link href="/my-shop/write">내 가게 - 등록 페이지</Link>
                 </li>
                 <li>
-                  <Link href="/my-shop/edit">내 가게 - 정보 수정 페이지</Link>
+                  <Link href="/my-shop/edit">내 가게 - 수정 페이지</Link>
                 </li>
                 <li>
-                  <Link href="/my-shop/job/1/">내 가게 - 공고 상세 페이지</Link>
+                  <Link href="/my-shop/jobs/1/">내 가게 - 공고 상세 페이지</Link>
                 </li>
                 <li>
-                  <Link href="/my-shop/job/write/">내 가게 - 공고 등록 페이지</Link>
+                  <Link href="/my-shop/jobs/write/">내 가게 - 공고 등록 페이지</Link>
                 </li>
                 <li>
-                  <Link href="/my-shop/job/edit/1">내 가게 - 공고 수정 페이지</Link>
+                  <Link href="/my-shop/jobs/edit/1">내 가게 - 공고 수정 페이지</Link>
                 </li>
               </ul>
             </li>
@@ -73,10 +73,10 @@ export default function Home() {
                   <Link href="/user/">내 프로필 페이지</Link>
                 </li>
                 <li>
-                  <Link href="/user/write">내 가게 정보 등록 페이지</Link>
+                  <Link href="/user/write">내 프로필 등록 페이지</Link>
                 </li>
                 <li>
-                  <Link href="/user/edit">내 가게 수정 페이지</Link>
+                  <Link href="/user/edit">내 프로필 페이지</Link>
                 </li>
               </ul>
             </li>
