@@ -2,6 +2,7 @@
 
 :root {
   /* gray */
+  --font-color: #111322;
   --primary: #ea3c12;
   --gray-100: #fafafa;
   --gray-200: #f2f2f3;
@@ -50,6 +51,8 @@
   --font-family: "Spoqa Han Sans Neo", Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
     Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-size-xxs: 1.2rem;
+  /* 12px */
   --font-size-xs: 1.4rem;
   /* 14px */
   --font-size-sm: 1.6rem;
@@ -65,7 +68,8 @@
 
   /* Font Weight */
   --font-weight-light: 300;
-  --font-weight-regular: 400; /* normal */
+  --font-weight-regular: 400;
+  /* normal */
   --font-weight-medium: 500;
   --font-weight-bold: 700;
 
@@ -80,6 +84,8 @@
   /* 20px */
   --spacing-16: 1.6rem;
   /* 16px */
+  --spacing-14: 1.4rem;
+  /* 14px */
   --spacing-12: 1.2rem;
   /* 12px */
   --spacing-10: 1rem;
@@ -100,7 +106,7 @@ html {
 
 body {
   font-family: var(--font-family);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   min-width: 320px;
   line-height: 1.5;
 }
