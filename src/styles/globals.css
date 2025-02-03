@@ -109,6 +109,10 @@ body {
   font-size: var(--font-size-sm);
   min-width: 320px;
   line-height: 1.5;
+  color: var(--font-color);
+}
+a {
+  color: var(--font-color);
 }
 
 .blind {
