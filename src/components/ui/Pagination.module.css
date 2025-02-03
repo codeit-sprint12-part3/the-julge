@@ -1,0 +1,9 @@
+.box {
+  display: flex;
+  justify-content: center;
+}
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
