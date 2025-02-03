@@ -76,7 +76,7 @@ export default function Home() {
                   <Link href="/user/write">내 프로필 등록 페이지</Link>
                 </li>
                 <li>
-                  <Link href="/user/edit">내 프로필 페이지</Link>
+                  <Link href="/user/edit">내 프로필 수정 페이지</Link>
                 </li>
               </ul>
             </li>

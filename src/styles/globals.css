@@ -1,44 +1,67 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 
 :root {
   /* gray */
-  --color-primary-500: #341909;
-  --color-primary-400: #542f1a;
-  --color-primary-300: #c7bbb5;
-  --color-primary-200: #e4d5c9;
-  --color-primary-100: #f5f1ee;
-  --color-gray-500: #515151;
-  --color-gray-400: #818181;
-  --color-gray-300: #cfcfcf;
-  --color-gray-200: #f9f9f9;
-  --color-black: #000;
-  --color-white: #fff;
-  --color-blue: #1877f2;
-  --color-yellow: #fee500;
-  --color-red: #b93333;
+  --primary: #ea3c12;
+  --gray-100: #fafafa;
+  --gray-200: #f2f2f3;
+  --gray-300: #e5e4e7;
+  --gray-400: #cbc9cf;
+  --gray-500: #a4a1aa;
+  --gray-600: #7d7986;
 
-  /* shadow */
-  --shadow-300: 0rem 1.6rem 2rem 0 rgba(48, 48, 48, 0.62);
-  --shadow-200: 0rem 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.25);
-  --shadow-100: 0rem 0.4rem 0.4rem 0 rgba(140, 140, 140, 0.25);
+  --red-100: #ffebe7;
+  --red-200: #ffaf9b;
+  --red-300: #ff8d72;
+  --red-400: #ff4040;
+
+  --blue-100: #cce6ff;
+  --blue-200: #0080ff;
+
+  --green-100: #d4f7d4;
+  --green-200: #20a81e;
+
+  --kakao: #fee500;
+
+  --white: #ffffff;
+  --black: #000000;
 
   /* Border Radius */
-  --board-radius-xl: 9999px; /* pill 모양*/
-  --border-radius-lg: 1.6rem;
+  --border-radius-xs: 0.4rem;
+  /* 4px */
+  --border-radius-sm: 0.6rem;
+  /* 6px */
   --border-radius-md: 0.8rem;
-  --border-radius-sm: 0.4rem;
+  /* 8px */
+  --border-radius-lg: 1rem;
+  /* 10px */
+  --border-radius-xl: 1.2rem;
+  /* 12px */
+  --border-radius-xxl: 1.4rem;
+  /* 14px */
+  --border-radius-round: 50%;
+  /* 원형 */
+  --border-radius-circle: 100%;
+  /* 정사각형 요소에 원 모양 */
+  --border-radius-pill: 2.4rem;
+  /* pill 모양 */
 
   /* Typography */
-  --font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+  --font-family: "Spoqa Han Sans Neo", Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
     Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-  --font-size-h1: 4rem; /* 40px */
-  --font-size-h2: 3.2rem; /* 32px */
-  --font-size-h3: 2.4rem; /* 24px */
-  --font-size-xl: 2rem; /* 20px */
-  --font-size-lg: 1.8rem; /* 18px */
-  --font-size-md: 1.6rem; /* 16px */
-  --font-size-sm: 1.4rem; /* 14px */
+  --font-size-xs: 1.4rem;
+  /* 14px */
+  --font-size-sm: 1.6rem;
+  /* 16px */
+  --font-size-md: 1.8rem;
+  /* 18px */
+  --font-size-h3: 2rem;
+  /* 20px */
+  --font-size-h2: 2.4rem;
+  /* 24px */
+  --font-size-h1: 2.8rem;
+  /* 28px */
 
   /* Font Weight */
   --font-weight-light: 300;
@@ -47,25 +70,46 @@
   --font-weight-bold: 700;
 
   /* Spacing System */
-  --spacing-34: 3.4rem; /* 34px */
-  --spacing-32: 3.2rem; /* 32px */
-  --spacing-24: 2.4rem; /* 24px */
-  --spacing-20: 2rem; /* 20px */
-  --spacing-16: 1.6rem; /* 16px */
-  --spacing-12: 1.2rem; /* 12px */
-  --spacing-10: 1rem; /* 10px */
-  --spacing-8: 0.8rem; /* 8px */
-  --spacing-6: 0.6rem; /* 6px */
-  --spacing-4: 0.4rem; /* 4px */
-  --spacing-2: 0.2rem; /* 2px */
+  --spacing-34: 3.4rem;
+  /* 34px */
+  --spacing-32: 3.2rem;
+  /* 32px */
+  --spacing-24: 2.4rem;
+  /* 24px */
+  --spacing-20: 2rem;
+  /* 20px */
+  --spacing-16: 1.6rem;
+  /* 16px */
+  --spacing-12: 1.2rem;
+  /* 12px */
+  --spacing-10: 1rem;
+  /* 10px */
+  --spacing-8: 0.8rem;
+  /* 8px */
+  --spacing-6: 0.6rem;
+  /* 6px */
+  --spacing-4: 0.4rem;
+  /* 4px */
+  --spacing-2: 0.2rem;
+  /* 2px */
 }
 
 html {
-  font-size: 62.5%; /* 1rem = 10px */
+  font-size: 62.5%;
 }
 
 body {
   font-family: var(--font-family);
   font-size: var(--font-size-md);
-  min-width: 37.5rem;
+  min-width: 320px;
+  line-height: 1.5;
+}
+
+.blind {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
 }
