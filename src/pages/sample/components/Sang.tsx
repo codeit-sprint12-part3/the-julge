@@ -91,6 +91,7 @@ const Sang = () => {
         </table>
       </div>
       <Input
+        type="text"
         placeholder="Input"
         label="이메일"
         id="email"
