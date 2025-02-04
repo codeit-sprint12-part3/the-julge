@@ -37,7 +37,7 @@ const AlertsItem = ({ data }: AlertsItemProps) => {
       <p>
         {`${shopName} (${startsAt}~${endsAt}) 공고 지원이 `}
         <span className={`${styles["alert-state-text"]}`}>{resultText}</span>
-        {` 승인되었어요.`}
+        {`되었어요.`}
       </p>
       <em>{timeAgo}</em>
     </div>
