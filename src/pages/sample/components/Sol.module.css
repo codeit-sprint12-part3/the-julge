@@ -1,3 +1,11 @@
-.wrapper {
-  background: pink;
+.title {
+  font-weight: var(--font-weight-medium);
+}
+
+.alert-button {
+  padding: 1rem 2rem;
+  color: var(--white);
+  border-radius: 1rem;
+  background-color: var(--primary);
+  margin-top: 1rem;
 }

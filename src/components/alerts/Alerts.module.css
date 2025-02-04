@@ -1,0 +1,36 @@
+.alert-wrapper {
+  max-width: 36.8rem;
+  padding: 2.4rem 2rem;
+  background-color: var(--red-100);
+  border: 0.1rem solid var(--gray-400);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0rem 0.2rem 0.8rem 0 rgba(120, 116, 134, 0.25);
+}
+
+.alert-title {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.alert-contents {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-height: 33.5rem;
+  margin-top: 1.6rem;
+  overflow-y: auto;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: var(--gray-400);
+  border-radius: 0.4rem;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background-color: transparent;
+}

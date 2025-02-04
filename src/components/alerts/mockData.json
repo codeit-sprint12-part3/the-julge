@@ -1,0 +1,128 @@
+{
+  "offset": 0,
+  "limit": 10,
+  "count": 2,
+  "hasNext": false,
+  "items": [
+    {
+      "item": {
+        "id": "e5948b8e-5092-450e-8e1a-7359628dc8b1",
+        "createdAt": "2025-02-04T11:58:04.094Z",
+        "result": "rejected",
+        "read": false,
+        "application": {
+          "item": {
+            "id": "57c4874d-bd99-41b6-9fcd-d3495fac1fbf",
+            "status": "rejected"
+          },
+          "href": "/api/12-6/the-julge/users/809b34d0-3369-4da7-974e-8723cf598c30/applications/57c4874d-bd99-41b6-9fcd-d3495fac1fbf"
+        },
+        "shop": {
+          "item": {
+            "id": "ac4405a2-f5b4-4340-ba5b-ce62f6ad9994",
+            "name": "코드잇",
+            "category": "한식",
+            "address1": "서울시 종로구",
+            "address2": "123-123",
+            "description": "공고 안내글",
+            "imageUrl": "http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg",
+            "originalHourlyPay": 12000
+          },
+          "href": "/api/12-6/the-julge/shops/ac4405a2-f5b4-4340-ba5b-ce62f6ad9994"
+        },
+        "notice": {
+          "item": {
+            "id": "f79aba82-e507-41b6-975b-105af073322b",
+            "hourlyPay": 20000,
+            "description": "공고 2번 안내글",
+            "startsAt": "2025-02-20T06:00:00.000Z",
+            "workhour": 8,
+            "closed": false
+          },
+          "href": "/api/12-6/the-julge/shops/ac4405a2-f5b4-4340-ba5b-ce62f6ad9994/notices/f79aba82-e507-41b6-975b-105af073322b"
+        }
+      },
+      "links": [
+        {
+          "rel": "read",
+          "description": "읽음 처리",
+          "method": "PUT",
+          "href": "/api/12-6/the-julge/users/809b34d0-3369-4da7-974e-8723cf598c30/alerts/e5948b8e-5092-450e-8e1a-7359628dc8b1"
+        }
+      ]
+    },
+    {
+      "item": {
+        "id": "79e199be-f7ba-4b37-8ee0-89e5162ad530",
+        "createdAt": "2025-02-04T11:32:45.307Z",
+        "result": "accepted",
+        "read": false,
+        "application": {
+          "item": {
+            "id": "604f5029-93b4-4684-ba2b-59e90f6934a6",
+            "status": "accepted"
+          },
+          "href": "/api/12-6/the-julge/users/809b34d0-3369-4da7-974e-8723cf598c30/applications/604f5029-93b4-4684-ba2b-59e90f6934a6"
+        },
+        "shop": {
+          "item": {
+            "id": "ac4405a2-f5b4-4340-ba5b-ce62f6ad9994",
+            "name": "코드잇",
+            "category": "한식",
+            "address1": "서울시 종로구",
+            "address2": "123-123",
+            "description": "공고 안내글",
+            "imageUrl": "http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg",
+            "originalHourlyPay": 12000
+          },
+          "href": "/api/12-6/the-julge/shops/ac4405a2-f5b4-4340-ba5b-ce62f6ad9994"
+        },
+        "notice": {
+          "item": {
+            "id": "69445c15-a719-48a1-9068-f2c101408550",
+            "hourlyPay": 13000,
+            "description": "공고 안내글",
+            "startsAt": "2025-02-15T08:00:00.000Z",
+            "workhour": 4,
+            "closed": true
+          },
+          "href": "/api/12-6/the-julge/shops/ac4405a2-f5b4-4340-ba5b-ce62f6ad9994/notices/69445c15-a719-48a1-9068-f2c101408550"
+        }
+      },
+      "links": [
+        {
+          "rel": "read",
+          "description": "읽음 처리",
+          "method": "PUT",
+          "href": "/api/12-6/the-julge/users/809b34d0-3369-4da7-974e-8723cf598c30/alerts/79e199be-f7ba-4b37-8ee0-89e5162ad530"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": "self",
+      "description": "현재 페이지",
+      "method": "GET",
+      "href": "/api/12-6/the-julge/users/809b34d0-3369-4da7-974e-8723cf598c30/alerts?offset=0&limit=10"
+    },
+    {
+      "rel": "prev",
+      "description": "이전 페이지",
+      "method": "GET",
+      "href": "/api/12-6/the-julge/users/809b34d0-3369-4da7-974e-8723cf598c30/alerts?offset=0&limit=10"
+    },
+    {
+      "rel": "next",
+      "description": "다음 페이지",
+      "method": "GET",
+      "href": "/api/12-6/the-julge/users/809b34d0-3369-4da7-974e-8723cf598c30/alerts?offset=10&limit=10"
+    },
+    {
+      "rel": "user",
+      "description": "사용자 정보",
+      "method": "GET",
+      "href": "/api/12-6/the-julge/users/809b34d0-3369-4da7-974e-8723cf598c30"
+    }
+  ]
+}

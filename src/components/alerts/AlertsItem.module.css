@@ -1,0 +1,50 @@
+.alert-item {
+  padding: 1.6rem 1.2rem;
+  border: 0.1rem solid var(--gray-300);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--white);
+}
+
+.alert-state {
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.alert-item.accepted .alert-state-icon {
+  background-color: var(--blue-200);
+}
+
+.alert-item.rejected .alert-state-icon {
+  background-color: var(--red-400);
+}
+
+.alert-item.canceled .alert-state-icon {
+  background-color: var(--red-300);
+}
+
+.alert-item.accepted .alert-state-text {
+  color: var(--blue-200);
+}
+
+.alert-item.rejected .alert-state-text {
+  color: var(--red-400);
+}
+
+.alert-item.canceled .alert-state-text {
+  color: var(--red-300);
+}
+
+.alert-item > p {
+  margin-top: 0.4rem;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.alert-item > em {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: var(--font-size-xxs);
+  color: var(--gray-500);
+}
