@@ -1,0 +1,28 @@
+.input {
+  padding: 1.6rem 1.0rem 1.6rem 2.0rem;
+  border: 1px solid var(--gray-400);
+  color: var(--font-color);
+  border-radius: 0.6rem;
+}
+
+.input::placeholder {
+  color: var(--gray-500);
+}
+
+.label {
+  display: block;
+  color: var(--font-color);
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.errorInput {
+  border: 1px solid var(--red-400);
+}
+
+.errorMessage {
+  margin: 0.8rem 0;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  color: var(--red-400);
+}

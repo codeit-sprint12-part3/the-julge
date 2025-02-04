@@ -31,7 +31,12 @@ const Input = ({
         label &&
         <label htmlFor={id} className={`${style.label} ${className}`}>
           {label}
-          {required && <span className={style.required}>*</span>}
+          {required && <span className={style.required}>
+            *
+            <em className="blind">
+              필수입력
+            </em>
+          </span>}
         </label>
       }
       <input

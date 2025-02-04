@@ -1,3 +1,62 @@
 .wrapper {
+  padding: 30px 20px;
   background: orange;
+}
+
+.title {
+  font-size: 35px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.list {
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.list li {
+  margin-bottom: 20px;
+}
+
+.list li .text {
+  display: block;
+}
+
+.box {
+  margin-bottom: 30px;
+}
+
+.tableBox {
+  overflow-x: auto;
+  width: 1200px;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+}
+
+.table {
+
+  border-top: 2px solid #000;
+  background-color: #efefef;
+
+}
+
+.table th {
+  background-color: #597ccd;
+  border: 1px solid #ddd;
+  color: #fff;
+}
+
+.table th,
+.table td {
+  padding: 15px 30px;
+  border: 1px solid #ddd;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.textLeft {
+  text-align: left !important;
 }
