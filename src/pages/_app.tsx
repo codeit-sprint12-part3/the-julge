@@ -6,13 +6,15 @@ import Header from "@/components/layout/Header";
 import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const is404 = Component.displayName === "Error404Page";
+
   return (
     <div>
-      <Header />
+      {!is404 && <Header />}
       <main>
         <Component {...pageProps} />
       </main>
-      <Footer />
+      {!is404 && <Footer />}
     </div>
   );
 }
