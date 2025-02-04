@@ -59,6 +59,13 @@ declare module "@mui/material/styles" {
 }
 
 const theme = createTheme({
+  typography: {
+    fontFamily: `"Pretendard", "Noto Sans KR", sans-serif`,
+    fontSize: 16, // 기본 폰트 크기
+    h1: { fontSize: "2.8rem", fontWeight: 700 },
+    h2: { fontSize: "2.4rem", fontWeight: 700 },
+    h3: { fontSize: "2rem", fontWeight: 700 },
+  },
   palette: {
     primary: {
       main: "#ea3c12", // 주 색상
