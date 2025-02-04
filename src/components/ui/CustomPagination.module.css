@@ -1,8 +1,3 @@
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .pagination > ul {
   display: flex;
   align-items: center;
