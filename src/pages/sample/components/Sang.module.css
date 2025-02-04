@@ -63,7 +63,7 @@
   text-align: left !important;
 }
 
-.description {
+p.description {
   margin-bottom: 20px;
   font-weight: 700;
   color: var(--font-color);
