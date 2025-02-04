@@ -1,0 +1,45 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+.pagination > ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.pagination > ul > li {
+}
+.pagination > ul > li > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  font-size: 1.4rem;
+}
+.pagination > ul > li > button:hover {
+  background-color: var(--gray-200, #f2f2f3);
+  transition: all 0.2s;
+}
+.pagination > ul > li > button.active {
+  background-color: var(--red-300, #ff8d72);
+  color: var(--white);
+}
+.pagination > ul > li > button.hide {
+  opacity: 0;
+  pointer-events: none;
+  cursor: default;
+}
+
+@media (max-width: 744px) {
+  .pagination > ul {
+    gap: 4px;
+  }
+  .pagination > ul > li > button {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+}
