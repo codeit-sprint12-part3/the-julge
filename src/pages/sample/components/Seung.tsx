@@ -1,6 +1,7 @@
+import { useState } from "react";
 import Pagination from "@/components/ui/Pagination";
 import style from "./Seung.module.css";
-import { useState } from "react";
+import { useModal } from "@/context/ModalContext";
 
 const Seung = () => {
   // --------------------------------------------------------
@@ -16,7 +17,17 @@ const Seung = () => {
   // 현재 페이지에 해당하는 데이터만 slice (실제 api 적용할때 수정필요할수도!)
   const startIndex = (currentPage - 1) * postsPerPage;
   const currentPosts = posts.slice(startIndex, startIndex + postsPerPage);
-  // ----------------- Pagination 관련 End -----------------
+  // ----------------- Pagination 관련 End -------------------
+  // --------------------------------------------------------
+
+  // --------------------------------------------------------
+  // ----------------- Modal 관련 Start ----------------------
+  const { openModal } = useModal();
+  // 타입이 confirm일 경우 적용되는 함수 예시
+  const TestConfirm = () => {
+    console.log("함수 실행");
+  };
+  // ----------------- Modal 관련 End ------------------------
   // --------------------------------------------------------
 
   return (
@@ -41,7 +52,27 @@ const Seung = () => {
           </li>
           <li>
             <h3>Modal</h3>
-            <div className={style.box}></div>
+            <div className={style.box}>
+              <ul className={style.btn_ul}>
+                <li>
+                  <button onClick={() => openModal("alert", "가게 정보를 먼저 등록해 주세요.")}>
+                    type "alert" Modal 버튼
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => openModal("confirm", "신청을 거절하시겠어요?", TestConfirm)}
+                  >
+                    type "confirm" Modal 버튼
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => openModal("notice", "비밀번호가 일치하지 않습니다.")}>
+                    type "notice" Modal 버튼
+                  </button>
+                </li>
+              </ul>
+            </div>
           </li>
         </ul>
       </div>
