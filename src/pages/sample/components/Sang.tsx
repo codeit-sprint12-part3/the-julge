@@ -1,7 +1,8 @@
 import Input from "@/components/ui/Input";
 import style from "./Sang.module.css";
-import CustomSelect from "./CustomSelect";
+import CustomSelect from "../../../components/ui/CustomSelect";
 import { useEffect, useState } from "react";
+import Button from "@/components/ui/Button";
 
 const Sang = () => {
 
@@ -122,6 +123,68 @@ const Sang = () => {
       </p>
       <CustomSelect
         menuItems={menuItems}
+      />
+    </div>
+
+    <div className={style.box}>
+      <h1 className={style.title}>
+        3.Button
+      </h1>
+      <Button
+        buttonText="로그인하기"
+        type="button"
+        size="large"
+        styleButton="primary"
+      /> <br />
+      <Button
+        buttonText="로그인하기"
+        type="button"
+        size="large"
+        styleButton="secondary"
+      /> <br />
+      <Button
+        buttonText="신청불가"
+        type="button"
+        size="large"
+        disabled={true}
+      />
+      <br /><br />
+      <Button
+        buttonText="로그인하기"
+        type="button"
+        size="medium"
+        styleButton="primary"
+      /> <br />
+      <Button
+        buttonText="로그인하기"
+        type="button"
+        size="medium"
+        styleButton="secondary"
+      /> <br />
+      <Button
+        buttonText="신청불가"
+        type="button"
+        size="medium"
+        disabled={true}
+      />
+      <br /><br />
+      <Button
+        buttonText="로그인하기"
+        type="button"
+        size="small"
+        styleButton="primary"
+      /> <br />
+      <Button
+        buttonText="로그인하기"
+        type="button"
+        size="small"
+        styleButton="secondary"
+      /> <br />
+      <Button
+        buttonText="신청불가"
+        type="button"
+        size="small"
+        disabled={true}
       />
     </div>
   </div>;

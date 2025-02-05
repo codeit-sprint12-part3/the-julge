@@ -1,0 +1,39 @@
+.button {
+  display: block;
+  border-radius: 0.6rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.button:disabled {
+  background-color: var(--gray-500);
+  cursor: auto;
+}
+
+.button_large {
+  min-width: 350px;
+  padding: 1.4rem 1rem;
+}
+
+.button_medium {
+  min-width: 108px;
+  padding: 0.9rem 2rem;
+  font-size: 1.4rem;
+}
+
+.button_small {
+  min-width: 82px;
+  padding: 0.8rem 1rem;
+  font-size: 1.2rem;
+}
+
+.button_primary {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.button_secondary {
+  background-color: var(--white);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
