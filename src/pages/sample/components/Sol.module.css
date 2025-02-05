@@ -1,11 +1,29 @@
-.title {
-  font-weight: var(--font-weight-medium);
+.wrapper {
+  max-width: 964px;
+  width: 100%;
+  margin: 0 auto;
 }
-
-.alert-button {
-  padding: 1rem 2rem;
-  color: var(--white);
-  border-radius: 1rem;
-  background-color: var(--primary);
-  margin-top: 1rem;
+.wrapper > ul {
+  counter-reset: number 0;
+}
+.wrapper > ul > li {
+  padding: 20px;
+  border: 1px solid #ddd;
+  counter-increment: number 1;
+  background-color: #f9f9f9;
+}
+.wrapper > ul > li + li {
+  margin-top: 20px;
+}
+.wrapper > ul > li > h3 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+.wrapper > ul > li > h3::before {
+  content: counter(number) ". ";
+}
+.wrapper > ul > li > .box {
+  padding: 20px;
+  background-color: #fff;
 }
