@@ -29,7 +29,7 @@ const Input = ({
     <>
       {
         label &&
-        <label htmlFor={id} className={`${style.label} ${className}`}>
+        <label htmlFor={id} className={`${style.label}`}>
           {label}
           {required && <span className={style.required}>
             *

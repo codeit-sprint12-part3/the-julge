@@ -1,0 +1,21 @@
+.label {
+  display: block;
+  color: var(--font-color);
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.textarea {
+  display: block;
+  border-radius: 0.6rem;
+  background-color: var(--white);
+  padding: 1.6rem 2rem;
+  border: 1px solid var(--gray-500);
+  line-height: 1.6;
+  overflow-y: auto;
+  color: var(--font-color);
+}
+
+.textarea::placeholder {
+  color: var(--gray-500);
+}
