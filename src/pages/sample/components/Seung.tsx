@@ -3,6 +3,7 @@ import Pagination from "@/components/ui/Pagination";
 import style from "./Seung.module.css";
 import { useModal } from "@/context/ModalContext";
 import Table from "@/components/ui/Table";
+import { toast } from "@/pages/_app";
 
 const Seung = () => {
   // --------------------------------------------------------
@@ -79,6 +80,16 @@ const Seung = () => {
             <h3>Table</h3>
             <div className={style.box}>
               <Table />
+            </div>
+          </li>
+          <li>
+            <h3>Toast</h3>
+            <div className={style.box}>
+              <ul className={style.btn_ul}>
+                <li>
+                  <button onClick={() => toast("거절 했어요.")}>Toast 팝업!</button>
+                </li>
+              </ul>
             </div>
           </li>
         </ul>
