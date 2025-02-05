@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import Table from "@/components/ui/Table";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         <meta property="og:title" content="더 줄게 - 일자리 매칭 플랫폼" />
       </Head>
       <div>
+        <Table />
         <main>
           메인 페이지
           <ul className="">

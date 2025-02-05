@@ -1,0 +1,97 @@
+.table_wrap {
+  position: relative;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  overflow: auto;
+  margin: 0 auto;
+}
+.table_wrap::-webkit-scrollbar {
+  display: none;
+}
+/* inner - border */
+.table {
+  width: 962px;
+  background-color: var(--white);
+}
+/* 각 td값 넓이 */
+.table .td:nth-child(1) {
+  width: 226px;
+}
+.table .td:nth-child(2) {
+  width: 300px;
+}
+.table .td:nth-child(3) {
+  width: 200px;
+}
+.table .td:nth-child(4) {
+  width: 235px;
+}
+.table > .thead > .th {
+  position: relative;
+  display: flex;
+}
+.table > .thead > .th > .td {
+  padding: 14px 12px;
+  background-color: var(--red-100);
+}
+.table_wrap .table > .thead > .th > .td:last-child {
+  position: sticky;
+  right: 0;
+}
+.table > .tbody > .tr {
+  display: flex;
+  border-bottom: 1px solid var(--gray-200);
+}
+.table > .tbody > .tr:last-child {
+  border-bottom: none;
+}
+.table > .tbody > .tr > .td {
+  padding: 20px 12px;
+}
+.table_wrap .table > .tbody > .tr > .td:last-child {
+  position: sticky;
+  right: 0;
+  background-color: var(--white);
+}
+/* 스크롤이 생겼을때 border 생성 */
+.table_wrap.scroll .table > .thead > .th > .td:last-child {
+  border-left: 1px solid var(--gray-200);
+}
+.table_wrap.scroll .table > .tbody > .tr > .td:last-child {
+  border-left: 1px solid var(--gray-200);
+}
+/* 페이지네이션 */
+.page {
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 0 0 10px 10px;
+  border: 1px solid var(--gray-200);
+  border-top: none;
+}
+@media (max-width: 964px) {
+  .table {
+    width: 947px;
+  }
+  .table .td:nth-child(4) {
+    width: 220px;
+  }
+}
+@media (max-width: 744px) {
+  .table_wrap {
+    font-size: 1.4rem;
+  }
+  .table {
+    width: 888px;
+  }
+  .table > .thead > .th > .td {
+    padding: 12px 8px;
+    font-size: 1.2rem;
+  }
+  .table > .tbody > .tr > .td {
+    padding: 12px 8px;
+  }
+  .table .td:nth-child(4) {
+    width: 162px;
+  }
+}
