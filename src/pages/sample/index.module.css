@@ -1,21 +1,21 @@
-.wrapper {
+.sample-wrapper {
   max-width: 1000px;
   margin: 0 auto;
   padding-bottom: 80px;
 }
 
-.wrapper h2 {
+.sample-wrapper > h2 {
   font-size: 30px;
   font-weight: 700;
 }
 
-.wrapper h3 {
+.sample-wrapper > section > h3 {
   margin-bottom: 20px;
   font-size: 20px;
   font-weight: 700;
 }
 
-.wrapper section {
+.sample-wrapper > section {
   margin-top: 50px;
   padding: 20px;
   border: 1px solid #ddd;
