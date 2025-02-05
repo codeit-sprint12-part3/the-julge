@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <ModalProvider>
       <div>
         {!is404 && <Header />}
-        <main>
+        <main className="main-container">
           <Component {...pageProps} />
         </main>
         {!is404 && <Footer />}
