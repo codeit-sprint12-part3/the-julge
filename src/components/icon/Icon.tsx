@@ -15,7 +15,7 @@ export function Icon({ name, size = 24, color, ...props }: IconProps) {
   }
 
   const targetColor = color ? colorMap[color as keyof typeof colorMap] || color : "currentColor";
-  console.log(targetColor);
+
   return (
     <svg
       width={size}

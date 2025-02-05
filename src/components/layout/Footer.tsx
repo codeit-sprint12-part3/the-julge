@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className={style["footer-container"]}>
       <div className={style["footer-wrapper"]}>
-        <p>©codeit - 2023</p>
+        <p className={style["footer-title"]}>©codeit - 2023</p>
         <ul className={style["footer-nav"]}>
           <li>
             <Link href={"/"}>Privacy Policy</Link>
