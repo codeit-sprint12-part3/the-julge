@@ -1,6 +1,7 @@
 import Alerts from "@/components/alerts/Alerts";
 import style from "./Sol.module.css";
 import { Icon } from "@/components/icon/Icon";
+import Logo from "@/components/ui/Logo";
 
 const Sol = () => {
   return (
@@ -14,7 +15,13 @@ const Sol = () => {
         </li>
         <li>
           <h3>Logo</h3>
-          <div className={style.box}></div>
+          <div>
+            <p>1️⃣기본 : {`<Logo />`}</p>
+            <p>2️⃣사이즈 : {`<width={248} height={45} />`}</p>
+          </div>
+          <div className={style.box}>
+            <Logo />
+          </div>
         </li>
         <li>
           <h3>Icon</h3>
