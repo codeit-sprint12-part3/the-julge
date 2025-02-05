@@ -4,9 +4,11 @@ import CustomSelect from "../../../components/ui/CustomSelect";
 import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import Textarea from "@/components/ui/Textarea";
+import CustomRadioInput from "@/components/ui/CustomRadioInput";
 
 const Sang = () => {
 
+  //CustomSelect 테스트
   const [menuItems, setMenuItems] = useState<string[]>([]);
 
   useEffect(() => {
@@ -16,11 +18,18 @@ const Sang = () => {
 
   }, [])
 
+  //TextArea 테스트
   const [value, setValue] = useState('');
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
   };
+
+  // CsutomRadioInput 테스트
+  const options = [
+    { id: 'radio01', radioText: '알바님' },
+    { id: 'radio02', radioText: '사장님' },
+  ];
 
   return <div className={style.wrapper}>
     <div className={style.box}>
@@ -120,7 +129,26 @@ const Sang = () => {
     </div>
     <div className={style.box}>
       <h1 className={style.title}>
-        2.CustomSelect
+        2.CustomRadioInput
+      </h1>
+
+      <div className={style.radioWrap}>
+        {options.map((option) => (
+          <CustomRadioInput
+            key={option.id}
+            id={option.id}
+            name="role"
+            type="radio"
+            radioText={option.radioText}
+            className={style.radioInput}
+          />
+        ))}
+      </div>
+    </div>
+
+    <div className={style.box}>
+      <h1 className={style.title}>
+        3.CustomSelect
       </h1>
       <h2 className={style.title}>
         props
@@ -135,7 +163,7 @@ const Sang = () => {
 
     <div className={style.box}>
       <h1 className={style.title}>
-        3.Button
+        4.Button
       </h1>
       <Button
         buttonText="로그인하기"
@@ -196,7 +224,7 @@ const Sang = () => {
     </div>
     <div className={style.box}>
       <h1 className={style.title}>
-        4.Textarea
+        5.Textarea
       </h1>
       <Textarea
         id="textArea"

@@ -67,3 +67,17 @@ p.description {
   color: var(--font-color);
   font-size: 22px
 }
+
+.radioWrap {
+  display: flex;
+  gap: 0 1.8rem;
+}
+
+@media (max-width: 480px) {
+
+  .radioWrap {
+    flex-direction: column;
+    gap: 1rem 0;
+  }
+
+}

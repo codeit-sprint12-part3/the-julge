@@ -1,0 +1,40 @@
+.radioBox {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.radioBox .radioInput+label {
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0 0.9rem;
+  color: var(--font-color);
+  font-size: 1.4rem;
+  border-radius: 5rem;
+  border: 1px solid var(--gray-400);
+  padding: 1.3rem 4.5rem;
+  cursor: pointer;
+
+}
+
+.radioBox .radioInput+label::before {
+  content: '';
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--gray-400);
+}
+
+.radioBox .radioInput:checked+label {
+  border: 1px solid var(--primary) !important;
+}
+
+.radioBox .radioInput:checked+label::before {
+  background: var(--primary) url(/check_icon.svg)no-repeat center;
+  border: 0;
+}
