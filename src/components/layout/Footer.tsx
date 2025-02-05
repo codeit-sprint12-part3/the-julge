@@ -18,17 +18,17 @@ const Footer = () => {
         <ul className={style["footer-sns"]}>
           <li>
             <Link href={"/"}>
-              <Icon name="mail" color={"gray-500"} />
+              <Icon name="mail" color={"--gray-500"} />
             </Link>
           </li>
           <li>
             <Link href={"/"}>
-              <Icon name="facebook" color={"gray-500"} />
+              <Icon name="facebook" color={"--gray-500"} />
             </Link>
           </li>
           <li>
             <Link href={"/"}>
-              <Icon name="instargram" color={"gray-500"} />
+              <Icon name="instargram" color={"--gray-500"} />
             </Link>
           </li>
         </ul>

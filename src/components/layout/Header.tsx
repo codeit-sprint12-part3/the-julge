@@ -20,7 +20,7 @@ const Header = () => {
           <Icon
             name="search"
             size={19}
-            color={"gray-500"}
+            color={"--gray-500"}
             className={style["header-search-icon"]}
           />
           <input type="text" placeholder="가게 이름으로 찾아보세요" />
