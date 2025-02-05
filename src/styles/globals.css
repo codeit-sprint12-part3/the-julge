@@ -124,3 +124,9 @@ a {
   margin: -1px;
   overflow: hidden;
 }
+
+.main-container {
+  max-width: 100.4rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
