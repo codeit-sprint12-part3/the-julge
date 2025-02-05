@@ -2,6 +2,7 @@ import Alerts from "@/components/alerts/Alerts";
 import style from "./Sol.module.css";
 import { Icon } from "@/components/icon/Icon";
 import Logo from "@/components/ui/Logo";
+import Badge from "@/components/ui/Badge";
 
 const Sol = () => {
   return (
@@ -16,8 +17,8 @@ const Sol = () => {
         <li>
           <h3>Logo</h3>
           <div>
-            <p>1️⃣기본 : {`<Logo />`}</p>
-            <p>2️⃣사이즈 : {`<width={248} height={45} />`}</p>
+            <p>1️⃣width? = {`{248}`}</p>
+            <p>2️⃣height? = {`{45}`}</p>
           </div>
           <div className={style.box}>
             <Logo />
@@ -26,11 +27,14 @@ const Sol = () => {
         <li>
           <h3>Icon</h3>
           <div>
-            <p>1️⃣아이콘명 : {`<Icon name="camera" />`}</p>
-            <p>2️⃣사이즈 : {`<size=16 />`}</p>
             <p>
-              3️⃣색상 : {`<color="red-400" />`}, {`<color="#e7e7e7" />`} → 색상 변수, 색상 코드 둘 다
-              사용 가능
+              1️⃣name ={" "}
+              {`"alter | camera | check | warn | map | time | phone | mail | facebook | instargram | search | close | selectUp | selectDown | leftArr | rightArr | upArr "`}
+            </p>
+            <p>2️⃣size? = {`{24}`}</p>
+            <p>
+              3️⃣color? = {`{"--green-200"}`} → 색상 변수, {`{"#f5f5f5"}`} → 색상 코드 둘 다 사용
+              가능
             </p>
           </div>
           <div className={style.box}>
@@ -51,6 +55,22 @@ const Sol = () => {
             <Icon name="leftArr" />
             <Icon name="rightArr" />
             <Icon name="upArr" />
+          </div>
+        </li>
+        <li>
+          <h3>Badge</h3>
+          <div>
+            <p>1️⃣type = {`" pending | accepted | rejected | canceled | increased "`}</p>
+            <p>2️⃣pay? = {`{ 14000 }`} → 공고 시급</p>
+            <p>3️⃣state? = {`"done"`} → 마감 완료 상태일 때</p>
+          </div>
+          <div className={style.box}>
+            <Badge type="pending" />
+            <Badge type="accepted" />
+            <Badge type="rejected" />
+            <Badge type="canceled" />
+            <Badge type="increased" pay={14000} />
+            <Badge type="increased" pay={14000} state="done" />
           </div>
         </li>
       </ul>
