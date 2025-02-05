@@ -24,7 +24,9 @@
 }
 
 .box {
-  margin-bottom: 30px;
+  margin-bottom: 60px;
+  padding-bottom: 60px;
+  border-bottom: 4px solid #597ccd;
 }
 
 .tableBox {
@@ -59,4 +61,11 @@
 
 .textLeft {
   text-align: left !important;
+}
+
+p.description {
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: var(--font-color);
+  font-size: 22px
 }

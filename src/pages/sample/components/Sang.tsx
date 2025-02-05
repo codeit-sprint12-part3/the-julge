@@ -1,7 +1,19 @@
 import Input from "@/components/ui/Input";
 import style from "./Sang.module.css";
+import CustomSelect from "./CustomSelect";
+import { useEffect, useState } from "react";
 
 const Sang = () => {
+
+  const [menuItems, setMenuItems] = useState<string[]>([]);
+
+  useEffect(() => {
+
+    const fetchedData = ["한식", "중식", "일식", "양식", "분식"];
+    setMenuItems(fetchedData);
+
+  }, [])
+
   return <div className={style.wrapper}>
     <div className={style.box}>
       <h1 className={style.title}>
@@ -96,6 +108,20 @@ const Sang = () => {
         label="이메일"
         id="email"
         required={true}
+      />
+    </div>
+    <div className={style.box}>
+      <h1 className={style.title}>
+        2.CustomSelect
+      </h1>
+      <h2 className={style.title}>
+        props
+      </h2>
+      <p className={style.description}>
+        menuItems 명으로 props 적용하면 CustomSelect 에서 데이터 적용
+      </p>
+      <CustomSelect
+        menuItems={menuItems}
       />
     </div>
   </div>;
