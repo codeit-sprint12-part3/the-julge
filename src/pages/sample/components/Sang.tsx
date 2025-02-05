@@ -3,6 +3,7 @@ import style from "./Sang.module.css";
 import CustomSelect from "../../../components/ui/CustomSelect";
 import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
+import Textarea from "@/components/ui/Textarea";
 
 const Sang = () => {
 
@@ -14,6 +15,12 @@ const Sang = () => {
     setMenuItems(fetchedData);
 
   }, [])
+
+  const [value, setValue] = useState('');
+
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value);
+  };
 
   return <div className={style.wrapper}>
     <div className={style.box}>
@@ -185,6 +192,20 @@ const Sang = () => {
         type="button"
         size="small"
         disabled={true}
+      />
+    </div>
+    <div className={style.box}>
+      <h1 className={style.title}>
+        4.Textarea
+      </h1>
+      <Textarea
+        id="textArea"
+        value={value}
+        label="가게 설명"
+        placeholder="입력"
+        required={true}
+        onChange={handleTextareaChange}
+        className={style.customTextarea}
       />
     </div>
   </div>;
