@@ -1,11 +1,13 @@
 import Link from "next/link";
+import style from "@/components/layout/Footer.module.css";
+import { Icon } from "../icon/Icon";
 
 const Footer = () => {
   return (
-    <footer>
-      <div>
+    <footer className={style["footer-container"]}>
+      <div className={style["footer-wrapper"]}>
         <p>©codeit - 2023</p>
-        <ul>
+        <ul className={style["footer-nav"]}>
           <li>
             <Link href={"/"}>Privacy Policy</Link>
           </li>
@@ -13,15 +15,21 @@ const Footer = () => {
             <Link href={"/"}>FAQ</Link>
           </li>
         </ul>
-        <ul>
+        <ul className={style["footer-sns"]}>
           <li>
-            <Link href={"/"}>이메일</Link>
+            <Link href={"/"}>
+              <Icon name="mail" color={"gray-500"} />
+            </Link>
           </li>
           <li>
-            <Link href={"/"}>페이스북</Link>
+            <Link href={"/"}>
+              <Icon name="facebook" color={"gray-500"} />
+            </Link>
           </li>
           <li>
-            <Link href={"/"}>인스타</Link>
+            <Link href={"/"}>
+              <Icon name="instargram" color={"gray-500"} />
+            </Link>
           </li>
         </ul>
       </div>

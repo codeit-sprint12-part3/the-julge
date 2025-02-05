@@ -1,0 +1,32 @@
+.footer-container {
+  background-color: var(--gray-200);
+}
+
+.footer-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 96.4rem;
+  height: 10rem;
+  margin: 0 auto;
+}
+
+.footer-wrapper,
+.footer-wrapper a {
+  color: var(--gray-600);
+}
+
+.footer-nav,
+.footer-sns {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}
+
+.footer-sns {
+  gap: 1.2rem;
+}
+
+.footer-sns > li > a {
+  display: flex;
+}
