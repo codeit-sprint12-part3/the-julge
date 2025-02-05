@@ -1,5 +1,6 @@
 import "@/styles/reset.css";
 import "@/styles/globals.css";
+import { ModalProvider } from "@/context/ModalContext";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 
@@ -9,12 +10,14 @@ export default function App({ Component, pageProps }: AppProps) {
   const is404 = Component.displayName === "Error404Page";
 
   return (
-    <div>
-      {!is404 && <Header />}
-      <main>
-        <Component {...pageProps} />
-      </main>
-      {!is404 && <Footer />}
-    </div>
+    <ModalProvider>
+      <div>
+        {!is404 && <Header />}
+        <main>
+          <Component {...pageProps} />
+        </main>
+        {!is404 && <Footer />}
+      </div>
+    </ModalProvider>
   );
 }
