@@ -32,8 +32,12 @@
   color: var(--gray-600);
 }
 
-.badge.increased {
+.badge.increased_up {
   background-color: var(--primary);
+  color: var(--white);
+}
+.badge.increased_down {
+  background-color: var(--red-300);
   color: var(--white);
 }
 
