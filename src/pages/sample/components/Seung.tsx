@@ -2,6 +2,7 @@ import { useState } from "react";
 import Pagination from "@/components/ui/Pagination";
 import style from "./Seung.module.css";
 import { useModal } from "@/context/ModalContext";
+import Table from "@/components/ui/Table";
 
 const Seung = () => {
   // --------------------------------------------------------
@@ -72,6 +73,12 @@ const Seung = () => {
                   </button>
                 </li>
               </ul>
+            </div>
+          </li>
+          <li>
+            <h3>Table</h3>
+            <div className={style.box}>
+              <Table />
             </div>
           </li>
         </ul>
