@@ -9,7 +9,7 @@ interface BadgeProps {
   type: BadgeType;
   state?: StateType;
   originalHourlyPay?: number;
-  hourlyPay?: number;
+  price?: number;
 }
 
 const badgeText: Record<BadgeType, string> = {
@@ -20,12 +20,12 @@ const badgeText: Record<BadgeType, string> = {
   increased: "시급 증가",
 };
 
-export default function Badge({ type, hourlyPay, state, originalHourlyPay }: BadgeProps) {
+export default function Badge({ type, price, state, originalHourlyPay }: BadgeProps) {
   let text = badgeText[type];
   let additionalStyle = "";
 
-  if (type === "increased" && hourlyPay && originalHourlyPay) {
-    const increaseRate = Math.round(((hourlyPay - originalHourlyPay) / originalHourlyPay) * 100);
+  if (type === "increased" && price && originalHourlyPay) {
+    const increaseRate = Math.round(((price - originalHourlyPay) / originalHourlyPay) * 100);
     text = `기존 시급보다 ${increaseRate}%`;
 
     additionalStyle = increaseRate >= 50 ? styles.increased_up : styles.increased_down;

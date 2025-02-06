@@ -42,7 +42,7 @@ const PostCard = ({ data }: PostCardProps) => {
             {hourlyPay > shop.item.originalHourlyPay && (
               <Badge
                 type="increased"
-                hourlyPay={hourlyPay}
+                price={hourlyPay}
                 originalHourlyPay={shop.item.originalHourlyPay}
               />
             )}
