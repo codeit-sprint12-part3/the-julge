@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "@/components/ui/Pagination";
+import PostCard from "@/components/ui/PostCard";
 import style from "./Seung.module.css";
 import { useModal } from "@/context/ModalContext";
 import Table from "@/components/ui/Table";
 import { toast } from "@/pages/_app";
+import { getNotices } from "@/lib/notices";
+import { NoticeResponse, NoticeWrapper } from "@/type";
 
 const Seung = () => {
   // --------------------------------------------------------
@@ -30,6 +33,26 @@ const Seung = () => {
     console.log("함수 실행");
   };
   // ----------------- Modal 관련 End ------------------------
+  // --------------------------------------------------------
+
+  // --------------------------------------------------------
+  // ----------------- PostCard 관련 Start -------------------
+  const [postData, setPostData] = useState<NoticeWrapper[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data: NoticeResponse = await getNotices({});
+        console.log(data);
+        setPostData(data.items || []);
+      } catch (error) {
+        console.error("API 요청 중 오류 발생:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  // ----------------- PostCard 관련 End ---------------------
   // --------------------------------------------------------
 
   return (
@@ -89,6 +112,21 @@ const Seung = () => {
                 <li>
                   <button onClick={() => toast("거절 했어요.")}>Toast 팝업!</button>
                 </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h3>PostCard</h3>
+            <div className={style.box}>
+              <ul className="post_list">
+                {postData.map(({ item }) => {
+                  if (!item) return null;
+                  return (
+                    <li key={item.id}>
+                      <PostCard data={item} />
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </li>
