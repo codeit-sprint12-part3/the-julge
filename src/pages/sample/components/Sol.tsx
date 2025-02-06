@@ -60,17 +60,18 @@ const Sol = () => {
         <li>
           <h3>Badge</h3>
           <div>
-            <p>1️⃣type = {`" pending | accepted | rejected | canceled | increased "`}</p>
-            <p>2️⃣pay? = {`{ 14000 }`} → 공고 시급</p>
-            <p>3️⃣state? = {`"done"`} → 마감 완료 상태일 때</p>
+            <p>type = {`" pending | accepted | rejected | canceled | increased "`}</p>
+            <p>hourlyPay? = {`{ 14000 }`} → 공고 시급</p>
+            <p>originalHourlyPay? = {`{ 14000 }`} → 기존 시급</p>
+            <p>state? = {`"done"`} → 마감 완료 상태일 때</p>
           </div>
           <div className={style.box}>
             <Badge type="pending" />
             <Badge type="accepted" />
             <Badge type="rejected" />
             <Badge type="canceled" />
-            <Badge type="increased" pay={14000} />
-            <Badge type="increased" pay={14000} state="done" />
+            <Badge type="increased" hourlyPay={14000} originalHourlyPay={10000} />
+            <Badge type="increased" hourlyPay={14000} originalHourlyPay={10000} state="done" />
           </div>
         </li>
       </ul>

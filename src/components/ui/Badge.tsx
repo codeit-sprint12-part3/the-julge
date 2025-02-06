@@ -7,11 +7,10 @@ type StateType = "done";
 
 interface BadgeProps {
   type: BadgeType;
-  pay?: number;
   state?: StateType;
+  originalHourlyPay?: number;
+  hourlyPay?: number;
 }
-
-const MINIMUM_PAY_2025 = 10030;
 
 const badgeText: Record<BadgeType, string> = {
   pending: "대기중",
@@ -21,16 +20,23 @@ const badgeText: Record<BadgeType, string> = {
   increased: "시급 증가",
 };
 
-export default function Badge({ type, pay, state }: BadgeProps) {
+export default function Badge({ type, hourlyPay, state, originalHourlyPay }: BadgeProps) {
   let text = badgeText[type];
+  let additionalStyle = "";
 
-  if (type === "increased" && pay) {
-    const increaseRate = Math.round(((pay - MINIMUM_PAY_2025) / MINIMUM_PAY_2025) * 100);
-    text = `최저 시급보다 ${increaseRate}%`;
+  if (type === "increased" && hourlyPay && originalHourlyPay) {
+    const increaseRate = Math.round(((hourlyPay - originalHourlyPay) / originalHourlyPay) * 100);
+    text = `기존 시급보다 ${increaseRate}%`;
+
+    additionalStyle = increaseRate >= 50 ? styles.increased_up : styles.increased_down;
   }
 
   return (
-    <span className={`${styles.badge} ${styles[type]} ${state === "done" ? styles.done : ""}`}>
+    <span
+      className={`${styles.badge} ${styles[type]} ${
+        state === "done" ? styles.done : ""
+      } ${additionalStyle}`}
+    >
       {text}
       {type === "increased" && (
         <Icon name="upArr" size={13} color={"white"} className={styles.upArr} />

@@ -10,7 +10,7 @@ interface PostCardProps {
 }
 
 const PostCard = ({ data }: PostCardProps) => {
-  const { workhour, startsAt, hourlyPay, description, closed, shop } = data;
+  const { id, workhour, startsAt, hourlyPay, description, closed, shop } = data;
   const formatStartsAt = dayjs(startsAt);
   const formatted = `${formatStartsAt.format("YYYY-MM-DD HH:mm")}~${formatStartsAt
     .add(workhour, "hour")
@@ -18,7 +18,7 @@ const PostCard = ({ data }: PostCardProps) => {
 
   return (
     <div className={`${styles.post_box} ${!closed ? styles.end : ""}`}>
-      <Link href="/">
+      <Link href={`/view/${id}`}>
         <div className={styles.thumbnail}>
           <span className={styles.end}>마감 완료</span>
           <figure>
@@ -39,7 +39,11 @@ const PostCard = ({ data }: PostCardProps) => {
           </ul>
           <div className={styles.price}>
             <p>{hourlyPay.toLocaleString()}원</p>
-            <Badge type="increased" pay={hourlyPay} />
+            <Badge
+              type="increased"
+              hourlyPay={hourlyPay}
+              originalHourlyPay={shop.item.originalHourlyPay}
+            />
           </div>
         </div>
       </Link>
