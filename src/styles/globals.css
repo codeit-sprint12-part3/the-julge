@@ -130,3 +130,31 @@ a {
   margin: 0 auto;
   padding: 0 2rem;
 }
+
+.post_list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 -7px -32px;
+}
+.post_list > li {
+  width: 33.3333%;
+  padding: 0 7px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 964px) {
+  .post_list > li {
+    width: 50%;
+  }
+}
+
+@media (max-width: 744px) {
+  .post_list {
+    margin: 0 -4px -16px;
+  }
+  .post_list > li {
+    padding: 0 4px;
+    margin-bottom: 16px;
+  }
+}

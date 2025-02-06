@@ -1,8 +1,27 @@
 import Head from "next/head";
 import Link from "next/link";
 import Table from "@/components/ui/Table";
+import { getNotices } from "@/lib/notices";
+import { NoticeResponse, NoticeWrapper } from "@/type";
+import { useEffect, useState } from "react";
+import PostCard from "@/components/ui/PostCard";
 
 export default function Home() {
+  const [postData, setPostData] = useState<NoticeWrapper[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data: NoticeResponse = await getNotices({});
+        console.log(data);
+        setPostData(data.items || []);
+      } catch (error) {
+        console.error("API 요청 중 오류 발생:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <Head>
@@ -15,6 +34,16 @@ export default function Home() {
       </Head>
       <div>
         <Table />
+        <ul className="post_list">
+          {postData.map(({ item }) => {
+            if (!item) return null;
+            return (
+              <li key={item.id}>
+                <PostCard data={item} />
+              </li>
+            );
+          })}
+        </ul>
         <main>
           메인 페이지
           <ul className="">
