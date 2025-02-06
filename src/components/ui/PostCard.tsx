@@ -39,13 +39,11 @@ const PostCard = ({ data }: PostCardProps) => {
           </ul>
           <div className={styles.price}>
             <p>{hourlyPay.toLocaleString()}원</p>
-            {hourlyPay > shop.item.originalHourlyPay && (
-              <Badge
-                type="increased"
-                price={hourlyPay}
-                originalHourlyPay={shop.item.originalHourlyPay}
-              />
-            )}
+            <Badge
+              type="increased"
+              hourlyPay={hourlyPay}
+              originalHourlyPay={shop.item.originalHourlyPay}
+            />
           </div>
         </div>
       </Link>
