@@ -41,6 +41,7 @@
 
 .header-nav {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   gap: 4rem;
 }
@@ -48,6 +49,17 @@
 .header-nav > li > a {
   display: flex;
   font-weight: var(--font-weight-bold);
+}
+
+.header-nav > li > button {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family);
+}
+
+.header-alter-icon {
+  vertical-align: middle;
+  display: inline-block;
 }
 
 @media (max-width: 768px) {
@@ -101,7 +113,8 @@
     font-size: var(--font-size-xxs);
   }
 
-  .header-nav > li > a {
+  .header-nav > li > a,
+  .header-nav > li > button {
     font-size: var(--font-size-xs);
   }
 

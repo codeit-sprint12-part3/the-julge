@@ -1,15 +1,16 @@
 import { client } from "@/lib/axiosClient";
-import { getCookie } from "@/lib/cookies";
+import { getToken } from "@/lib/storage";
 
 // 1. Presigned URL 생성
 export const createPresignedUrl = async (name: string) => {
   try {
+    const token = getToken();
     const response = await client.post(
       "/images",
       { name },
       {
         headers: {
-          Authorization: `Bearer ${getCookie("token")?.value}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -22,16 +23,16 @@ export const createPresignedUrl = async (name: string) => {
 // 2. S3로 이미지 업로드
 export const uploadImageToS3 = async (url: string, file: File) => {
   try {
-    const formData = new FormData();
-    formData.append("file", file);
-
     const response = await fetch(url, {
       method: "PUT",
-      body: formData,
+      body: file,
+      headers: {
+        "Content-Type": file.type,
+      },
     });
 
     if (response.ok) {
-      return await response.json();
+      return await response.text();
     } else {
       throw new Error("Failed to upload image");
     }

@@ -1,9 +1,28 @@
+import { useAuthUser } from "@/stores/useAuthUser";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import style from "@/components/layout/Header.module.css";
 import { Icon } from "../icon/Icon";
+import { useState, useEffect } from "react";
 
 const Header = () => {
+  const { token, user, logout, fetchAndSetUser } = useAuthUser();
+  const router = useRouter();
+  const [isClient, setIsClient] = useState(false); // 클라이언트 렌더링 체크
+
+  useEffect(() => {
+    setIsClient(true);
+    if (token && !user) {
+      fetchAndSetUser(); // 유저 정보 자동 로드
+    }
+  }, [token, user, fetchAndSetUser]);
+
+  const handleLogout = () => {
+    logout(); // Zustand에서 로그아웃 실행
+    router.push("/");
+  };
+
   return (
     <header className={style["header-container"]}>
       <div className={style["header-wrapper"]}>
@@ -26,22 +45,38 @@ const Header = () => {
           <input type="text" placeholder="가게 이름으로 찾아보세요" />
         </div>
         <ul className={style["header-nav"]}>
+          {isClient && token && user?.type === "employee" && (
+            <li>
+              <Link href={"/user"}>내 프로필</Link>
+            </li>
+          )}
+          {isClient && token && user?.type === "employer" && (
+            <li>
+              <Link href={"/my-shop"}>내 가게</Link>
+            </li>
+          )}
+          {isClient && !token && (
+            <>
+              <li>
+                <Link href={"/auth/login"}>로그인</Link>
+              </li>
+              <li>
+                <Link href={"/auth/signup"}>회원가입</Link>
+              </li>
+            </>
+          )}
+
+          {isClient && token && (
+            <li>
+              <button onClick={handleLogout} className={style["logout-button"]}>
+                로그아웃
+              </button>
+            </li>
+          )}
           <li>
-            <Link href={"/user"}>내 프로필</Link>
-          </li>
-          {/* <li>
-            <Link href={"/my-shop"}>내 가게</Link>
-          </li> */}
-          <li>
-            <Link href={"/auth/login"}>로그인</Link>
-          </li>
-          {/* <li>
-            <Link href={"/auth/logout"}>로그아웃</Link>
-          </li> */}
-          <li>
-            <Link href={"/auth/logout"}>
+            <button>
               <Icon name="alter" color={"black"} className={style["header-alter-icon"]} />
-            </Link>
+            </button>
           </li>
         </ul>
       </div>

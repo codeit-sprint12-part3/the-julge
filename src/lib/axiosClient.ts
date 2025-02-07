@@ -1,19 +1,14 @@
-"use client";
 import axios from "axios";
-import { getCookie } from "@/lib/cookies";
+import { getToken } from "@/lib/storage";
 
 export const client = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:3000",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 client.interceptors.request.use((config) => {
-  const authHeader = config.headers["x-auth-not-required"];
-  if (authHeader) return config;
-
-  const token = getCookie("token")?.value;
+  const token = getToken();
   if (token) {
-    config.headers["Authorization"] = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
-
   return config;
 });

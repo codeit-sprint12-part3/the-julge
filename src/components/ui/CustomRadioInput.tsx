@@ -1,12 +1,14 @@
-import style from './CustomRadioInput.module.css';
+import style from "./CustomRadioInput.module.css";
 
 interface CustomRadioInputProps {
-  type: 'radio';
+  type: "radio";
   name?: string;
   value?: string;
   id?: string;
   radioText?: string;
   className?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  checked?: boolean;
 }
 
 const CustomRadioInput = ({
@@ -16,6 +18,8 @@ const CustomRadioInput = ({
   name,
   radioText,
   className,
+  onChange,
+  checked,
 }: CustomRadioInputProps) => {
   return (
     <div className={`${style.radioBox} ${className}`}>
@@ -25,6 +29,8 @@ const CustomRadioInput = ({
         type={type}
         name={name}
         value={value}
+        onChange={onChange}
+        checked={checked}
       />
       <label htmlFor={id}>{radioText}</label>
     </div>
