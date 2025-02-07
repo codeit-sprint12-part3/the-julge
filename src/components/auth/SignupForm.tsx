@@ -6,6 +6,7 @@ import { registerUser } from "@/lib/users";
 import { useRouter } from "next/router";
 import { login } from "@/lib/auth";
 import { useAuthUser } from "@/stores/useAuthUser";
+import { toast } from "react-toastify";
 
 const SignupForm = () => {
   const { login: loginUser } = useAuthUser();
@@ -79,7 +80,7 @@ const SignupForm = () => {
       });
 
       if (!response?.item?.id) {
-        alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+        toast.error("회원가입 실패 🥹");
         return;
       }
 
@@ -87,14 +88,15 @@ const SignupForm = () => {
 
       if (token) {
         await loginUser(token); // Zustand에서 로그인 처리
+        toast.success("환영합니다 🫶🏻");
         router.push("/");
       } else {
-        alert("회원가입 후 자동 로그인에 실패했습니다. 로그인 페이지로 이동합니다.");
+        // 회원가입 후 자동 로그인에 실패 / 로그인 페이지로 이동
+        toast.error("가입 성공 🎉 자동 로그인 실패 🥹");
         router.push("/auth/login");
       }
     } catch (error) {
-      alert("회원가입에 실패했습니다. 다시 시도해주세요.");
-      // console.error("회원가입 실패:", error);
+      toast.error("회원가입 실패 🥹");
     }
   };
 

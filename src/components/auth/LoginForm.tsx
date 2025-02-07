@@ -4,6 +4,7 @@ import { login } from "@/lib/auth";
 import { useRouter } from "next/router";
 import Input from "@/components/ui/Input";
 import { validateEmail, validatePassword } from "@/utils/validation";
+import { toast } from "react-toastify";
 import style from "@/pages/auth/auth.module.css";
 
 function LoginForm() {
@@ -52,10 +53,11 @@ function LoginForm() {
     try {
       const token = await login(formData.email, formData.password);
       await loginUser(token);
+      toast.success("로그인 성공 🎉");
       router.push("/");
     } catch (error) {
-      //console.error("로그인 실패", error);
-      setErrors({ password: "로그인 실패: 이메일 또는 비밀번호가 올바르지 않습니다." });
+      // 로그인 실패 / 이메일 또는 비밀번호가 올바르지 않음
+      toast.error("로그인 실패 🥹");
     }
   };
 
