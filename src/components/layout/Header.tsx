@@ -7,13 +7,16 @@ import { Icon } from "../icon/Icon";
 import { useState, useEffect } from "react";
 
 const Header = () => {
-  const { token, user, logout } = useAuthUser();
+  const { token, user, logout, fetchAndSetUser } = useAuthUser();
   const router = useRouter();
   const [isClient, setIsClient] = useState(false); // 클라이언트 렌더링 체크
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    if (token && !user) {
+      fetchAndSetUser(); // 유저 정보 자동 로드
+    }
+  }, [token, user, fetchAndSetUser]);
 
   const handleLogout = () => {
     logout(); // Zustand에서 로그아웃 실행
