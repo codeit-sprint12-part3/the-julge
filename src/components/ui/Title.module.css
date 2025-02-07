@@ -1,0 +1,27 @@
+.title_box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+.title_box > h3 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: -0.56px;
+}
+.title_box > h3 > span {
+  color: var(--primary);
+}
+.title_box > .children {
+  margin-left: auto;
+}
+
+@media (max-width: 744px) {
+  .title_box {
+    display: block;
+    margin-bottom: 16px;
+  }
+  .title_box > h3 {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+}

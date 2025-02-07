@@ -1,27 +1,62 @@
 import Head from "next/head";
 import Link from "next/link";
-import Table from "@/components/ui/Table";
 import { getNotices } from "@/lib/notices";
 import { NoticeResponse, NoticeWrapper } from "@/type";
 import { useEffect, useState } from "react";
 import PostCard from "@/components/ui/PostCard";
+import Title from "@/components/ui/Title";
+import Button from "@/components/ui/Button";
+import styles from "@/styles/index.module.css";
+import { Icon } from "@/components/icon/Icon";
+import Pagination from "@/components/ui/Pagination";
 
 export default function Home() {
-  const [postData, setPostData] = useState<NoticeWrapper[]>([]);
+  const [postFitData, setPostFitData] = useState<NoticeWrapper[]>([]);
+  const [postAllData, setPostAllData] = useState<NoticeWrapper[]>([]);
+  const [sortOpen, setSortOpen] = useState(false);
+  const [sortState, setSortState] = useState("마감임박순");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+  const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data: NoticeResponse = await getNotices({});
-        console.log(data);
-        setPostData(data.items || []);
+        const [fitData, allData]: [NoticeResponse, NoticeResponse] = await Promise.all([
+          getNotices({ limit: 3 }),
+          getNotices({
+            offset: (currentPage - 1) * itemsPerPage,
+            limit: itemsPerPage,
+            sort:
+              sortState === "마감임박순"
+                ? "time"
+                : sortState === "시급많은순"
+                ? "pay"
+                : sortState === "시간적은순"
+                ? "hour"
+                : "shop",
+          }),
+        ]);
+
+        setPostFitData(fitData.items || []);
+        setPostAllData(allData.items || []);
+        setTotalItems(allData.count || 0);
       } catch (error) {
         console.error("API 요청 중 오류 발생:", error);
       }
     };
-
     fetchData();
-  }, []);
+  }, [currentPage, sortState]);
+
+  const sortToggle = () => {
+    sortOpen ? setSortOpen(false) : setSortOpen(true);
+  };
+
+  const sortSet = (state: string) => {
+    setSortState(state);
+    setSortOpen(false);
+  };
+
   return (
     <>
       <Head>
@@ -33,85 +68,84 @@ export default function Home() {
         <meta property="og:title" content="더 줄게 - 일자리 매칭 플랫폼" />
       </Head>
       <div>
-        <Table />
-        <ul className="post_list">
-          {postData.map(({ item }) => {
-            if (!item) return null;
-            return (
-              <li key={item.id}>
-                <PostCard data={item} />
-              </li>
-            );
-          })}
-        </ul>
-        <main>
-          메인 페이지
-          <ul className="">
-            <li>
-              [인증]
-              <ul>
-                <li>
-                  <Link href="/auth/login">로그인 페이지</Link>
-                </li>
-                <li>
-                  <Link href="/auth/signup">회원가입 페이지</Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              [공통 - 공고 상세]
-              <ul>
-                <li>
-                  <Link href="/view/1">공고 상세 페이지</Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              [공통 - 검색]
-              <ul>
-                <li>
-                  <Link href="/search/">검색 페이지</Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              [사장님 - 내 가게]
-              <ul>
-                <li>
-                  <Link href="/my-shop/">내 가게 페이지</Link>
-                </li>
-                <li>
-                  <Link href="/my-shop/write">내 가게 - 등록 페이지</Link>
-                </li>
-                <li>
-                  <Link href="/my-shop/edit">내 가게 - 수정 페이지</Link>
-                </li>
-                <li>
-                  <Link href="/my-shop/jobs/1/">내 가게 - 공고 상세 페이지</Link>
-                </li>
-                <li>
-                  <Link href="/my-shop/jobs/write/">내 가게 - 공고 등록 페이지</Link>
-                </li>
-                <li>
-                  <Link href="/my-shop/jobs/edit/1">내 가게 - 공고 수정 페이지</Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              [유저 - 내 프로필]
-              <ul>
-                <li>
-                  <Link href="/user/">내 프로필 페이지</Link>
-                </li>
-                <li>
-                  <Link href="/user/write">내 프로필 등록 페이지</Link>
-                </li>
-                <li>
-                  <Link href="/user/edit">내 프로필 수정 페이지</Link>
-                </li>
-              </ul>
-            </li>
-          </ul>
+        <main className={styles.main}>
+          <section className={styles.main_fit}>
+            <Title text="맞춤 공고" />
+            <ul className="post_list">
+              {postFitData.map(({ item }) => {
+                if (!item) return null;
+                return (
+                  <li key={item.id}>
+                    <PostCard data={item} />
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+          <section className={styles.main_all}>
+            <Title text="전체 공고">
+              <div className={styles.right}>
+                <div className={styles.sort_box}>
+                  <p onClick={sortToggle}>
+                    {sortState} <Icon name="selectUp" size={10}></Icon>
+                  </p>
+                  {sortOpen && (
+                    <ul>
+                      <li
+                        onClick={() => {
+                          sortSet("마감임박순");
+                        }}
+                      >
+                        마감임박순
+                      </li>
+                      <li
+                        onClick={() => {
+                          sortSet("시급많은순");
+                        }}
+                      >
+                        시급많은순
+                      </li>
+                      <li
+                        onClick={() => {
+                          sortSet("시간적은순");
+                        }}
+                      >
+                        시간적은순
+                      </li>
+                      <li
+                        onClick={() => {
+                          sortSet("가나다순");
+                        }}
+                      >
+                        가나다순
+                      </li>
+                    </ul>
+                  )}
+                </div>
+                <div className={styles.filter}>
+                  <Button buttonText="상세 필터" styleButton="primary" size="small" />
+                </div>
+              </div>
+            </Title>
+            <ul className="post_list">
+              {postAllData.map(({ item }) => {
+                if (!item) return null;
+                return (
+                  <li key={item.id}>
+                    <PostCard data={item} />
+                  </li>
+                );
+              })}
+            </ul>
+            <div className={styles.page}>
+              <Pagination
+                currentPage={currentPage}
+                totalPosts={totalItems}
+                postsPerPage={itemsPerPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </div>
+          </section>
         </main>
       </div>
     </>

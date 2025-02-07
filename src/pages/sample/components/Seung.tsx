@@ -7,6 +7,8 @@ import Table from "@/components/ui/Table";
 import { toast } from "@/pages/_app";
 import { getNotices } from "@/lib/notices";
 import { NoticeResponse, NoticeWrapper } from "@/type";
+import Title from "@/components/ui/Title";
+import Button from "@/components/ui/Button";
 
 const Seung = () => {
   // --------------------------------------------------------
@@ -128,6 +130,25 @@ const Seung = () => {
                   );
                 })}
               </ul>
+            </div>
+          </li>
+          <li>
+            <h3>Title</h3>
+            <div className={style.box}>
+              <h3>1. 일반 타이틀</h3>
+              <Title text="공고목록" />
+              <h3>2. 하이라이트 타이틀 (span태그에 하이라이트 부분 감싸기)</h3>
+              <Title
+                text={
+                  <>
+                    <span>맛집</span>에 대한 공고목록
+                  </>
+                }
+              />
+              <h3>3. 우측 컨텐츠 타이틀 (children에 우측 영역 추가)</h3>
+              <Title text="공고목록">
+                <Button buttonText="상세필터" type="button" size="small" styleButton="primary" />
+              </Title>
             </div>
           </li>
         </ul>
