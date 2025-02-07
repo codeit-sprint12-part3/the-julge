@@ -1,5 +1,5 @@
 import { client } from "@/lib/axiosClient";
-import { getCookie } from "@/lib/cookies";
+import { getToken } from "@/lib/storage";
 
 // 1. 가게 등록
 export const registerShop = async (data: {
@@ -12,10 +12,9 @@ export const registerShop = async (data: {
   originalHourlyPay: number;
 }) => {
   try {
+    const token = getToken();
     const response = await client.post("/shops", data, {
-      headers: {
-        Authorization: `Bearer ${getCookie("token")?.value}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   } catch (error) {
@@ -47,10 +46,9 @@ export const updateShopInfo = async (
   }
 ) => {
   try {
+    const token = getToken();
     const response = await client.put(`/shops/${shopId}`, data, {
-      headers: {
-        Authorization: `Bearer ${getCookie("token")?.value}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   } catch (error) {

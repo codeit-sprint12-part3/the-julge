@@ -1,7 +1,7 @@
 import { client } from "@/lib/axiosClient";
-import { getCookie } from "@/lib/cookies";
+import { getToken } from "@/lib/storage";
 
-// 1. 공고 조회
+// 1. 공고 목록 조회
 export const getNotices = async (params: {
   offset?: number;
   limit?: number;
@@ -43,10 +43,9 @@ export const createShopNotice = async (
   }
 ) => {
   try {
+    const token = getToken();
     const response = await client.post(`/shops/${shopId}/notices`, data, {
-      headers: {
-        Authorization: `Bearer ${getCookie("token")?.value}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   } catch (error) {
@@ -76,10 +75,9 @@ export const updateShopNotice = async (
   }
 ) => {
   try {
+    const token = getToken();
     const response = await client.put(`/shops/${shopId}/notices/${noticeId}`, data, {
-      headers: {
-        Authorization: `Bearer ${getCookie("token")?.value}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   } catch (error) {

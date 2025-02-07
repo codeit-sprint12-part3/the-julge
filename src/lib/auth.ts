@@ -1,24 +1,12 @@
-import { client } from "./axiosClient";
-import { setCookie, removeCookie } from "./cookies";
+import { client } from "@/lib/axiosClient";
 
-interface LoginResponse {
-  token: string;
-}
-
-export const login = async (email: string, password: string): Promise<LoginResponse> => {
-  try {
-    const res = await client.post<LoginResponse>("/api/login", { email, password });
-
-    if (res.data.token) {
-      setCookie("token", res.data.token);
-    }
-
-    return res.data;
-  } catch (error) {
-    throw new Error("Login failed");
-  }
+export const login = async (email: string, password: string) => {
+  const res = await client.post("/token", { email, password });
+  return res.data.item.token;
 };
 
-export const logout = () => {
-  removeCookie("token");
+export const fetchUserInfo = async (token: string) => {
+  const userId = JSON.parse(atob(token.split(".")[1])).userId; // JWT 디코딩
+  const res = await client.get(`/users/${userId}`);
+  return res.data.item;
 };

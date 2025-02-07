@@ -1,15 +1,15 @@
 import style from "./Input.module.css";
 
 interface InputProps {
-  placeholder?: string,
+  placeholder?: string;
   type: "text" | "password" | "email" | "number";
-  name?: string,
-  value?: string,
-  id?: string,
-  label?: string,
-  className?: string,
-  required?: boolean,
-  error?: boolean;
+  name?: string;
+  value?: string;
+  id?: string;
+  label?: string;
+  className?: string;
+  required?: boolean;
+  error?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -23,22 +23,20 @@ const Input = ({
   className,
   required,
   error,
-  onChange }: InputProps) => {
-
+  onChange,
+}: InputProps) => {
   return (
     <>
-      {
-        label &&
+      {label && (
         <label htmlFor={id} className={`${style.label}`}>
           {label}
-          {required && <span className={style.required}>
-            *
-            <em className="blind">
-              필수입력
-            </em>
-          </span>}
+          {required && (
+            <span className={style.required}>
+              *<em className="blind">필수입력</em>
+            </span>
+          )}
         </label>
-      }
+      )}
       <input
         id={id}
         className={`${style.input} ${className} ${error ? style.errorInput : ""}`}
@@ -48,11 +46,7 @@ const Input = ({
         value={value}
         onChange={onChange}
       />
-      {
-        error && <div className={style.errorMessage}>
-          {error}
-        </div>
-      }
+      {error && <div className={style.errorMessage}>{error}</div>}
     </>
   );
 };

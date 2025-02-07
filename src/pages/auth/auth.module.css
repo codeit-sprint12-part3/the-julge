@@ -1,4 +1,7 @@
-.auth-wrapper {
-  max-width: 35rem;
-  margin: 0 auto;
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
 }
