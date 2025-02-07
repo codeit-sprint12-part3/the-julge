@@ -110,11 +110,18 @@
   .post_box > a > .thumbnail .end {
     font-size: 1.8rem;
   }
+  .post_box > a > .content {
+    margin-top: 10px;
+  }
   .post_box > a > .content > h3 {
     font-size: 1.6rem;
+    margin-bottom: 8px;
   }
   .post_box > a > .content > .price {
     display: block;
+  }
+  .post_box > a > .content > ul {
+    margin-bottom: 10px;
   }
   .post_box > a > .content > ul > li > svg {
     min-width: 16px;

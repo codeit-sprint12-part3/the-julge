@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <ModalProvider>
-      <div>
+      <div style={{ overflow: "Hidden" }}>
         {!is404 && <Header />}
         <main className="main-container">
           <Component {...pageProps} />
