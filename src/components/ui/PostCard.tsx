@@ -3,7 +3,7 @@ import styles from "./PostCard.module.css";
 import { Icon } from "../icon/Icon";
 import dayjs from "dayjs";
 import Badge from "./Badge";
-import { NoticeItem, ShopItem } from "@/type";
+import { NoticeItem } from "@/type";
 
 interface PostCardProps {
   data: NoticeItem;
@@ -11,16 +11,20 @@ interface PostCardProps {
 
 const PostCard = ({ data }: PostCardProps) => {
   const { id, workhour, startsAt, hourlyPay, description, closed, shop } = data;
+  const shopId = shop.item.id;
   const formatStartsAt = dayjs(startsAt);
   const formatted = `${formatStartsAt.format("YYYY-MM-DD HH:mm")}~${formatStartsAt
     .add(workhour, "hour")
     .format("HH:mm")} (${workhour}시간)`;
 
+  const isPast = dayjs().isAfter(formatStartsAt) && !closed;
+  const statusText = closed ? "마감 완료" : isPast ? "지난공고" : "";
+
   return (
-    <div className={`${styles.post_box} ${!closed ? styles.end : ""}`}>
-      <Link href={`/view/${id}`}>
+    <div className={`${styles.post_box} ${closed ? styles.end : ""} ${isPast ? styles.end : ""}`}>
+      <Link href={`/view/${shopId}/${id}`}>
         <div className={styles.thumbnail}>
-          <span className={styles.end}>마감 완료</span>
+          <span className={styles.end}>{statusText}</span>
           <figure>
             <img src={shop.item.imageUrl} alt={shop.item.name} />
           </figure>
