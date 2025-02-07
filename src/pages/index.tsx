@@ -71,7 +71,7 @@ export default function Home() {
         <main className={styles.main}>
           <section className={styles.main_fit}>
             <Title text="맞춤 공고" />
-            <ul className="post_list">
+            <ul className={`post_list ${styles.fit_list}`}>
               {postFitData.map(({ item }) => {
                 if (!item) return null;
                 return (
