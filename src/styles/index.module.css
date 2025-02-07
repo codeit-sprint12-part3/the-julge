@@ -38,6 +38,7 @@
   border-radius: 5px;
   font-weight: 700;
   background-color: var(--gray-200);
+  cursor: pointer;
 }
 .sort_box > p > svg {
   margin-top: -2px;
@@ -58,6 +59,7 @@
   text-align: center;
   font-size: 1.4rem;
   line-height: 1.5714;
+  cursor: pointer;
 }
 .sort_box > ul > li + li {
   border-top: 1px solid var(--gray-200);
@@ -71,9 +73,26 @@
   margin-top: 40px;
 }
 
+@media (max-width: 964px) {
+  .fit_list {
+    flex-wrap: nowrap;
+    overflow-y: auto;
+    margin: 0 -2rem;
+    padding: 0 2rem;
+  }
+  .fit_list::-webkit-scrollbar {
+    display: none;
+  }
+  .fit_list > li {
+    min-width: 312px;
+  }
+}
 @media (max-width: 744px) {
   .main_fit {
     padding: 40px 0;
+  }
+  .fit_list > li {
+    min-width: 171px;
   }
   .main_all {
     padding: 40px 0;
