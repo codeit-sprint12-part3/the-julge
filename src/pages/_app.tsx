@@ -6,21 +6,24 @@ import Header from "@/components/layout/Header";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "@/styles/Toast.css";
+import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 
 export { toast };
 
 export default function App({ Component, pageProps }: AppProps) {
-  const is404 = Component.displayName === "Error404Page";
+  const router = useRouter();
+
+  const noLayout = ["/auth/signup", "/auth/login", "/404"].includes(router.pathname);
 
   return (
     <ModalProvider>
       <div style={{ overflow: "Hidden" }}>
-        {!is404 && <Header />}
-        <main className="main-container">
+        {!noLayout && <Header />}
+        <main className={noLayout ? "" : "main-container"}>
           <Component {...pageProps} />
         </main>
-        {!is404 && <Footer />}
+        {!noLayout && <Footer />}
       </div>
       <ToastContainer
         position="top-center"
