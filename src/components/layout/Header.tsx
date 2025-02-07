@@ -5,7 +5,6 @@ import Image from "next/image";
 import style from "@/components/layout/Header.module.css";
 import { Icon } from "../icon/Icon";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 
 const Header = () => {
   const { token, user, logout, fetchAndSetUser } = useAuthUser();

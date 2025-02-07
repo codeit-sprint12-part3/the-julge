@@ -2,10 +2,13 @@ import { useState } from "react";
 import { useAuthUser } from "@/stores/useAuthUser";
 import { login } from "@/lib/auth";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from "next/image";
 import Input from "@/components/ui/Input";
 import { validateEmail, validatePassword } from "@/utils/validation";
 import { toast } from "react-toastify";
-import style from "@/pages/auth/auth.module.css";
+import style from "@/components/auth/Auth.module.css";
+import Button from "@/components/ui/Button";
 
 function LoginForm() {
   const { login: loginUser } = useAuthUser();
@@ -63,27 +66,50 @@ function LoginForm() {
 
   return (
     <div className={style["auth-wrapper"]}>
-      <form onSubmit={handleSubmit} noValidate>
-        <Input
-          label="이메일"
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          error={errors.email}
-          placeholder="이메일을 입력하세요"
+      <Link href={"/"} className={style["auth-logo"]}>
+        <Image
+          src="/logo.svg"
+          alt="더줄게 로고"
+          width={248}
+          height={45}
+          className={style["auth-logo-img"]}
         />
-        <Input
-          label="비밀번호"
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          error={errors.password}
-          placeholder="비밀번호를 입력하세요"
+      </Link>
+      <form onSubmit={handleSubmit} noValidate className={style["auth-form"]}>
+        <div>
+          <Input
+            label="이메일"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            error={errors.email}
+            placeholder="이메일을 입력하세요"
+          />
+        </div>
+        <div>
+          <Input
+            label="비밀번호"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            error={errors.password}
+            placeholder="비밀번호를 입력하세요"
+          />
+        </div>
+        <Button
+          buttonText="로그인 하기"
+          type="submit"
+          size="large"
+          styleButton="primary"
+          className={style["auth-submit-button"]}
         />
-        <button type="submit">로그인</button>
       </form>
+      <div className={style["guide-box"]}>
+        회원이 아니신가요?
+        <Link href={"/auth/signup"}>회원가입하기</Link>
+      </div>
     </div>
   );
 }

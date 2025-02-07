@@ -1,0 +1,65 @@
+.auth-wrapper {
+  width: 100%;
+  max-width: 39rem;
+  padding: 0 2rem;
+}
+
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.auth-form > div {
+  margin-bottom: 2.8rem;
+}
+
+.auth-radio-box > p {
+  margin-bottom: 0.8rem;
+}
+
+.auth-radio-box > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.6rem;
+}
+
+.auth-radio-box > div > div {
+  display: block;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.auth-submit-button {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family);
+}
+
+.guide-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.guide-box > a {
+  margin-left: 1rem;
+}
+
+.guide-box > a,
+.guide-box > a:link,
+.guide-box > a:visited,
+.guide-box > a:hover,
+.guide-box > a:active {
+  text-decoration: initial;
+}
+
+@media (max-width: 480px) {
+  .auth-logo-img {
+    width: 20.8rem;
+  }
+
+  .guide-box {
+    margin-top: 1.6rem;
+  }
+}

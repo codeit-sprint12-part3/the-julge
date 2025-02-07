@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import Input from "@/components/ui/Input";
 import CustomRadioInput from "@/components/ui/CustomRadioInput";
 import { validateEmail, validatePassword, validateConfirmPassword } from "@/utils/validation";
@@ -7,6 +9,8 @@ import { useRouter } from "next/router";
 import { login } from "@/lib/auth";
 import { useAuthUser } from "@/stores/useAuthUser";
 import { toast } from "react-toastify";
+import Button from "@/components/ui/Button";
+import style from "@/components/auth/Auth.module.css";
 
 const SignupForm = () => {
   const { login: loginUser } = useAuthUser();
@@ -101,57 +105,85 @@ const SignupForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      <Input
-        label="이메일"
-        type="email"
-        name="email"
-        value={formData.email}
-        error={errors.email}
-        onChange={handleChange}
-        placeholder="이메일을 입력하세요"
-      />
-      <Input
-        label="비밀번호"
-        type="password"
-        name="password"
-        value={formData.password}
-        error={errors.password}
-        onChange={handleChange}
-        placeholder="비밀번호를 입력하세요"
-      />
-      <Input
-        label="비밀번호 확인"
-        type="password"
-        name="confirmPassword"
-        value={formData.confirmPassword}
-        error={errors.confirmPassword}
-        onChange={handleChange}
-        placeholder="비밀번호를 다시 입력하세요"
-      />
-
-      <div>
-        <p>회원 유형</p>
-        {[
-          { id: "employee", value: "employee", label: "알바님" },
-          { id: "employer", value: "employer", label: "사장님" },
-        ].map((option) => (
-          <CustomRadioInput
-            key={option.id}
-            type="radio"
-            name="type"
-            id={option.id}
-            value={option.value}
-            radioText={option.label}
-            className={formData.type === option.value ? "selected" : ""}
+    <div className={style["auth-wrapper"]}>
+      <Link href={"/"} className={style["auth-logo"]}>
+        <Image
+          src="/logo.svg"
+          alt="더줄게 로고"
+          width={248}
+          height={45}
+          className={style["auth-logo-img"]}
+        />
+      </Link>
+      <form onSubmit={handleSubmit} noValidate className={style["auth-form"]}>
+        <div>
+          <Input
+            label="이메일"
+            type="email"
+            name="email"
+            value={formData.email}
+            error={errors.email}
             onChange={handleChange}
-            checked={formData.type === option.value}
+            placeholder="이메일을 입력하세요"
           />
-        ))}
-      </div>
+        </div>
+        <div>
+          <Input
+            label="비밀번호"
+            type="password"
+            name="password"
+            value={formData.password}
+            error={errors.password}
+            onChange={handleChange}
+            placeholder="비밀번호를 입력하세요"
+          />
+        </div>
+        <div>
+          <Input
+            label="비밀번호 확인"
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            error={errors.confirmPassword}
+            onChange={handleChange}
+            placeholder="비밀번호를 다시 입력하세요"
+          />
+        </div>
+        <div className={style["auth-radio-box"]}>
+          <p>회원 유형</p>
+          <div>
+            {[
+              { id: "employee", value: "employee", label: "알바님" },
+              { id: "employer", value: "employer", label: "사장님" },
+            ].map((option) => (
+              <CustomRadioInput
+                key={option.id}
+                type="radio"
+                name="type"
+                id={option.id}
+                value={option.value}
+                radioText={option.label}
+                className={formData.type === option.value ? "selected" : ""}
+                onChange={handleChange}
+                checked={formData.type === option.value}
+              />
+            ))}
+          </div>
+        </div>
 
-      <button type="submit">회원가입</button>
-    </form>
+        <Button
+          buttonText="가입하기"
+          type="submit"
+          size="large"
+          styleButton="primary"
+          className={style["auth-submit-button"]}
+        />
+      </form>
+      <div className={style["guide-box"]}>
+        이미 가입하셨나요?
+        <Link href={"/auth/login"}>로그인하기</Link>
+      </div>
+    </div>
   );
 };
 
