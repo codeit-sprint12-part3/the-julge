@@ -9,7 +9,7 @@ import "@/styles/Toast.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
-import SkeletonLoader from "@/components/ui/SkeletonLoader";
+import SpinnerLoader from "@/components/ui/SpinnerLoader";
 
 export { toast };
 
@@ -40,7 +40,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <ModalProvider>
-      {loading && <SkeletonLoader />}
+      {loading && <SpinnerLoader />}
       <div style={{ overflow: "Hidden", display: loading ? "none" : "block" }}>
         {!noLayout && <Header />}
         <main className={noLayout ? "" : "main-container"}>
