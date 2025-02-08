@@ -51,3 +51,10 @@ export interface NoticeResponse {
   items: NoticeWrapper[];
   links: Link[];
 }
+// 공고 요청 파라미터 타입
+export interface NoticeRequestParams {
+  limit?: number;
+  offset?: number;
+  sort?: "pay" | "time" | "hour" | "shop";
+  address?: string; // 주소 검색을 위한 배열
+}
