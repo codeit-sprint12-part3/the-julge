@@ -111,6 +111,13 @@ body {
   line-height: 1.5;
   color: var(--font-color);
 }
+input,
+button,
+select,
+textarea {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+}
 
 a {
   color: var(--font-color);
@@ -140,6 +147,32 @@ a {
   width: 33.3333%;
   padding: 0 7px;
   margin-bottom: 32px;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: var(--gray-400);
+  border-radius: 0.4rem;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scrollable::-webkit-scrollbar:horizontal {
+  height: 0.4rem;
+}
+
+.scrollable::-webkit-scrollbar-thumb:horizontal {
+  background-color: var(--gray-400);
+  border-radius: 0.4rem;
+}
+
+.scrollable::-webkit-scrollbar-track:horizontal {
+  background-color: transparent;
 }
 
 @media (max-width: 964px) {

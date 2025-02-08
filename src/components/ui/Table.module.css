@@ -6,9 +6,6 @@
   overflow: auto;
   margin: 0 auto;
 }
-.table_wrap::-webkit-scrollbar {
-  display: none;
-}
 /* inner - border */
 .table {
   width: 962px;
