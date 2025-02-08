@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./Table.module.css";
 import Badge from "@/components/ui/Badge";
 import Pagination from "@/components/ui/Pagination";
-import useDragScroll from "@/hooks/useDragScroll";
 
 interface RowData {
   store: string;
@@ -311,7 +310,10 @@ const Table = () => {
     if (!tableWrap) return;
 
     const handleScroll = () => {
-      setHasScroll(tableWrap.scrollWidth > tableWrap.clientWidth);
+      const isScrollable = tableWrap.scrollWidth > tableWrap.clientWidth;
+      const isAtEnd = tableWrap.scrollLeft + tableWrap.clientWidth >= tableWrap.scrollWidth - 1; // 소수점 오류 방지
+
+      setHasScroll(isScrollable && !isAtEnd);
     };
 
     handleScroll(); // 초기 상태 설정
@@ -335,14 +337,11 @@ const Table = () => {
   // ----------------- Pagination 관련 End -------------------
   // --------------------------------------------------------
 
-  const { handleMouseDown } = useDragScroll(tableWrapRef);
-
   return (
     <>
       <div
         ref={tableWrapRef}
-        className={`${styles.table_wrap} ${hasScroll ? styles.scroll : ""}`}
-        onMouseDown={handleMouseDown}
+        className={`scrollable ${styles.table_wrap} ${hasScroll ? styles.scroll : ""}`}
       >
         <div className={styles.table}>
           <div className={styles.thead}>

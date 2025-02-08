@@ -1,3 +1,4 @@
+import { useAuthUser } from "@/stores/useAuthUser";
 import { useEffect, useState } from "react";
 import styles from "./view.module.css";
 import { NoticeWrapper } from "@/type";
@@ -10,11 +11,139 @@ import { Icon } from "@/components/icon/Icon";
 import Button from "@/components/ui/Button";
 import PostCard from "@/components/ui/PostCard";
 import Head from "next/head";
+import { useModal } from "@/context/ModalContext";
+import { applyToNotice, getUserApplications, updateApplicationStatus } from "@/lib/applications";
+import { toast } from "@/pages/_app";
 
 const ViewPage = () => {
+  const { openModal, closeModal } = useModal();
   const router = useRouter();
-  const { shopId, noticeId } = router.query;
+  const { token, user, logout, fetchAndSetUser } = useAuthUser();
+  const [isClient, setIsClient] = useState(false);
+  const [hasApplied, setHasApplied] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [postData, setPostData] = useState<NoticeWrapper>();
+  const [recentPosts, setRecentPosts] = useState<NoticeWrapper[]>([]);
+  const [statusText, setStatusText] = useState("");
+
+  // 유저 정보 불러오기 [시작]
+  useEffect(() => {
+    setIsClient(true);
+    if (token && !user) {
+      fetchAndSetUser();
+    }
+  }, [token, user, fetchAndSetUser]);
+  // 유저 정보 불러오기 [종료]
+
+  // 유저의 지원 여부 확인 [시작]
+  const fetchUserApplications = async () => {
+    if (!user?.id || !token) return;
+    try {
+      const data = await getUserApplications(user.id);
+      const application = data.items.find(
+        (app: any) =>
+          app.item.notice.item.id === postData?.item.id && app.item.status !== "canceled"
+      );
+      setHasApplied(!!application);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    if (user?.id && token && postData?.item.id) {
+      fetchUserApplications();
+    }
+  }, [user?.id, token, postData?.item.id]);
+  // 유저의 지원 여부 확인 [종료]
+
+  const HandelEmployer = () => {
+    openModal("alert", "사장님은 공고에 신청할 수 없어요.");
+  };
+
+  // 알바생의 프로필 여부 확인 [시작]
+  const hasProfile = user?.type === "employee" && user?.address ? true : false;
+
+  const handleGoToProfile = () => {
+    const onConfirm = () => {
+      closeModal();
+      router.push("/user/write");
+    };
+    openModal(
+      "confirm",
+      "내 프로필을 먼저 등록해 주세요. \n프로필 등록 페이지로 이동하시겠습니까?",
+      onConfirm
+    );
+  };
+  // 알바생의 프로필 여부 확인 [종료]
+
+  // 로그인 여부 확인 [시작]
+  const isLoggedIn = !!token;
+  const handleGoToLogin = () => {
+    const onConfirm = () => {
+      closeModal();
+      router.push("/auth/login");
+    };
+    openModal("confirm", "로그인이 필요합니다. \n로그인 페이지로 이동하시겠습니까?", onConfirm);
+  };
+  // 로그인 여부 확인 [종료]
+
+  // 공고 지원하기 [시작]
+  const handleApply = async () => {
+    if (!postData || !user?.id || !token) return;
+
+    const onConfirm = async () => {
+      try {
+        closeModal();
+        await applyToNotice(postData.item.shop.item.id, postData.item.id);
+        toast("신청이 완료되었습니다.");
+        await fetchUserApplications();
+      } catch (error) {
+        console.error(error);
+        toast("신청 중 오류가 발생했습니다.");
+      }
+    };
+
+    openModal("confirm", `'${postData?.item.shop.item.name}'에 신청하시겠어요?`, onConfirm);
+  };
+  // 공고 지원하기 [종료]
+
+  // 공고 지원 취소하기 [시작]
+  const handleCancel = async () => {
+    if (!postData || !user?.id || !token) return;
+
+    const onConfirm = async () => {
+      try {
+        closeModal();
+        const data = await getUserApplications(user.id);
+        const application = data.items.find(
+          (app: any) =>
+            app.item.notice.item.id === postData.item.id && app.item.status !== "canceled"
+        );
+        if (!application) {
+          toast("이미 취소된 신청입니다.");
+          return;
+        }
+        await updateApplicationStatus(
+          postData.item.shop.item.id,
+          postData.item.id,
+          application.item.id,
+          "canceled"
+        );
+        toast("신청이 취소되었습니다.");
+        await fetchUserApplications();
+      } catch (error) {
+        console.error(error);
+        toast("취소 중 오류가 발생했습니다.");
+      }
+    };
+    openModal("confirm", `'${postData?.item.shop.item.name}'에 신청을 취소하시겠어요?`, onConfirm);
+  };
+
+  // 공고 지원 취소하기 [종료]
+
+  // 공고 데이터 불러오기 [시작]
+  const { shopId, noticeId } = router.query;
+
   useEffect(() => {
     const fetchData = async () => {
       if (!shopId || !noticeId) return;
@@ -28,11 +157,10 @@ const ViewPage = () => {
 
     fetchData();
   }, [shopId, noticeId]);
+  // 공고 데이터 불러오기 [종료]
 
-  const [recentPosts, setRecentPosts] = useState<NoticeWrapper[]>([]);
-
+  // 로컬스토리지에서 최근에 본 공고 불러오기 [시작]
   useEffect(() => {
-    // 로컬스토리지에서 최근에 본 공고 불러오기
     const storedPosts: NoticeWrapper[] = JSON.parse(localStorage.getItem("recentPosts") || "[]");
     setRecentPosts(storedPosts);
 
@@ -46,15 +174,74 @@ const ViewPage = () => {
       setRecentPosts(updatedPosts);
     }
   }, [postData]);
+  // 로컬스토리지에서 최근에 본 공고 불러오기 [종료]
 
+  // 공고 시작 시간 포맷팅 [시작]
   const formatStartsAt = dayjs(postData?.item.startsAt);
   const formatted = `${formatStartsAt.format("YYYY-MM-DD HH:mm")}~${formatStartsAt
     .add(postData?.item.workhour as number, "hour")
     .format("HH:mm")} (${postData?.item.workhour}시간)`;
+  // 공고 시작 시간 포맷팅 [종료]
 
+  // 마감 여부 및 지난 공고 여부 확인 [시작]
   const closed = postData?.item.closed;
   const isPast = dayjs().isAfter(formatStartsAt) && !closed;
-  const statusText = closed ? "마감 완료" : isPast ? "지난공고" : "";
+  useEffect(() => {
+    if (!postData) return;
+    const formatStartsAt = dayjs(postData?.item.startsAt);
+    const isPast = dayjs().isAfter(formatStartsAt) && !postData?.item.closed;
+    const closed = postData?.item.closed;
+    setStatusText(closed ? "마감 완료" : isPast ? "지난공고" : "");
+  }, [postData]);
+  // 마감 여부 및 지난 공고 여부 확인 [종료]
+
+  // 버튼 렌더링 [시작]
+  const [buttonText, setButtonText] = useState("신청 불가");
+  const [buttonStyle, setButtonStyle] = useState<"primary" | "secondary">("primary");
+  const [buttonAction, setButtonAction] = useState<(() => void) | undefined>(undefined);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    if (!isClient) return; // 클라이언트에서만 실행
+
+    if (closed || isPast) {
+      setButtonText("신청 불가");
+      setButtonDisabled(true);
+    } else if (!isLoggedIn) {
+      setButtonText("신청하기");
+      setButtonDisabled(false);
+      setButtonAction(() => handleGoToLogin);
+    } else if (user?.type === "employer") {
+      setButtonText("신청하기");
+      setButtonDisabled(false);
+      setButtonAction(() => HandelEmployer);
+    } else if (!hasProfile) {
+      setButtonText("신청하기");
+      setButtonDisabled(false);
+      setButtonAction(() => handleGoToProfile);
+    } else if (hasApplied) {
+      setButtonText("취소하기");
+      setButtonStyle("secondary");
+      setButtonDisabled(false);
+      setButtonAction(() => handleCancel);
+    } else {
+      setButtonText("신청하기");
+      setButtonStyle("primary");
+      setButtonDisabled(false);
+      setButtonAction(() => handleApply);
+    }
+  }, [isClient, closed, isPast, isLoggedIn, user, hasProfile, hasApplied]);
+
+  const button = (
+    <Button
+      buttonText={buttonText}
+      size="large"
+      styleButton={buttonStyle}
+      onClick={buttonAction}
+      disabled={buttonDisabled}
+    />
+  );
+  // 버튼 렌더링 [종료]
 
   return (
     <>
@@ -66,6 +253,7 @@ const ViewPage = () => {
         <meta property="og:image" content={postData?.item.shop.item.imageUrl} />
         <meta property="og:title" content={postData?.item.shop.item.name} />
       </Head>
+
       <div className={styles.view}>
         <section className={styles.view_content}>
           <div className={styles.category}>{postData?.item.shop.item.category}</div>
@@ -98,7 +286,7 @@ const ViewPage = () => {
               <div className={styles.txt}>
                 <p>{postData?.item.shop.item.description}</p>
               </div>
-              <Button buttonText="신청하기" size="large" styleButton="primary" />
+              {button}
             </div>
           </div>
           <div className={styles.description}>

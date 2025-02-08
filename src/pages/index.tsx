@@ -1,7 +1,8 @@
+import { useAuthUser } from "@/stores/useAuthUser";
 import Head from "next/head";
 import Link from "next/link";
 import { getNotices } from "@/lib/notices";
-import { NoticeResponse, NoticeWrapper } from "@/type";
+import { NoticeResponse, NoticeWrapper, NoticeRequestParams } from "@/type";
 import { useEffect, useState } from "react";
 import PostCard from "@/components/ui/PostCard";
 import Title from "@/components/ui/Title";
@@ -11,6 +12,7 @@ import { Icon } from "@/components/icon/Icon";
 import Pagination from "@/components/ui/Pagination";
 
 export default function Home() {
+  const { token, user } = useAuthUser();
   const [postFitData, setPostFitData] = useState<NoticeWrapper[]>([]);
   const [postAllData, setPostAllData] = useState<NoticeWrapper[]>([]);
   const [sortOpen, setSortOpen] = useState(false);
@@ -18,35 +20,58 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const [totalItems, setTotalItems] = useState(0);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [fitData, allData]: [NoticeResponse, NoticeResponse] = await Promise.all([
-          getNotices({ limit: 3 }),
-          getNotices({
-            offset: (currentPage - 1) * itemsPerPage,
-            limit: itemsPerPage,
-            sort:
-              sortState === "마감임박순"
-                ? "time"
-                : sortState === "시급많은순"
-                ? "pay"
-                : sortState === "시간적은순"
-                ? "hour"
-                : "shop",
-          }),
-        ]);
+    if (user === undefined) return;
+    setIsReady(true);
+  }, [user]);
 
+  useEffect(() => {
+    if (!isReady) return;
+
+    const fetchFitData = async () => {
+      try {
+        let fitParams: NoticeRequestParams;
+        if (user?.type === "employee" && user?.address) {
+          fitParams = { limit: 3, sort: "pay", address: user.address };
+        } else {
+          fitParams = { limit: 3, sort: "pay" };
+        }
+        const fitData: NoticeResponse = await getNotices(fitParams);
         setPostFitData(fitData.items || []);
+      } catch (error) {
+        console.error("맞춤 공고 API 요청 중 오류 발생:", error);
+      }
+    };
+    fetchFitData();
+  }, [isReady, user]);
+
+  useEffect(() => {
+    const fetchAllData = async () => {
+      try {
+        const allData: NoticeResponse = await getNotices({
+          offset: (currentPage - 1) * itemsPerPage,
+          limit: itemsPerPage,
+          sort:
+            sortState === "마감임박순"
+              ? "time"
+              : sortState === "시급많은순"
+              ? "pay"
+              : sortState === "시간적은순"
+              ? "hour"
+              : "shop",
+        });
+
         setPostAllData(allData.items || []);
         setTotalItems(allData.count || 0);
       } catch (error) {
-        console.error("API 요청 중 오류 발생:", error);
+        console.error("전체 공고 API 요청 중 오류 발생:", error);
       }
     };
-    fetchData();
-  }, [currentPage, sortState]);
+
+    fetchAllData();
+  }, [currentPage, sortState]); // 페이지 또는 정렬 상태 변경 시 실행
 
   const sortToggle = () => {
     sortOpen ? setSortOpen(false) : setSortOpen(true);
@@ -71,17 +96,19 @@ export default function Home() {
         <main className={styles.main}>
           <section className={styles.main_fit}>
             <Title text="맞춤 공고" />
-            <ul className={`post_list ${styles.fit_list}`}>
-              {postFitData.map(({ item }) => {
-                if (!item) return null;
-                return (
+            {postFitData.length > 0 ? (
+              <ul className={`post_list ${styles.fit_list}`}>
+                {postFitData.map(({ item }) => (
                   <li key={item.id}>
                     <PostCard data={item} />
                   </li>
-                );
-              })}
-            </ul>
+                ))}
+              </ul>
+            ) : (
+              <p className={styles.no_data}>우리 동네에 공고가 없습니다.</p>
+            )}
           </section>
+
           <section className={styles.main_all}>
             <Title text="전체 공고">
               <div className={styles.right}>

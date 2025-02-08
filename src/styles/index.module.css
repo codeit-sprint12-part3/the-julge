@@ -72,6 +72,13 @@
 .page {
   margin-top: 40px;
 }
+.no_data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.8rem;
+}
 
 @media (max-width: 964px) {
   .fit_list {
