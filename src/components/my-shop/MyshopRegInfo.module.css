@@ -1,0 +1,15 @@
+.myshopInfoBox {
+  padding: 6rem 2.0rem;
+  border-radius: 1.2rem;
+  border: 0.1rem solid var(--gray-300);
+}
+
+.myshopInfoBox p {
+  margin-bottom: 2.4rem;
+  text-align: center;
+  color: var(--font-color);
+}
+
+.myshopInfoBox button {
+  margin: 0 auto;
+}

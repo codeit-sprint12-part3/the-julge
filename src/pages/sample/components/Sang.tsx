@@ -10,6 +10,7 @@ const Sang = () => {
 
   //CustomSelect 테스트
   const [menuItems, setMenuItems] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   useEffect(() => {
 
@@ -23,6 +24,12 @@ const Sang = () => {
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
+  };
+
+  // Handle Select change
+  const handleSelectChange = (selectedValue: string) => {
+    setSelectedCategory(selectedValue);
+    console.log("선택된 카테고리:", selectedValue); // To see the selected category
   };
 
   // CsutomRadioInput 테스트
@@ -158,6 +165,8 @@ const Sang = () => {
       </p>
       <CustomSelect
         menuItems={menuItems}
+        onChange={handleSelectChange} // Pass the onChange handler
+        value={selectedCategory} // Pass the selected value
       />
     </div>
 

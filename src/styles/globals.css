@@ -136,14 +136,15 @@ a {
   flex-wrap: wrap;
   margin: 0 -7px -32px;
 }
-.post_list > li {
+
+.post_list>li {
   width: 33.3333%;
   padding: 0 7px;
   margin-bottom: 32px;
 }
 
 @media (max-width: 964px) {
-  .post_list > li {
+  .post_list>li {
     width: 50%;
   }
 }
@@ -152,8 +153,14 @@ a {
   .post_list {
     margin: 0 -4px -16px;
   }
-  .post_list > li {
+
+  .post_list>li {
     padding: 0 4px;
     margin-bottom: 16px;
   }
+}
+
+footer {
+  position: relative;
+  z-index: 99999;
 }
