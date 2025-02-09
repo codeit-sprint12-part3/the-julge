@@ -91,7 +91,7 @@ export default function MyshopReg() {
       });
 
       console.log("이미지 업로드 성공:", presignedUrl);
-      return presignedUrl.split("?")[0]; // Query String 제거 후 반환
+      return presignedUrl.split("?")[0];
     }
     catch (error) {
       console.error("이미지 업로드 실패:", error);
@@ -106,29 +106,26 @@ export default function MyshopReg() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // Check if the response contains any shops with the same name
       if (response.data && response.data.items.length > 0) {
-        return true; // Shop exists
+        return true;
       }
 
-      return false; // Shop does not exist
+      return false;
     } catch (error) {
       console.error("Error checking if shop exists:", error);
-      return false; // If there is an error, assume the shop does not exist
+      return false;
     }
   };
-
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) return;
 
-    // Check if the shop already exists before submitting
     const shopExists = await checkIfShopExists(shopName);
     if (shopExists) {
       toast.error("이미 등록된 가게가 있습니다.");
-      return; // Prevent further submission if the shop exists
+      return;
     }
 
     try {
@@ -157,7 +154,6 @@ export default function MyshopReg() {
         toast.success("가게가 등록되었습니다!");
         const shop_id = response.data.item.id;
 
-        // 가게 등록 후 상세 페이지로 이동
         router.push(`/my-shop/detail?shop_id=${shop_id}`);
       } else {
         toast.error("가게 등록에 실패했습니다.");
@@ -167,9 +163,6 @@ export default function MyshopReg() {
       console.error("Error registering shop:", error);
     }
   };
-
-
-
 
   return (
     <div className={style.myshopContainer}>
