@@ -3,6 +3,7 @@ import style from "./Sol.module.css";
 import { Icon } from "@/components/icon/Icon";
 import Logo from "@/components/ui/Logo";
 import Badge from "@/components/ui/Badge";
+import EmptyState from "@/components/ui/EmptyState";
 
 const Sol = () => {
   return (
@@ -60,10 +61,10 @@ const Sol = () => {
         <li>
           <h3>Badge</h3>
           <div>
-            <p>type = {`" pending | accepted | rejected | canceled | increased "`}</p>
-            <p>hourlyPay? = {`{ 14000 }`} → 공고 시급</p>
-            <p>originalHourlyPay? = {`{ 14000 }`} → 기존 시급</p>
-            <p>state? = {`"done"`} → 마감 완료 상태일 때</p>
+            <p>1️⃣type = {`" pending | accepted | rejected | canceled | increased "`}</p>
+            <p>2️⃣hourlyPay? = {`{ 14000 }`} → 공고 시급</p>
+            <p>3️⃣originalHourlyPay? = {`{ 14000 }`} → 기존 시급</p>
+            <p>4️⃣state? = {`"done"`} → 마감 완료 상태일 때</p>
           </div>
           <div className={style.box}>
             <Badge type="pending" />
@@ -72,6 +73,21 @@ const Sol = () => {
             <Badge type="canceled" />
             <Badge type="increased" hourlyPay={14000} originalHourlyPay={10000} />
             <Badge type="increased" hourlyPay={14000} originalHourlyPay={10000} state="done" />
+          </div>
+        </li>
+        <li>
+          <h3>EmptyState</h3>
+          <div>
+            <p>1️⃣message = "{"안내 문구 작성"}"</p>
+            <p>2️⃣buttonText? = "{"버튼명"}"</p>
+            <p>3️⃣href? = "{"/user/write"}"</p>
+          </div>
+          <div className={style.box}>
+            <EmptyState
+              message={"내 프로필을 등록하고 원하는 가게에 지원해 보세요."}
+              buttonText={"내 프로필 등록하기"}
+              href={"/user/write"}
+            />
           </div>
         </li>
       </ul>
