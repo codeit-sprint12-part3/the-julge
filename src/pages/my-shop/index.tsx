@@ -1,7 +1,16 @@
-import AuthGuard from "@/components/auth/AuthGuard";
+import MyshopRegInfo from "@/components/my-shop/MyshopRegInfo";
+import Title from "@/components/ui/Title";
+import style from "@/pages/my-shop/Myshop.module.css";
 
-function Page() {
-  return <div className="">내 가게 페이지</div>;
+export default function Myshop() {
+  return (
+    <div className={style.myshopContainer}>
+      <Title
+        text="내 가게"
+      />
+      <MyshopRegInfo
+        buttonText="가게 등록하기"
+      />
+    </div>
+  );
 }
-
-export default AuthGuard(Page, "employer");

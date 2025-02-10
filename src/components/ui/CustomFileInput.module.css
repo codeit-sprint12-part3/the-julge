@@ -1,0 +1,76 @@
+.fileInputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2.0rem;
+}
+
+.labelText {
+  display: block;
+  color: var(--font-color);
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.fileInputArea {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 27.8rem;
+  border-radius: 1.2rem;
+  border: 1px solid var(--gray-400);
+  background-color: var(--gray-200);
+  text-align: center;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.imagePreview {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.noImageText {
+  position: relative;
+  color: var(--gray-500);
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem 0;
+  align-items: center;
+}
+
+.noImageText::before {
+  content: '';
+  width: 33px;
+  height: 28px;
+  background: url(/img_file_icon.svg)no-repeat center;
+}
+
+.file_customStyle .fileInputArea {
+  border: 0;
+  z-index: 2;
+}
+
+.file_customStyle .fileInputArea::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: -1;
+}
+
+.file_customStyle .noImageText {
+  color: #fff;
+}
+
+.file_customStyle .noImageText::before {
+  background: url(/img_file_edit_icon.svg)no-repeat center !important;
+}
