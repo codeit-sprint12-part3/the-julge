@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import style from "@/components/layout/Header.module.css";
-import { Icon } from "../icon/Icon";
+import { Icon } from "@/components/icon/Icon";
 import { useState, useEffect } from "react";
 
 const Header = () => {

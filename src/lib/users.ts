@@ -16,7 +16,7 @@ export const registerUser = async (data: {
 };
 
 // 2. 내 정보 조회
-export const getUserInfo = async (userId: string) => {
+export const getUserInfo = async (userId?: string) => {
   try {
     const token = getToken();
     const response = await client.get(`/users/${userId}`, {
