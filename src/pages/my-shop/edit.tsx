@@ -23,6 +23,8 @@ const addressOptions = [
 // 가게 분류 목록
 const categoryOptions = ["한식", "중식", "일식", "양식", "분식", "카페", "편의점", "기타"];
 
+type Category = "한식" | "중식" | "일식" | "양식" | "분식" | "카페" | "편의점" | "기타";
+
 function useAuth() {
   const [token, setToken] = useState<string | null>(null);
 
@@ -41,7 +43,7 @@ export default function MyshopEdit() {
   const token = useAuth();
 
   const [shopName, setShopName] = useState("");
-  const [shopClassification, setShopClassification] = useState("");
+  const [shopClassification, setShopClassification] = useState<Category>("한식"); // Set initial value as one of the categories
   const [shopAddress, setShopAddress] = useState("");
   const [detailShopAddress, setDetailShopAddress] = useState("");
   const [shopImage, setShopImage] = useState<File | null>(null);
@@ -55,7 +57,7 @@ export default function MyshopEdit() {
       getShopInfo(shop_Id as string)
         .then(shopData => {
           setShopName(shopData.name);
-          setShopClassification(shopData.category);
+          setShopClassification(shopData.category as Category); // Ensuring the category is cast to the correct type
           setShopAddress(shopData.address1);
           setDetailShopAddress(shopData.address2);
           setShopDescription(shopData.description);
@@ -173,7 +175,7 @@ export default function MyshopEdit() {
             <CustomSelect
               menuItems={categoryOptions}
               type="button"
-              onChange={setShopClassification}
+              onChange={(selectedValue: string) => setShopClassification(selectedValue as Category)}
               value={shopClassification}
             />
           </div>
