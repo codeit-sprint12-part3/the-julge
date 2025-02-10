@@ -247,8 +247,6 @@ export default function MyshopReg() {
               type="button"
               onChange={setShopClassification}
               value={shopClassification}
-              onBlur={(e) => handleBlur("shopClassification", e.target.value)} // 포커스 아웃 시 검증
-              error={error.shopClassification}
             />
           </div>
         </div>
@@ -264,8 +262,6 @@ export default function MyshopReg() {
               type="button"
               onChange={setShopAddress}
               value={shopAddress}
-              onBlur={(e) => handleBlur("shopAddress", e.target.value)} // 포커스 아웃 시 검증
-              error={error.shopAddress}
             />
           </div>
           <div className={style.box}>
