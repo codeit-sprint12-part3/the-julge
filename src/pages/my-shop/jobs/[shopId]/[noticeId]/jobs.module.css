@@ -132,7 +132,7 @@
   line-height: 1.625;
   white-space: pre-line;
 }
-.view_recent {
+.view_list {
   padding: 60px 0;
 }
 
@@ -204,5 +204,135 @@
   }
   .view_recent {
     padding: 40px 0;
+  }
+}
+
+/**/
+.table_wrap {
+  position: relative;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  overflow: auto;
+  margin: 0 auto;
+}
+/* inner - border */
+.table {
+  width: 962px;
+  background-color: var(--white);
+}
+/* 각 td값 넓이 */
+.table .td:nth-child(1) {
+  width: 126px;
+}
+.table .td:nth-child(2) {
+  width: 400px;
+}
+.table .td:nth-child(3) {
+  width: 190px;
+}
+.table .td:nth-child(4) {
+  width: 245px;
+}
+.table > .thead > .th {
+  position: relative;
+  display: flex;
+}
+.table > .thead > .th > .td {
+  padding: 14px 12px;
+  background-color: var(--red-100);
+}
+.table_wrap .table > .thead > .th > .td:last-child {
+  position: sticky;
+  right: 0;
+}
+.table > .tbody > .tr {
+  display: flex;
+  border-bottom: 1px solid var(--gray-200);
+}
+.table > .tbody > .tr:last-child {
+  border-bottom: none;
+}
+.table > .tbody > .tr > .td {
+  padding: 20px 12px;
+  display: flex;
+  align-items: center;
+}
+.table > .tbody > .tr > .td .line2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.table > .tbody > .tr > .td .btn_wrap {
+  display: flex;
+  padding: 0 10px;
+  width: 100%;
+  gap: 12px;
+}
+.table > .tbody > .tr > .td .btn_wrap > button {
+  flex: 1;
+  max-width: none;
+}
+.table > .tbody > .tr > .td .btn_wrap > button:nth-child(even) {
+  border-color: var(--blue-200);
+  color: var(--blue-200);
+}
+.table_wrap .table > .tbody > .tr > .td:last-child {
+  position: sticky;
+  right: 0;
+  background-color: var(--white);
+}
+/* 스크롤이 생겼을때 border 생성 */
+.table_wrap.scroll .table > .thead > .th > .td:last-child {
+  border-left: 1px solid var(--gray-200);
+}
+.table_wrap.scroll .table > .tbody > .tr > .td:last-child {
+  border-left: 1px solid var(--gray-200);
+}
+/* 페이지네이션 */
+.page {
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 0 0 10px 10px;
+  border: 1px solid var(--gray-200);
+  border-top: none;
+  background-color: var(--white);
+}
+@media (max-width: 964px) {
+  .table {
+    width: 937px;
+  }
+  .table .td:nth-child(4) {
+    width: 220px;
+  }
+  .table > .tbody > .tr > .td .btn_wrap {
+    padding: 0px;
+  }
+}
+@media (max-width: 744px) {
+  .table_wrap {
+    font-size: 1.4rem;
+  }
+  .table {
+    width: 880px;
+  }
+  .table .td:nth-child(4) {
+    width: 165px;
+  }
+  .table > .tbody > .tr > .td .btn_wrap {
+    padding: 0px;
+  }
+  .table > .tbody > .tr > .td .btn_wrap > button {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .table > .thead > .th > .td {
+    padding: 12px 8px;
+    font-size: 1.2rem;
+  }
+  .table > .tbody > .tr > .td {
+    padding: 12px 8px;
   }
 }

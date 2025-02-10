@@ -51,10 +51,54 @@ export interface NoticeResponse {
   items: NoticeWrapper[];
   links: Link[];
 }
+
 // 공고 요청 파라미터 타입
 export interface NoticeRequestParams {
   limit?: number;
   offset?: number;
   sort?: "pay" | "time" | "hour" | "shop";
   address?: string; // 주소 검색을 위한 배열
+}
+
+// 사용자 정보 타입
+export interface UserItem {
+  id: string;
+  email: string;
+  type: string;
+  name: string;
+  phone: string;
+  address: string;
+  bio: string;
+}
+
+// 사용자 정보 래퍼 타입
+export interface User {
+  item: UserItem;
+  href: string;
+}
+
+// 지원서 아이템 타입
+export interface ApplicationItem {
+  id: string;
+  status: string;
+  createdAt: string;
+  user: User;
+  shop: Shop;
+  notice: NoticeWrapper;
+}
+
+// 지원서 아이템 래퍼 타입
+export interface ApplicationWrapper {
+  item: ApplicationItem;
+  links: Link[];
+}
+
+// 지원서 API 응답 타입
+export interface ApplicationResponse {
+  offset: number;
+  limit: number;
+  count: number;
+  hasNext: boolean;
+  items: ApplicationWrapper[];
+  links: Link[];
 }
