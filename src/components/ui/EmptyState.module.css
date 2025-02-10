@@ -11,3 +11,10 @@
 .empty-message {
   margin-bottom: 2.7rem;
 }
+
+@media (max-width: 480px) {
+  .empty-message {
+    font-size: var(--font-size-xs);
+    margin-bottom: 1.6rem;
+  }
+}
