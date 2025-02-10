@@ -9,6 +9,7 @@ export default function Myshop() {
         text="내 가게"
       />
       <MyshopRegInfo
+        infoText="내 가게를 소개하고 공고도 등록해 보세요."
         buttonText="가게 등록하기"
       />
     </div>

@@ -4,15 +4,16 @@ import style from "./MyshopRegInfo.module.css";
 interface MyshopRegInfoProps {
 
   buttonText: string;
+  infoText: string;
 
 }
 
-export default function MyshopRegInfo({ buttonText }: MyshopRegInfoProps) {
+export default function MyshopRegInfo({ infoText, buttonText }: MyshopRegInfoProps) {
 
   return (
     <div className={style.myshopInfoBox}>
       <p>
-        내 가게를 소개하고 공고도 등록해보세요
+        {infoText}
       </p>
       <Button
         buttonText={buttonText}

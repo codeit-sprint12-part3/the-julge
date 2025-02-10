@@ -1,85 +1,83 @@
-import Button from "@/components/ui/Button";
-import Title from "@/components/ui/Title";
-import style from "@/pages/my-shop/Myshop.module.css";
-import { useRouter } from "next/router";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { getShopInfo } from "@/lib/shops"; // API 호출 함수
+import Title from "@/components/ui/Title";
+import Button from "@/components/ui/Button";
+import style from "./Myshop.module.css";
 import MyshopRegInfo from "@/components/my-shop/MyshopRegInfo";
+import SpinnerLoader from "@/components/ui/SpinnerLoader";
 
 export default function MyshopDetail() {
   const router = useRouter();
-  const [detailData, setDetailData] = useState(null);
-  console.log(detailData);
-  const [error, setError] = useState(null);
-  const { shop_id } = router.query;
-
-  const getDetailShopData = () => {
-    try {
-      axios
-        .get(`https://bootcamp-api.codeit.kr/api/0-1/the-julge/shops/${shop_id}`)
-        .then((response) => {
-          setDetailData(response.data.item);
-        })
-        .catch((error) => {
-          setError(error);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  const { shop_Id } = router.query; // URL에서 shopId 가져오기
+  const [shop, setShop] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getDetailShopData();
-  }, [])
+    if (shop_Id) {
+      setLoading(true);
+      getShopInfo(shop_Id as string)
+        .then((data) => {
+          setShop(data.item); // data.item으로 설정
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("가게 정보를 불러오는데 실패했습니다:", error);
+          setLoading(false);
+        });
+    }
+  }, [shop_Id]);
+
+  if (loading) return <SpinnerLoader />;
+  if (!shop) return <p>가게 정보를 찾을 수 없습니다.</p>;
 
   return (
-    <div className={style.myshopContainer}>
-      <Title text="내 가게" />
+    <>
+      <div className={style.myshopContainer}>
+        <Title text="가게 상세 정보" />
+        <div className={style.myshopDetailContainer}>
+          <div className={style.detailImgBox}>
+            <img src={shop.imageUrl} alt={shop.name} className={style.shopImage} />
+          </div>
 
-      <div className={style.myshopDetailContainer}>
-        <div className={style.detailImgBox}>
-          img 영역
-        </div>
-        <div className={style.detailTextBox}>
-          <span className={style.subText}>
-            식당
-          </span>
-          <h3 className={style.detailTatle}>
-            도토리 식당
-          </h3>
-          <address>
-            서울시 송파구
-          </address>
-          <p>
-            알바하기 편한 너구리네 라면집!
-            라면 올려두고 끓이기만 하면 되어서 쉬운 편에 속하는 가게입니다.
-          </p>
-          <div className={style.btnBox}>
-            <Button
-              buttonText="편집하기"
-              styleButton="secondary"
-              className={style.detailBtn}
-              type="submit"
-              href={`/my-shop/edit?shop_id=${shop_id}`}
-            />
-            <Button
-              buttonText="공고등록하기"
-              styleButton="primary"
-              className={style.detailBtn}
-              type="submit"
-            />
+          <div className={style.detailTextBox}>
+            <span className={style.subText}>
+              {shop.category}
+            </span>
+            <h3 className={style.detailTatle}>{shop.name}</h3>
+            <address>
+              {shop.address1}
+            </address>
+            <p>
+              {shop.description}
+            </p>
+            <div className={style.btnBox}>
+              <Button
+                className={style.detailBtn}
+                buttonText="편집하기"
+                size="large"
+                styleButton="secondary"
+                onClick={() => router.push(`/my-shop/edit?shop_Id=${shop_Id}`)}
+              />
+              <Button
+                className={style.detailBtn}
+                buttonText="공고등록하기"
+                size="large"
+                styleButton="primary"
+                onClick={() => router.push("/my-shop")}
+              />
+            </div>
           </div>
         </div>
+
+        <div className={style.announcementRegBox}>
+          <Title text="등록한 공고" />
+          <MyshopRegInfo
+            infoText="공고를 등록해 보세요."
+            buttonText="공고 등록하기"
+          />
+        </div>
       </div>
-
-      <div className={style.bgBox}>
-        <Title text="등록한 공고" />
-        <MyshopRegInfo
-          buttonText="공고 등록하기"
-        />
-      </div>
-
-    </div>
-
+    </>
   );
 }

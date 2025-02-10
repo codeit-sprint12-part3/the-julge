@@ -9,7 +9,7 @@ import Title from "@/components/ui/Title";
 import Button from "@/components/ui/Button";
 import CustomFileInput from "@/components/ui/CustomFileInput";
 import { useRouter } from "next/router";
-
+import { registerShop } from "@/lib/shops";
 
 // 서울시 구 목록
 const addressOptions = [
@@ -38,8 +38,7 @@ function useAuth() {
 
 export default function MyshopReg() {
   const router = useRouter();
-  const token = useAuth();
-
+  const token = useAuth(); // 토큰 관리
   const [shopName, setShopName] = useState("");
   const [shopClassification, setShopClassification] = useState("");
   const [shopAddress, setShopAddress] = useState("");
@@ -47,7 +46,8 @@ export default function MyshopReg() {
   const [shopImage, setShopImage] = useState<File | null>(null);
   const [shopDescription, setShopDescription] = useState("");
   const [error, setError] = useState<{ [key: string]: string }>({});
-  const { shopId } = router.query;  // 쿼리에서 shopId 가져오기
+
+  const { shopId } = router.query; // 쿼리에서 shopId 가져오기
 
   useEffect(() => {
     if (shopId) {
@@ -55,20 +55,78 @@ export default function MyshopReg() {
     }
   }, [shopId]);
 
-  const validateForm = () => {
-    if (!shopName || !shopClassification || !shopAddress || !detailShopAddress || !shopDescription) {
-      toast.error("모든 필드를 올바르게 입력해주세요.");
-      return false;
+  // 필드 검증 함수
+  const validateField = (field: string, value: string) => {
+    switch (field) {
+      case "shopName":
+        if (!value) {
+          return "가게 이름은 필수 입력 항목입니다.";
+        }
+        break;
+      case "shopClassification":
+        if (!value) {
+          return "가게 분류는 필수 입력 항목입니다.";
+        }
+        break;
+      case "shopAddress":
+        if (!value) {
+          return "주소는 필수 입력 항목입니다.";
+        }
+        break;
+      case "detailShopAddress":
+        if (!value) {
+          return "상세주소는 필수 입력 항목입니다.";
+        }
+        break;
+      default:
+        return "";
     }
-    return true;
+    return "";
   };
 
+  const handleBlur = (field: string, value: string) => {
+    const errorMessage = validateField(field, value);
+    setError((prevError) => ({
+      ...prevError,
+      [field]: errorMessage,
+    }));
+  };
+
+  const validateForm = () => {
+    const errors: { [key: string]: string } = {};
+    let isValid = true;
+
+    // 필수 입력 항목 검증
+    if (!shopName) {
+      errors.shopName = "가게 이름은 필수 입력 항목입니다.";
+      isValid = false;
+    }
+    if (!shopClassification) {
+      errors.shopClassification = "가게 분류는 필수 입력 항목입니다.";
+      isValid = false;
+    }
+    if (!shopAddress) {
+      errors.shopAddress = "주소는 필수 입력 항목입니다.";
+      isValid = false;
+    }
+    if (!detailShopAddress) {
+      errors.detailShopAddress = "상세주소는 필수 입력 항목입니다.";
+      isValid = false;
+    }
+
+    setError(errors); // 에러 상태 업데이트
+    return isValid;
+  };
+
+  // Presigned URL을 생성하여 이미지 업로드
   const getPresignedUrl = async (file: File) => {
     try {
       const response = await axios.post(
         "https://bootcamp-api.codeit.kr/api/0-1/the-julge/images",
         { name: file.name },
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
 
       if (response.status === 200 && response.data.item?.url) {
@@ -78,42 +136,46 @@ export default function MyshopReg() {
       }
     } catch (error) {
       console.error("Presigned URL 요청 실패:", error);
-      toast.error("이미지 업로드 URL 생성 실패");
       throw error;
     }
   };
 
+  // S3에 이미지를 업로드하는 함수
   const uploadImageToS3 = async (file: File) => {
     try {
-      const presignedUrl = await getPresignedUrl(file);
+      const presignedUrl = await getPresignedUrl(file); // presigned URL 얻기
       await axios.put(presignedUrl, file, {
-        headers: { "Content-Type": file.type },
+        headers: { "Content-Type": file.type }, // 파일의 MIME 타입을 설정
       });
 
       console.log("이미지 업로드 성공:", presignedUrl);
-      return presignedUrl.split("?")[0];
-    }
-    catch (error) {
+      return presignedUrl.split("?")[0]; // 쿼리 파라미터를 제외한 URL 반환
+    } catch (error) {
       console.error("이미지 업로드 실패:", error);
       throw error;
     }
   };
 
+  // 가게가 이미 등록되어 있는지 확인하는 함수
   const checkIfShopExists = async (shopName: string) => {
     try {
       const response = await axios.get(
         `https://bootcamp-api.codeit.kr/api/0-1/the-julge/shops?name=${shopName}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
 
       if (response.data && response.data.items.length > 0) {
+        // 이미 가게가 존재하는 경우
         return true;
       }
 
+      // 가게가 존재하지 않는 경우
       return false;
     } catch (error) {
-      console.error("Error checking if shop exists:", error);
-      return false;
+      console.error("가게 존재 여부 확인 실패:", error);
+      return false; // 실패시에는 false로 처리
     }
   };
 
@@ -131,32 +193,24 @@ export default function MyshopReg() {
     try {
       let imageUrl = "";
       if (shopImage) {
-        imageUrl = await uploadImageToS3(shopImage);
+        imageUrl = await uploadImageToS3(shopImage); // 이미지 업로드 처리
       }
 
       const dataToSend = {
         name: shopName,
-        category: shopClassification,
+        category: shopClassification as "한식" | "중식" | "일식" | "양식" | "분식" | "카페" | "편의점" | "기타",
         address1: shopAddress,
         address2: detailShopAddress,
         description: shopDescription,
-        imageUrl: imageUrl || null,
-        originalHourlyPay: 9860, // 최저 시급 예시
+        imageUrl: imageUrl || "", // 업로드된 이미지 URL
+        originalHourlyPay: 9860, // 기본 시급
       };
 
-      const response = await axios.post(
-        "https://bootcamp-api.codeit.kr/api/0-1/the-julge/shops",
-        dataToSend,
-        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
-      );
+      const response = await registerShop(dataToSend); // 가게 등록 API 호출
 
-      if (response.status === 201) {
+      if (response) {
         toast.success("가게가 등록되었습니다!");
-        const shop_id = response.data.item.id;
-
-        router.push(`/my-shop/detail?shop_id=${shop_id}`);
-      } else {
-        toast.error("가게 등록에 실패했습니다.");
+        router.push(`/my-shop/detail?shop_Id=${response.item.id}`); // 등록 후 상세 페이지로 이동
       }
     } catch (error) {
       toast.error("가게 등록에 실패했습니다.");
@@ -168,7 +222,6 @@ export default function MyshopReg() {
     <div className={style.myshopContainer}>
       <Title text="가게 정보" />
       <form onSubmit={handleSubmit} className={style.myshopForm}>
-
         <div className={style.inputContainer}>
           <div className={style.box}>
             <Input
@@ -177,22 +230,24 @@ export default function MyshopReg() {
               type="text"
               placeholder="입력"
               value={shopName}
-              onChange={(e) => setShopName(e.target.value)} required
+              onChange={(e) => setShopName(e.target.value)}
+              onBlur={(e) => handleBlur("shopName", e.target.value)} // 포커스 아웃 시 검증
+              required
+              error={error.shopName}
             />
           </div>
 
           <div className={style.box}>
             <span className={style.labelText}>
               분류
-              <em title="필수 입력">
-                *
-              </em>
+              <em title="필수 입력">*</em>
             </span>
             <CustomSelect
               menuItems={categoryOptions}
               type="button"
               onChange={setShopClassification}
-              value={shopClassification} />
+              value={shopClassification}
+            />
           </div>
         </div>
 
@@ -200,9 +255,7 @@ export default function MyshopReg() {
           <div className={style.box}>
             <span className={style.labelText}>
               주소
-              <em title="필수 입력">
-                *
-              </em>
+              <em title="필수 입력">*</em>
             </span>
             <CustomSelect
               menuItems={addressOptions}
@@ -218,7 +271,10 @@ export default function MyshopReg() {
               type="text"
               placeholder="입력"
               value={detailShopAddress}
-              onChange={(e) => setDetailShopAddress(e.target.value)} required
+              onChange={(e) => setDetailShopAddress(e.target.value)}
+              onBlur={(e) => handleBlur("detailShopAddress", e.target.value)} // 포커스 아웃 시 검증
+              required
+              error={error.detailShopAddress}
             />
           </div>
         </div>

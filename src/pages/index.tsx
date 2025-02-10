@@ -57,10 +57,10 @@ export default function Home() {
             sortState === "마감임박순"
               ? "time"
               : sortState === "시급많은순"
-              ? "pay"
-              : sortState === "시간적은순"
-              ? "hour"
-              : "shop",
+                ? "pay"
+                : sortState === "시간적은순"
+                  ? "hour"
+                  : "shop",
         });
 
         setPostAllData(allData.items || []);
