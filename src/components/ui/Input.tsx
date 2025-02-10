@@ -11,6 +11,7 @@ interface InputProps {
   required?: boolean;
   error?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const Input = ({
@@ -23,6 +24,7 @@ const Input = ({
   className,
   required,
   error,
+  onBlur,
   onChange,
 }: InputProps) => {
   return (
@@ -45,6 +47,7 @@ const Input = ({
         name={name}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
       />
       {error && <div className={style.errorMessage}>{error}</div>}
     </>

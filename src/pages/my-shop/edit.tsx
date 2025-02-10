@@ -9,6 +9,7 @@ import Title from "@/components/ui/Title";
 import Button from "@/components/ui/Button";
 import CustomFileInput from "@/components/ui/CustomFileInput";
 import { useRouter } from "next/router";
+import { getShopInfo, updateShopInfo } from "@/lib/shops";
 
 // 서울시 구 목록
 const addressOptions = [
@@ -45,36 +46,27 @@ export default function MyshopEdit() {
   const [detailShopAddress, setDetailShopAddress] = useState("");
   const [shopImage, setShopImage] = useState<File | null>(null);
   const [shopDescription, setShopDescription] = useState("");
-  const { shopId } = router.query; // 쿼리에서 shopId 가져오기
+  const [currentImageUrl, setCurrentImageUrl] = useState(""); // 이미지 URL 상태 추가
+  const { shop_Id } = router.query;
 
   useEffect(() => {
-    if (shopId) {
-      // Fetch the shop details when the component mounts
-      fetchShopDetails(shopId as string);
+    if (shop_Id) {
+      // getShopInfo를 바로 호출하여 가게 정보 가져오기
+      getShopInfo(shop_Id as string)
+        .then(shopData => {
+          setShopName(shopData.name);
+          setShopClassification(shopData.category);
+          setShopAddress(shopData.address1);
+          setDetailShopAddress(shopData.address2);
+          setShopDescription(shopData.description);
+          setCurrentImageUrl(shopData.imageUrl || ""); // 이미지 URL 설정
+        })
+        .catch(error => {
+          toast.error("가게 정보를 불러오는데 실패했습니다.");
+          console.error("Error fetching shop details:", error);
+        });
     }
-  }, [shopId]);
-
-  const fetchShopDetails = async (shopId: string) => {
-    try {
-      const response = await axios.get(
-        `https://bootcamp-api.codeit.kr/api/0-1/the-julge/shops/${shopId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      const shopData = response.data.item;
-      setShopName(shopData.name);
-      setShopClassification(shopData.category);
-      setShopAddress(shopData.address1);
-      setDetailShopAddress(shopData.address2);
-      setShopDescription(shopData.description);
-      // 이미지 URL도 설정하려면 여기에서 처리
-    } catch (error) {
-      toast.error("가게 정보를 불러오는데 실패했습니다.");
-      console.error("Error fetching shop details:", error);
-    }
-  };
+  }, [shop_Id]);
 
   const validateForm = () => {
     if (!shopName || !shopClassification || !shopAddress || !detailShopAddress || !shopDescription) {
@@ -137,19 +129,15 @@ export default function MyshopEdit() {
         address1: shopAddress,
         address2: detailShopAddress,
         description: shopDescription,
-        imageUrl: imageUrl || null,
+        imageUrl: imageUrl || currentImageUrl, // 이미지 URL 업데이트
         originalHourlyPay: 9860, // 최저 시급 예시
       };
 
-      const response = await axios.put(
-        `https://bootcamp-api.codeit.kr/api/0-1/the-julge/shops/${shopId}`,
-        dataToSend,
-        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
-      );
+      const response = await updateShopInfo(shop_Id as string, dataToSend);
 
-      if (response.status === 200) {
+      if (response) {
         toast.success("가게 정보가 수정되었습니다!");
-        router.push(`/my-shop/detail?shop_id=${shopId}`);
+        router.push(`/my-shop/detail?shop_Id=${response.item.id}`);
       } else {
         toast.error("가게 정보 수정에 실패했습니다.");
       }
@@ -163,7 +151,6 @@ export default function MyshopEdit() {
     <div className={`${style.myshopContainer} ${style.myshopEditContainer}`}>
       <Title text="가게 정보" />
       <form onSubmit={handleSubmit} className={style.myshopForm}>
-
         <div className={style.inputContainer}>
           <div className={style.box}>
             <Input
@@ -187,7 +174,8 @@ export default function MyshopEdit() {
               menuItems={categoryOptions}
               type="button"
               onChange={setShopClassification}
-              value={shopClassification} />
+              value={shopClassification}
+            />
           </div>
         </div>
 
@@ -228,6 +216,9 @@ export default function MyshopEdit() {
               styleClass="customStyle"
             />
           </div>
+          {currentImageUrl && (
+            <img src={currentImageUrl} alt="Shop Image" style={{ width: "100px", height: "auto", marginTop: "10px" }} />
+          )}
         </div>
 
         <Textarea
