@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import Textarea from "@/components/ui/Textarea";
 import CustomRadioInput from "@/components/ui/CustomRadioInput";
+import DetailFilter from "@/components/ui/DetailFilter";
 
 const Sang = () => {
 
@@ -245,6 +246,36 @@ const Sang = () => {
         className={style.customTextarea}
       />
     </div>
+
+    <div className={style.box}>
+      <h1 className={style.title}>
+        6.DetailFilter
+      </h1>
+      <h2 className={style.title}>
+        props
+      </h2>
+      <p className={style.description}>
+        전체 코드 흐름 요약 <br />
+        부모 컴포넌트: <br />
+
+        1.필터 상태(filters)를 관리. <br />
+        2.DetailFilter 컴포넌트에 onApply prop 전달. <br />
+        3.자식 컴포넌트 DetailFilter: <br /> <br />
+
+        자식 컴포넌트 DetailFilter <br />
+        1.필터 값 변경, 추가, 삭제 처리. <br />
+        2.적용하기 버튼 클릭 시, onApply를 통해 부모로 필터 값 전달. <br />
+        3.초기화 버튼 클릭 시, 필터 값 초기화. <br /><br />
+
+        핵심 흐름: <br />
+        1.부모는 필터 값(filters)을 관리하고, 이를 **자식 컴포넌트 DetailFilter**로 전달. <br />
+        2.자식은 필터 값 관리 및 변경, 삭제 후, 적용하기 버튼 클릭 시 부모에게 변경된 필터 값 전달. <br />
+        3.초기화 버튼을 클릭하면 필터 값이 리셋됨.
+
+      </p>
+      <DetailFilter />
+    </div>
+
   </div>;
 };
 
