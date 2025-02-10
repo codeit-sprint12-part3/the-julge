@@ -1,0 +1,186 @@
+.myshopContainer {
+  padding: 6rem 0;
+  min-height: 92rem;
+}
+
+@media (max-width: 768px) {
+
+  .myshopContainer {
+    padding: 4rem 0;
+  }
+
+}
+
+.myshopForm .inputContainer {
+  display: flex;
+  gap: 0 2.0rem;
+}
+
+.myshopForm .inputContainer .box {
+  width: 50%;
+  margin-bottom: 2.4rem;
+}
+
+.myshopForm .inputContainer .box .labelText {
+  display: block;
+  color: var(--font-color);
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.myshopForm .inputContainer .box button {
+  display: block;
+  padding: 1.8rem 1.0rem 1.9rem 2.0rem;
+}
+
+.myshopForm textarea {
+  width: 100%;
+  border: 0.1rem solid var(--gray-400);
+  height: 18.7rem;
+}
+
+.myshopForm .regBtn {
+  margin: 32px auto;
+}
+
+@media (max-width: 767px) {
+
+  .myshopForm .inputContainer {
+    flex-direction: column;
+  }
+
+  .myshopForm .inputContainer .box {
+    width: 100%;
+    margin-bottom: 2.4rem;
+  }
+
+}
+
+/* 상세 */
+.myshopDetailContainer {
+  margin-bottom: 6.0rem;
+  margin-top: 2.4rem;
+  padding: 2.4rem;
+  display: flex;
+  gap: 0 3.0rem;
+  border-radius: 1.2rem;
+  background-color: var(--red-100);
+}
+
+.myshopDetailContainer .detailImgBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 539px;
+  height: 308px;
+  border-radius: 1.2rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.myshopDetailContainer .detailImgBox img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.myshopDetailContainer .detailTextBox {
+  padding: 1.6rem 0;
+}
+
+.myshopDetailContainer .detailTextBox .subText {
+  display: block;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.myshopDetailContainer .detailTextBox .detailTatle {
+  margin-bottom: 1.2rem;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #111322;
+}
+
+.myshopDetailContainer .detailTextBox address {
+  display: flex;
+  gap: 0 0.6rem;
+  margin-bottom: 1.2rem;
+  color: var(----gray-600);
+}
+
+.myshopDetailContainer .detailTextBox address::before {
+  content: '';
+  width: 1.6rem;
+  height: 2.0rem;
+  background: url(/address_icon.svg)no-repeat center;
+}
+
+.myshopDetailContainer .detailTextBox p {
+  margin-bottom: 5.4rem;
+  color: var(--black);
+  text-align: left;
+  line-height: 1.6;
+}
+
+.myshopDetailContainer .detailTextBox .btnBox {
+  display: flex;
+  gap: 0 0.8rem;
+}
+
+.myshopDetailContainer .detailTextBox .detailBtn {
+  padding: 1.1rem 0.5rem;
+  font-size: 1.6rem;
+}
+
+.bgBox {
+  padding: 6.0rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+.bgBox::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  bottom: -100%;
+  right: -100%;
+  background-color: var(--gray-100);
+  z-index: -1;
+}
+
+@media (max-width: 1024px) {
+
+  .myshopDetailContainer {
+    flex-direction: column;
+    gap: 0 1.0rem
+  }
+
+  .myshopDetailContainer .detailImgBox {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .myshopDetailContainer .detailTextBox .detailTatle {
+    font-size: 2.5rem;
+  }
+
+}
+
+/* 수정 */
+.myshopEditContainer {
+  position: relative;
+
+}
+
+.myshopEditContainer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  right: -100%;
+  bottom: 0;
+  background-color: var(--gray-100);
+  z-index: -1;
+}

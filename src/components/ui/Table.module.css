@@ -31,6 +31,7 @@
 .table > .thead > .th > .td {
   padding: 14px 12px;
   background-color: var(--red-100);
+  font-size: var(--font-size-xs);
 }
 .table_wrap .table > .thead > .th > .td:last-child {
   position: sticky;
@@ -65,6 +66,7 @@
   border-radius: 0 0 10px 10px;
   border: 1px solid var(--gray-200);
   border-top: none;
+  background-color: var(--white);
 }
 @media (max-width: 964px) {
   .table {

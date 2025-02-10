@@ -40,7 +40,6 @@ const Seung = () => {
   // --------------------------------------------------------
   // ----------------- PostCard 관련 Start -------------------
   const [postData, setPostData] = useState<NoticeWrapper[]>([]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {

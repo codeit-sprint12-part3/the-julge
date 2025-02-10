@@ -11,21 +11,19 @@ interface TextareaProps {
 }
 
 const Textarea = ({ value, required, label, placeholder, className, id, onChange }: TextareaProps) => {
-
   return (
     <>
-      {
-        label &&
+      {label && (
         <label htmlFor={id} className={`${style.label}`}>
           {label}
-          {required && <span className={style.required}>
-            *
-            <em className="blind">
-              필수입력
-            </em>
-          </span>}
+          {required && (
+            <span className={style.required}>
+              *
+              <em className="blind">필수입력</em>
+            </span>
+          )}
         </label>
-      }
+      )}
 
       <textarea
         value={value}
@@ -35,7 +33,7 @@ const Textarea = ({ value, required, label, placeholder, className, id, onChange
         className={`${style.textarea} ${className}`}
       />
     </>
-  )
-}
+  );
+};
 
 export default Textarea;
