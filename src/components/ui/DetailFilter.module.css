@@ -1,0 +1,118 @@
+.filterContainer {
+  max-width: 390px;
+  width: 100%;
+  padding: 2.4rem 2.0rem;
+  box-shadow: 0 2px 8px rgba(120, 116, 134, 0.25);
+  border-radius: 1.0rem;
+}
+
+.filterContainer .filterBox {
+  margin-top: -3.0rem;
+  margin-bottom: 2.4rem;
+  padding: 2.4rem 0;
+  border-bottom: 0.2rem solid var(--gray-200);
+}
+
+
+.filterContainer .filterBox:last-child {
+  border-bottom: 0;
+}
+
+.filterContainer .filterInputContainer {
+  display: flex;
+  align-items: center;
+  gap: 0 1.2rem;
+}
+
+.filterContainer .filterInputContainer em {
+  flex-shrink: 0;
+}
+
+.filterContainer .filterInputBox {
+  position: relative;
+  width: 169px;
+}
+
+.filterContainer .filterInputBox .priceText {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--font-color);
+}
+
+.filterContainer .filterInputBox .priceInput {
+  padding-right: 5.4rem;
+}
+
+.filterContainer .text {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: var(--font-color);
+  line-height: 1.6;
+}
+
+.filterContainer .addressBox {
+  height: 258px;
+  margin-bottom: 1.2rem;
+  padding: 2.0rem 2.0rem 0.6rem 2.8rem;
+  overflow-y: auto;
+  border: 0.1rem solid var(--gray-300);
+  border-radius: 0.6rem;
+}
+
+.filterContainer .addressBox .addressList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.0rem 7.4rem;
+}
+
+.filterContainer .addressBox .addressList li .selectBtn {
+  display: block;
+  color: var(--font-color);
+  font-size: 14px;
+}
+
+.filterContainer .selectAddressList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+
+}
+
+.filterContainer .selectAddressList li {
+  padding: 0.5rem 1.4rem;
+  font-size: 1.4rem;
+  color: var(--primary);
+  font-weight: 700;
+  border-radius: 5.0rem;
+  background-color: var(--red-100);
+}
+
+.filterContainer .selectAddressList li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.8rem;
+}
+
+.filterContainer .selectAddressList li .selectDelBtn {
+  display: block;
+  margin-top: 0.6rem;
+  width: 10px;
+  height: 9px;
+  background: url(/delete_icon.svg)no-repeat center;
+}
+
+.filterContainer .btnBox {
+  margin-top: 4.0rem;
+  display: flex;
+  gap: 0 0.8rem;
+}
+
+.filterContainer .btnBox button {
+  height: 4.8rem;
+}
+
+.filterContainer .btnBox .resetBtn {
+  width: 11rem;
+}
