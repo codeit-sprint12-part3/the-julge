@@ -31,7 +31,7 @@ export const getUserInfo = async (userId?: string) => {
 // 3. 내 정보 수정
 export const updateUserInfo = async (
   userId: string,
-  data: { name: string; phone: string; address: string; bio: string }
+  data: { name: string; phone: string; address: string; bio?: string }
 ) => {
   try {
     const token = getToken();

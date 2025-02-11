@@ -15,12 +15,6 @@ function Page() {
   const [detailData, setDetailData] = useState<any[]>([]);
 
   useEffect(() => {
-    if (!user && token) {
-      fetchAndSetUser();
-    }
-  }, [token, user, fetchAndSetUser]);
-
-  useEffect(() => {
     const fetchApplications = async () => {
       if (!user) return;
       try {
