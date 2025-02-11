@@ -1,0 +1,47 @@
+.label-text {
+  display: block;
+  color: var(--font-color);
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.grid-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding-bottom: 2.4rem;
+}
+
+.form-textarea {
+  padding: 1.6rem 2rem;
+  width: 100%;
+  min-height: 15.3rem;
+  border: 1px solid var(--gray-400);
+  border-radius: var(--border-radius-sm);
+}
+
+.form-button-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.2rem;
+}
+
+.selectBox .selectBtn {
+  min-height: 8rem;
+}
+
+@media (max-width: 768px) {
+  .grid-box {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-box {
+    grid-template-columns: 1fr;
+  }
+
+  .form-button-box {
+    margin-top: 2.4rem;
+  }
+}
