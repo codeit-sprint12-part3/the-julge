@@ -28,6 +28,18 @@
   color: var(--red-400);
 }
 
+.inputBox {
+  position: relative;
+}
+
+.inputBox .text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--font0color);
+  right: 1.6rem;
+}
+
 @media (max-width: 767px) {
 
   .input {

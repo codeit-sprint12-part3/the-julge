@@ -111,6 +111,7 @@ body {
   line-height: 1.5;
   color: var(--font-color);
 }
+
 input,
 button,
 select,
@@ -195,5 +196,5 @@ a {
 
 footer {
   position: relative;
-  z-index: 99999;
+  z-index: 99;
 }

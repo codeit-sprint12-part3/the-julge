@@ -2,7 +2,7 @@ import style from "./Input.module.css";
 
 interface InputProps {
   placeholder?: string;
-  type: "text" | "password" | "email" | "number";
+  type: "text" | "password" | "email" | "number" | "date";
   name?: string;
   value?: string;
   id?: string;
@@ -12,6 +12,7 @@ interface InputProps {
   error?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlur?: React.ChangeEventHandler<HTMLInputElement>;
+  text?: string;
 }
 
 const Input = ({
@@ -24,6 +25,7 @@ const Input = ({
   className,
   required,
   error,
+  text,
   onBlur,
   onChange,
 }: InputProps) => {
@@ -39,16 +41,21 @@ const Input = ({
           )}
         </label>
       )}
-      <input
-        id={id}
-        className={`${style.input} ${className} ${error ? style.errorInput : ""}`}
-        placeholder={placeholder}
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-      />
+      <div className={style.inputBox}>
+        <input
+          id={id}
+          className={`${style.input} ${className} ${error ? style.errorInput : ""}`}
+          placeholder={placeholder}
+          type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+        />
+        <span className={style.text}>
+          {text}
+        </span>
+      </div>
       {error && <div className={style.errorMessage}>{error}</div>}
     </>
   );

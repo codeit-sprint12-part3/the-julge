@@ -34,7 +34,7 @@ export const getShopNotices = async (
 
 // 3. 가게 공고 등록
 export const createShopNotice = async (
-  shopId: string,
+  shopId: string | string[] | undefined,
   data: {
     hourlyPay: number;
     startsAt: string;

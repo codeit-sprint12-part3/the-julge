@@ -9,14 +9,14 @@ import SpinnerLoader from "@/components/ui/SpinnerLoader";
 
 export default function MyshopDetail() {
   const router = useRouter();
-  const { shop_Id } = router.query; // URL에서 shopId 가져오기
+  const { shopId } = router.query; // URL에서 shopId 가져오기
   const [shop, setShop] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (shop_Id) {
+    if (shopId) {
       setLoading(true);
-      getShopInfo(shop_Id as string)
+      getShopInfo(shopId as string)
         .then((data) => {
           setShop(data.item); // data.item으로 설정
           setLoading(false);
@@ -26,7 +26,7 @@ export default function MyshopDetail() {
           setLoading(false);
         });
     }
-  }, [shop_Id]);
+  }, [shopId]);
 
   if (loading) return <SpinnerLoader />;
   if (!shop) return <p>가게 정보를 찾을 수 없습니다.</p>;
@@ -57,14 +57,14 @@ export default function MyshopDetail() {
                 buttonText="편집하기"
                 size="large"
                 styleButton="secondary"
-                onClick={() => router.push(`/my-shop/edit?shop_Id=${shop_Id}`)}
+                onClick={() => router.push(`/my-shop/edit?shopId=${shopId}`)}
               />
               <Button
                 className={style.detailBtn}
                 buttonText="공고등록하기"
                 size="large"
                 styleButton="primary"
-                onClick={() => router.push("/my-shop")}
+                onClick={() => router.push(`/my-shop/jobs/write?shopId=${shopId}`)}
               />
             </div>
           </div>
@@ -75,6 +75,7 @@ export default function MyshopDetail() {
           <MyshopRegInfo
             infoText="공고를 등록해 보세요."
             buttonText="공고 등록하기"
+            href={`/my-shop/jobs/write?shopId=${shopId}`}
           />
         </div>
       </div>
