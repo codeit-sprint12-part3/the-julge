@@ -5,6 +5,7 @@ import Image from "next/image";
 import style from "@/components/layout/Header.module.css";
 import { Icon } from "@/components/icon/Icon";
 import { useState, useEffect } from "react";
+import Alerts from "../alerts/Alerts";
 
 const Header = () => {
   const { token, user, logout, fetchAndSetUser } = useAuthUser();
@@ -89,11 +90,14 @@ const Header = () => {
               </button>
             </li>
           )}
-          <li>
-            <button>
-              <Icon name="alter" color={"black"} className={style["header-alter-icon"]} />
-            </button>
-          </li>
+          {isClient && token && user?.type === "employee" && (
+            <li className={style["header-alter-box"]}>
+              <button>
+                <Icon name="alter" color={"black"} className={style["header-alter-icon"]} />
+              </button>
+              <Alerts />
+            </li>
+          )}
         </ul>
       </div>
     </header>

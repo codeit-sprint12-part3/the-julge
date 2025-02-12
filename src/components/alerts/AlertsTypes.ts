@@ -1,59 +1,63 @@
-export interface Application {
-  item: {
-    id: string;
-    status: string;
-  };
-  href: string;
+interface ApplicationItem {
+  id: string;
+  status: "pending | accepted | rejected";
 }
 
-export interface Shop {
-  item: {
-    id: string;
-    name: string;
-    category: string;
-    address1: string;
-    address2: string;
-    description: string;
-    imageUrl: string;
-    originalHourlyPay: number;
-  };
+interface Application {
   href: string;
+  item: ApplicationItem;
 }
 
-export interface Notice {
-  item: {
-    id: string;
-    hourlyPay: number;
-    description: string;
-    startsAt: string;
-    workhour: number;
-    closed: boolean;
-  };
+interface NoticeItem {
+  closed: boolean;
+  description: string;
+  hourlyPay: number;
+  id: string;
+  startsAt: string;
+  workhour: number;
+}
+
+interface Notice {
   href: string;
+  item: NoticeItem;
+}
+
+interface ShopItem {
+  address1: string;
+  address2: string;
+  category: string;
+  description: string;
+  id: string;
+  imageUrl: string;
+  name: string;
+  originalHourlyPay: number;
+}
+
+interface Shop {
+  href: string;
+  item: ShopItem;
 }
 
 export interface AlertItem {
-  id: string;
-  createdAt: string;
-  result: string;
-  read: boolean;
   application: Application;
-  shop: Shop;
+  createdAt: string;
+  id: string;
   notice: Notice;
+  read: boolean;
+  result: "accepted" | "rejected";
+  shop: Shop;
 }
 
-export interface AlertResponse {
-  offset: number;
-  limit: number;
-  count: number;
-  hasNext: boolean;
-  items: {
-    item: AlertItem;
-    links: { rel: string; description: string; method: string; href: string }[];
-  }[];
-  links: { rel: string; description: string; method: string; href: string }[];
+interface LinkType {
+  rel: string;
+  description: string;
+  method: string;
+  href: string;
+  body?: Record<string, unknown>;
+  query?: Record<string, unknown>;
 }
 
-export interface AlertsItemProps {
-  data: AlertItem;
+export interface Alert {
+  item: AlertItem;
+  link: LinkType;
 }

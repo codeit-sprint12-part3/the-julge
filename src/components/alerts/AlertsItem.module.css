@@ -3,6 +3,7 @@
   border: 0.1rem solid var(--gray-300);
   border-radius: var(--border-radius-sm);
   background-color: var(--white);
+  cursor: pointer;
 }
 
 .alert-state-icon {

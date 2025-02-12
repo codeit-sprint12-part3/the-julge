@@ -1,10 +1,14 @@
 .alert-wrapper {
-  max-width: 36.8rem;
+  position: absolute;
+  top: 4rem;
+  right: 0;
+  width: 36.8rem;
   padding: 2.4rem 2rem;
   background-color: var(--red-100);
   border: 0.1rem solid var(--gray-400);
   border-radius: var(--border-radius-lg);
   box-shadow: 0rem 0.2rem 0.8rem 0 rgba(120, 116, 134, 0.25);
+  z-index: 999;
 }
 
 .alert-title {
