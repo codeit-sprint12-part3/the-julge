@@ -4,15 +4,22 @@ import { Icon } from "@/components/icon/Icon";
 import Logo from "@/components/ui/Logo";
 import Badge from "@/components/ui/Badge";
 import EmptyState from "@/components/ui/EmptyState";
+import { useState } from "react";
 
 const Sol = () => {
+  const [isAlertsOpen, setIsAlertsOpen] = useState(true);
+
+  const handleAlerts = () => {
+    setIsAlertsOpen(true);
+  };
+
   return (
     <div className={style.wrapper}>
       <ul>
         <li>
           <h3>Alerts</h3>
           <div className={style.box}>
-            <Alerts />
+            <Alerts onClose={handleAlerts} />
           </div>
         </li>
         <li>
