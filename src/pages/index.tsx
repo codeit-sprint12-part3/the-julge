@@ -81,7 +81,7 @@ export default function Home() {
               : "shop",
           address:
             appliedFilter.selectedAddresses.length > 0
-              ? appliedFilter.selectedAddresses.join(",")
+              ? appliedFilter.selectedAddresses
               : undefined,
           startsAtGte: formattedDate,
           hourlyPayGte: appliedFilter.price ? Number(appliedFilter.price) : undefined,

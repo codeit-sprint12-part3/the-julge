@@ -65,7 +65,7 @@ export default function SearchPage() {
               : "shop",
           address:
             appliedFilter.selectedAddresses.length > 0
-              ? appliedFilter.selectedAddresses.join(",")
+              ? appliedFilter.selectedAddresses
               : undefined,
           keyword: keyword as string, // keyword가 undefined일 가능성 방지
           startsAtGte: formattedDate,
