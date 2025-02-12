@@ -5,10 +5,11 @@ interface MyshopRegInfoProps {
 
   buttonText: string;
   infoText: string;
+  href?: string;
 
 }
 
-export default function MyshopRegInfo({ infoText, buttonText }: MyshopRegInfoProps) {
+export default function MyshopRegInfo({ infoText, buttonText, href }: MyshopRegInfoProps) {
 
   return (
     <div className={style.myshopInfoBox}>
@@ -19,7 +20,7 @@ export default function MyshopRegInfo({ infoText, buttonText }: MyshopRegInfoPro
         buttonText={buttonText}
         size="large"
         styleButton="primary"
-        href="/my-shop/write"
+        href={href}
       />
     </div>
   )

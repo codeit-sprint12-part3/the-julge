@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm?: () => void;
+  onConfirm?: (() => void) | undefined,
   type: "alert" | "confirm" | "notice";
   text: string;
 }

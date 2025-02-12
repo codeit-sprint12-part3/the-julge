@@ -43,21 +43,21 @@ export default function MyshopEdit() {
   const token = useAuth();
 
   const [shopName, setShopName] = useState("");
-  const [shopClassification, setShopClassification] = useState<Category>("한식"); // Set initial value as one of the categories
+  const [shopClassification, setShopClassification] = useState<Category>("한식");
   const [shopAddress, setShopAddress] = useState("");
   const [detailShopAddress, setDetailShopAddress] = useState("");
   const [shopImage, setShopImage] = useState<File | null>(null);
   const [shopDescription, setShopDescription] = useState("");
   const [currentImageUrl, setCurrentImageUrl] = useState(""); // 이미지 URL 상태 추가
-  const { shop_Id } = router.query;
+  const { shopId } = router.query;
 
   useEffect(() => {
-    if (shop_Id) {
+    if (shopId) {
       // getShopInfo를 바로 호출하여 가게 정보 가져오기
-      getShopInfo(shop_Id as string)
+      getShopInfo(shopId as string)
         .then(shopData => {
           setShopName(shopData.name);
-          setShopClassification(shopData.category as Category); // Ensuring the category is cast to the correct type
+          setShopClassification(shopData.category as Category);
           setShopAddress(shopData.address1);
           setDetailShopAddress(shopData.address2);
           setShopDescription(shopData.description);
@@ -68,7 +68,7 @@ export default function MyshopEdit() {
           console.error("Error fetching shop details:", error);
         });
     }
-  }, [shop_Id]);
+  }, [shopId]);
 
   const validateForm = () => {
     if (!shopName || !shopClassification || !shopAddress || !detailShopAddress || !shopDescription) {
@@ -135,11 +135,11 @@ export default function MyshopEdit() {
         originalHourlyPay: 9860, // 최저 시급 예시
       };
 
-      const response = await updateShopInfo(shop_Id as string, dataToSend);
+      const response = await updateShopInfo(shopId as string, dataToSend);
 
       if (response) {
         toast.success("가게 정보가 수정되었습니다!");
-        router.push(`/my-shop/detail?shop_Id=${response.item.id}`);
+        router.push(`/my-shop/detail?shopId=${response.item.id}`);
       } else {
         toast.error("가게 정보 수정에 실패했습니다.");
       }
