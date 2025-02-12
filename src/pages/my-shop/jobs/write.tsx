@@ -8,7 +8,6 @@ import { useAuthUser } from "@/stores/useAuthUser";
 import { useEffect, useState } from "react";
 import { createShopNotice } from "@/lib/notices";
 import { useRouter } from "next/router";
-import { toast } from "react-toastify";
 import Modal from "@/components/ui/Modal";
 
 function Page() {
@@ -21,6 +20,7 @@ function Page() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"alert" | "confirm" | "notice">("alert");
   const [modalText, setModalText] = useState("");
+  const [registeredShopId, setRegisteredShopId] = useState<string | null>(null);
 
   // 유저 정보 불러오기
   useEffect(() => {
@@ -177,10 +177,7 @@ function Page() {
         setModalType("alert");
         setModalText("공고가 성공적으로 등록되었습니다.");
         setModalOpen(true);
-
-        setTimeout(() => {
-          router.push(`/my-shop/jobs/${shopId}/${response.item.id}`);
-        }, 1500);
+        setRegisteredShopId(response.item.id);
 
       } else {
         setModalType("alert");
@@ -193,7 +190,6 @@ function Page() {
       setModalOpen(true);
     }
   };
-
 
   return (
     <div className={styles.announcementContainer}>
@@ -275,7 +271,12 @@ function Page() {
 
       <Modal
         isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={() => {
+          setModalOpen(false)
+          if (registeredShopId) {
+            router.push(`/my-shop/jobs/${shopId}/${registeredShopId}`);
+          }
+        }}
         type={modalType}
         text={modalText}
       />

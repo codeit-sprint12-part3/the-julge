@@ -21,6 +21,17 @@
   margin-bottom: 2.4rem;
 }
 
+.myshopForm .inputContainer .fileBox {
+  width: 49%;
+}
+
+.myshopForm .inputContainer .fileEditBox {
+  position: relative;
+  z-index: 9;
+}
+
+.myshopForm .inputContainer .fileEditBox::after {}
+
 .myshopForm .inputContainer .box .labelText {
   display: block;
   color: var(--font-color);
@@ -204,4 +215,12 @@
   bottom: 0;
   background-color: var(--gray-100);
   z-index: -1;
+}
+
+.img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9;
 }

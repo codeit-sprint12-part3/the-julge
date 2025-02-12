@@ -8,8 +8,9 @@ import { useAuthUser } from "@/stores/useAuthUser";
 import { useEffect, useState } from "react";
 import { getShopNotice, updateShopNotice } from "@/lib/notices";
 import Modal from "@/components/ui/Modal";
+import AuthGuard from "@/components/auth/AuthGuard";
 
-export default function Page() {
+function Page() {
   const router = useRouter();
   const { shopId, noticeId } = router.query;
 
@@ -19,6 +20,8 @@ export default function Page() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalText, setModalText] = useState("");
   const [modalType, setModalType] = useState<"alert" | "confirm" | "notice">("alert");
+  const [registeredShopId, setRegisteredShopId] = useState<string | null>(null);
+
   const [onConfirmCallback, setOnConfirmCallback] = useState<(() => void) | undefined>(undefined);
 
   // 유저 정보 불러오기
@@ -141,7 +144,7 @@ export default function Page() {
     }
 
     if (!isValid) {
-      setModalType("notice");
+      setModalType("alert");
       setModalText("필수입력 사항을 입력해주세요.");
       setModalOpen(true);
       return;
@@ -150,7 +153,7 @@ export default function Page() {
     const hourlyPay = parseInt(priceData, 10);
     if (hourlyPay < 1000) {
       setPriceError("최저시급 이상으로 입력해주세요.");
-      setModalType("notice");
+      setModalType("alert");
       setModalText("최저시급 이상으로 입력해주세요.");
       setModalOpen(true);
       return;
@@ -159,7 +162,7 @@ export default function Page() {
     const timeNumber = parseInt(timeData, 10);
     if (isNaN(timeNumber) || timeNumber < 1 || timeNumber > 24) {
       setTimeError("올바른 시간을 입력해주세요. 1에서 24시간 사이.");
-      setModalType("notice");
+      setModalType("alert");
       setModalText("올바른 시간을 입력해주세요. 1에서 24시간 사이.");
       setModalOpen(true);
       return;
@@ -170,7 +173,7 @@ export default function Page() {
     const currentTime = new Date();
 
     if (selectedDateTime <= currentTime) {
-      setModalType("notice");
+      setModalType("alert");
       setModalText("시작일시는 현재 시간 이후여야 합니다.");
       setModalOpen(true);
       return;
@@ -189,27 +192,24 @@ export default function Page() {
         setModalType("alert");
         setModalText("공고가 성공적으로 수정되었습니다.");
         setModalOpen(true);
-
-        setTimeout(() => {
-          router.push(`/my-shop/jobs/${shopId}/${response.item.id}`);
-        }, 1500);
+        setRegisteredShopId(response.item.id);
 
       } else {
-        setModalType("notice");
+        setModalType("alert");
         setModalText("수정된 공고의 ID를 찾을 수 없습니다.");
         setModalOpen(true);
       }
     } catch (error) {
-      setModalType("notice");
+      setModalType("alert");
       setModalText("공고 수정에 실패했습니다. 다시 시도해주세요.");
       setModalOpen(true);
-      console.error(error);
+      console.error("error :", error);
     }
   };
 
   return (
     <div className={styles.announcementContainer}>
-      <Title text="공고 편집" />
+      <Title text="공고 수정" />
 
       <form onSubmit={handleSubmit}>
         <div className={styles.inputWrap}>
@@ -290,7 +290,12 @@ export default function Page() {
 
       <Modal
         isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={() => {
+          setModalOpen(false)
+          if (registeredShopId) {
+            router.push(`/my-shop/jobs/${shopId}/${registeredShopId}`);
+          }
+        }}
         type={modalType}
         text={modalText}
         onConfirm={onConfirmCallback} // Pass the callback to the modal
@@ -298,3 +303,5 @@ export default function Page() {
     </div>
   );
 }
+
+export default AuthGuard(Page, "employer");
