@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import style from "./Myshop.module.css";
 import axios from "axios";
@@ -11,6 +10,8 @@ import Button from "@/components/ui/Button";
 import CustomFileInput from "@/components/ui/CustomFileInput";
 import { useRouter } from "next/router";
 import { registerShop } from "@/lib/shops";
+import Modal from "@/components/ui/Modal";
+import AuthGuard from "@/components/auth/AuthGuard";
 
 // 서울시 구 목록
 const addressOptions = [
@@ -37,7 +38,7 @@ function useAuth() {
   return token;
 }
 
-export default function MyshopReg() {
+function Page() {
   const router = useRouter();
   const token = useAuth(); // 토큰 관리
   const [shopName, setShopName] = useState("");
@@ -49,6 +50,11 @@ export default function MyshopReg() {
   const [error, setError] = useState<{ [key: string]: string }>({});
 
   const { shopId } = router.query; // 쿼리에서 shopId 가져오기
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<"alert" | "confirm" | "notice">("alert");
+  const [modalText, setModalText] = useState("");
+  const [registeredShopId, setRegisteredShopId] = useState<string | null>(null); // Store shopId here
 
   useEffect(() => {
     if (shopId) {
@@ -186,8 +192,11 @@ export default function MyshopReg() {
     if (!validateForm()) return;
 
     const shopExists = await checkIfShopExists(shopName);
+
     if (shopExists) {
-      toast.error("이미 등록된 가게가 있습니다.");
+      setModalType("alert");
+      setModalText("이미 등록된 가게가 있습니다.");
+      setModalOpen(true);
       return;
     }
 
@@ -210,11 +219,15 @@ export default function MyshopReg() {
       const response = await registerShop(dataToSend); // 가게 등록 API 호출
 
       if (response) {
-        toast.success("가게가 등록되었습니다!");
-        router.push(`/my-shop/detail?shopId=${response.item.id}`); // 등록 후 상세 페이지로 이동
+        setModalType("alert");
+        setModalText("가게가 등록되었습니다.");
+        setRegisteredShopId(response.item.id); // Store shopId
+        setModalOpen(true);
       }
     } catch (error) {
-      toast.error("가게 등록에 실패했습니다.");
+      setModalType("alert");
+      setModalText("가게 등록에 실패했습니다.");
+      setModalOpen(true);
       console.error("Error registering shop:", error);
     }
   };
@@ -281,7 +294,7 @@ export default function MyshopReg() {
         </div>
 
         <div className={style.inputContainer}>
-          <div className={style.box}>
+          <div className={`${style.box} ${style.fileBox}`}>
             <CustomFileInput
               label="가게 사진 업로드"
               id="ShopImage"
@@ -305,6 +318,20 @@ export default function MyshopReg() {
           type="submit"
         />
       </form>
+
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          if (registeredShopId) {
+            router.push(`/my-shop/detail?shopId=${registeredShopId}`); // 이미 등록된 shopId로 상세 페이지로 이동
+          }
+        }}
+        type={modalType}
+        text={modalText}
+      />
     </div>
   );
 }
+
+export default AuthGuard(Page, "employer");

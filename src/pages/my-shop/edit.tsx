@@ -10,6 +10,8 @@ import Button from "@/components/ui/Button";
 import CustomFileInput from "@/components/ui/CustomFileInput";
 import { useRouter } from "next/router";
 import { getShopInfo, updateShopInfo } from "@/lib/shops";
+import AuthGuard from "@/components/auth/AuthGuard";
+import Modal from "@/components/ui/Modal";
 
 // 서울시 구 목록
 const addressOptions = [
@@ -38,11 +40,13 @@ function useAuth() {
   return token;
 }
 
-export default function MyshopEdit() {
+
+function Page() {
   const router = useRouter();
   const token = useAuth();
 
   const [shopName, setShopName] = useState("");
+  console.log(shopName)
   const [shopClassification, setShopClassification] = useState<Category>("한식");
   const [shopAddress, setShopAddress] = useState("");
   const [detailShopAddress, setDetailShopAddress] = useState("");
@@ -51,22 +55,35 @@ export default function MyshopEdit() {
   const [currentImageUrl, setCurrentImageUrl] = useState(""); // 이미지 URL 상태 추가
   const { shopId } = router.query;
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalText, setModalText] = useState("");
+  const [modalType, setModalType] = useState<"alert" | "confirm" | "notice">("alert");
+  const [registeredShopId, setRegisteredShopId] = useState<string | null>(null);
+  const [onConfirmCallback, setOnConfirmCallback] = useState<(() => void) | undefined>(undefined);
+
+  //가게 데이터 불러오기
   useEffect(() => {
     if (shopId) {
-      // getShopInfo를 바로 호출하여 가게 정보 가져오기
-      getShopInfo(shopId as string)
-        .then(shopData => {
-          setShopName(shopData.name);
-          setShopClassification(shopData.category as Category);
-          setShopAddress(shopData.address1);
-          setDetailShopAddress(shopData.address2);
-          setShopDescription(shopData.description);
-          setCurrentImageUrl(shopData.imageUrl || ""); // 이미지 URL 설정
-        })
-        .catch(error => {
-          toast.error("가게 정보를 불러오는데 실패했습니다.");
-          console.error("Error fetching shop details:", error);
-        });
+      const fetchNotice = async () => {
+        try {
+          const response = await getShopInfo(shopId as string);
+          const shop = response?.item;
+          if (shop) {
+            setShopName(shop.name);
+            setShopClassification(shop.category as Category);
+            setShopAddress(shop.address1);
+            setDetailShopAddress(shop.address2);
+            setShopDescription(shop.description);
+            setCurrentImageUrl(shop.imageUrl || ""); // 이미지 URL 설정
+          }
+        } catch (error) {
+          setModalType("alert");
+          setModalText("가게정보를 불러오는 데 실패했습니다.");
+          setModalOpen(true);
+          console.error("error:", error);
+        }
+      };
+      fetchNotice()
     }
   }, [shopId]);
 
@@ -138,20 +155,26 @@ export default function MyshopEdit() {
       const response = await updateShopInfo(shopId as string, dataToSend);
 
       if (response) {
-        toast.success("가게 정보가 수정되었습니다!");
-        router.push(`/my-shop/detail?shopId=${response.item.id}`);
+        setModalType("alert");
+        setModalText("가게정보가 성공적으로 수정되었습니다.");
+        setModalOpen(true);
+        setRegisteredShopId(response.item.id);
       } else {
-        toast.error("가게 정보 수정에 실패했습니다.");
+        setModalType("alert");
+        setModalText("공고 수정에 실패했습니다. 다시 시도해주세요.");
+        setModalOpen(true);
       }
     } catch (error) {
-      toast.error("가게 정보 수정에 실패했습니다.");
-      console.error("Error editing shop:", error);
+      setModalType("alert");
+      setModalText("공고 수정에 실패했습니다. 다시 시도해주세요.");
+      setModalOpen(true);
+      console.error("error:", error);
     }
   };
 
   return (
     <div className={`${style.myshopContainer} ${style.myshopEditContainer}`}>
-      <Title text="가게 정보" />
+      <Title text="가게 수정" />
       <form onSubmit={handleSubmit} className={style.myshopForm}>
         <div className={style.inputContainer}>
           <div className={style.box}>
@@ -209,7 +232,7 @@ export default function MyshopEdit() {
         </div>
 
         <div className={style.inputContainer}>
-          <div className={style.box}>
+          <div className={`${style.box} ${style.fileBox} ${style.fileEditBox}`}>
             <CustomFileInput
               label="가게 이미지"
               id="ShopImage"
@@ -217,10 +240,10 @@ export default function MyshopEdit() {
               text="이미지 변경하기"
               styleClass="customStyle"
             />
+            {/* {currentImageUrl && (
+              <img src={currentImageUrl} alt="가게이미지" className={style.img} />
+            )} */}
           </div>
-          {currentImageUrl && (
-            <img src={currentImageUrl} alt="Shop Image" style={{ width: "100px", height: "auto", marginTop: "10px" }} />
-          )}
         </div>
 
         <Textarea
@@ -238,6 +261,22 @@ export default function MyshopEdit() {
           type="submit"
         />
       </form>
+
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => {
+          setModalOpen(false)
+          if (registeredShopId) {
+            router.push(`/my-shop/detail?shopId=${registeredShopId}`);
+          }
+        }}
+        type={modalType}
+        text={modalText}
+        onConfirm={onConfirmCallback} // Pass the callback to the modal
+      />
+
     </div>
   );
 }
+
+export default AuthGuard(Page, "employer");

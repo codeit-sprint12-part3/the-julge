@@ -6,8 +6,9 @@ import Button from "@/components/ui/Button";
 import style from "./Myshop.module.css";
 import MyshopRegInfo from "@/components/my-shop/MyshopRegInfo";
 import SpinnerLoader from "@/components/ui/SpinnerLoader";
+import AuthGuard from "@/components/auth/AuthGuard";
 
-export default function MyshopDetail() {
+function Page() {
   const router = useRouter();
   const { shopId } = router.query; // URL에서 shopId 가져오기
   const [shop, setShop] = useState<any>(null);
@@ -82,3 +83,5 @@ export default function MyshopDetail() {
     </>
   );
 }
+
+export default AuthGuard(Page, "employer");
