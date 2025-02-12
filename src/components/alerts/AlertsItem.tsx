@@ -2,10 +2,15 @@ import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import relativeTime from "dayjs/plugin/relativeTime";
 import styles from "@/components/alerts/AlertsItem.module.css";
-import { AlertsItemProps } from "@/components/alerts/AlertsTypes";
+import { AlertItem } from "@/components/alerts/AlertsTypes";
 
-const AlertsItem = ({ data }: AlertsItemProps) => {
-  const { shop, notice, result } = data;
+interface AlertsItemProps {
+  alertItem: AlertItem;
+  handleAlertRead: (alertId: string) => void;
+}
+
+const AlertsItem = ({ alertItem, handleAlertRead }: AlertsItemProps) => {
+  const { id, shop, notice, result } = alertItem;
   const shopName = shop.item.name;
 
   dayjs.locale("ko");
@@ -13,7 +18,7 @@ const AlertsItem = ({ data }: AlertsItemProps) => {
   const workhour = notice.item.workhour;
   const startsAt = dayjs(notice.item.startsAt).format("YYYY-MM-DD HH:mm");
   const endsAt = dayjs(notice.item.startsAt).add(workhour, "hour").format("HH:mm");
-  const createdAt = new Date(data.createdAt);
+  const createdAt = new Date(alertItem.createdAt);
   const timeAgo = dayjs(createdAt).fromNow();
 
   let resultText = "";
@@ -24,15 +29,15 @@ const AlertsItem = ({ data }: AlertsItemProps) => {
     case "rejected":
       resultText = "거절";
       break;
-    case "cancelled":
-      resultText = "취소";
-      break;
     default:
       resultText = "";
   }
 
   return (
-    <div className={`${styles["alert-item"]} ${styles[result]}`}>
+    <div
+      className={`${styles["alert-item"]} ${styles[result]}`}
+      onClick={() => handleAlertRead(id)}
+    >
       <span className={`${styles["alert-state-icon"]}`}></span>
       <p>
         {`${shopName} (${startsAt}~${endsAt}) 공고 지원이 `}

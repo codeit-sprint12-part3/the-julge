@@ -2,7 +2,9 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { setToken, getToken, removeToken } from "@/lib/storage";
 import { fetchUserInfo } from "@/lib/auth";
+import { getUserAlerts, markAlertAsRead } from "@/lib/alerts";
 import { toast } from "react-toastify";
+import { Alert } from "@/components/alerts/AlertsTypes";
 
 interface User {
   id: string;
@@ -16,10 +18,13 @@ interface User {
 
 interface AuthState {
   token: string | null;
-  user: User | null;
+  user: User | any;
+  alerts: Alert[];
   login: (token: string) => Promise<void>;
   logout: () => void;
   fetchAndSetUser: () => Promise<void>;
+  fetchAndSetAlerts: () => Promise<void>;
+  markAlertAsRead: (alertId: string) => Promise<void>;
 }
 
 export const useAuthUser = create<AuthState>()(
@@ -27,6 +32,7 @@ export const useAuthUser = create<AuthState>()(
     (set, get) => ({
       token: getToken(),
       user: null,
+      alerts: [],
       login: async (token) => {
         setToken(token);
         const userInfo = await fetchUserInfo(token);
@@ -38,10 +44,24 @@ export const useAuthUser = create<AuthState>()(
         toast.success("또 만나요 🫶🏻");
       },
       fetchAndSetUser: async () => {
-        const { token, user } = get();
+        const { token } = get();
         if (!token) return;
         const userInfo = await fetchUserInfo(token);
         set({ user: userInfo });
+      },
+      fetchAndSetAlerts: async () => {
+        const { token, user } = get();
+        if (!token || !user) return;
+
+        const response = await getUserAlerts(user.id, 0, 10);
+        const unreadAlert = response.items.filter((itemData: any) => !itemData.item.read);
+        set({ alerts: unreadAlert });
+      },
+      markAlertAsRead: async (alertId: string) => {
+        const user = get().user;
+        if (!user) return;
+        const response = await markAlertAsRead(user.id, alertId);
+        return response;
       },
     }),
     { name: "auth-storage" }
