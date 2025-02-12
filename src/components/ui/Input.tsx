@@ -2,8 +2,9 @@ import style from "./Input.module.css";
 
 interface InputProps {
   placeholder?: string;
-  type: "text" | "password" | "email" | "number";
+  type: "text" | "password" | "email" | "number" | "date";
   name?: string;
+  min?: string;
   value?: string;
   id?: string;
   label?: string;
@@ -20,6 +21,7 @@ const Input = ({
   value,
   id,
   name,
+  min,
   label,
   className,
   required,
@@ -45,6 +47,7 @@ const Input = ({
         placeholder={placeholder}
         type={type}
         name={name}
+        min={min}
         value={value}
         onChange={onChange}
         onBlur={onBlur}

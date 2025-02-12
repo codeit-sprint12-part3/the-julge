@@ -3,26 +3,27 @@ import style from "./DetailFilter.module.css";
 import Title from "./Title";
 import Input from "./Input";
 import Button from "./Button";
-
-// 필터 타입 정의
-interface Filters {
-  selectedAddresses: string[];  // 선택된 주소
-  startDate: string;  // 시작일
-  price: string;  // 금액
-}
+import { SEOUL_DISTRICTS } from "@/constants/locations";
+import { Icon } from "../icon/Icon";
+import { toast } from "@/pages/_app";
+import { Filters } from "@/type";
 
 // 부모로 필터 값 전달하는 onApply prop 추가
 interface DetailFilterProps {
   onApply?: (filters: Filters) => void;
+  onClose?: () => void;
+  className?: string;
+  filters: Filters;
+  setFilters: React.Dispatch<React.SetStateAction<Filters>>;
 }
 
-export default function DetailFilter({ onApply }: DetailFilterProps) {
-  const [filters, setFilters] = useState<Filters>({
-    selectedAddresses: [],
-    startDate: "",
-    price: "",
-  });
-
+export default function DetailFilter({
+  onApply,
+  onClose,
+  className,
+  filters,
+  setFilters,
+}: DetailFilterProps) {
   // 주소 선택
   const handleSelect = (select: string) => {
     if (!filters.selectedAddresses.includes(select)) {
@@ -60,33 +61,26 @@ export default function DetailFilter({ onApply }: DetailFilterProps) {
 
   // 필터 적용 (부모로 필터 값 전달)
   const handleApply = () => {
-    onApply?.(filters);  // 부모로 필터 값 전달
+    onApply?.(filters); // 부모로 필터 값 전달
   };
 
-  // 주소 데이터 (예시)
-  const addressData = [
-    { id: 1, address: "서울시 송파구" },
-    { id: 2, address: "서울시 강남구" },
-    { id: 3, address: "서울시 서초구" },
-    { id: 4, address: "서울시 마포구" },
-  ];
-
   return (
-    <div className={style.filterContainer}>
-      <Title text="상세필터" />
+    <div className={`${className} ${style.filterContainer}`}>
+      <Title text="상세필터">
+        <div className={style.close} onClick={onClose}>
+          <Icon name="close" size={14} />
+        </div>
+      </Title>
 
       {/* 위치 선택 */}
       <div className={style.filterBox}>
         <span className={style.text}>위치</span>
         <div className={style.addressBox}>
           <ul className={style.addressList}>
-            {addressData.map((data) => (
-              <li key={data.id}>
-                <button
-                  className={style.selectBtn}
-                  onClick={() => handleSelect(data.address)}
-                >
-                  {data.address}
+            {SEOUL_DISTRICTS.map((data) => (
+              <li key={data}>
+                <button className={style.selectBtn} onClick={() => handleSelect(data)}>
+                  {data}
                 </button>
               </li>
             ))}
@@ -98,10 +92,7 @@ export default function DetailFilter({ onApply }: DetailFilterProps) {
             {filters.selectedAddresses.map((address, index) => (
               <li key={index}>
                 {address}
-                <button
-                  className={style.selectDelBtn}
-                  onClick={() => handleDelete(address)}
-                >
+                <button className={style.selectDelBtn} onClick={() => handleDelete(address)}>
                   <span className="blind">선택된 주소 삭제</span>
                 </button>
               </li>
@@ -117,10 +108,11 @@ export default function DetailFilter({ onApply }: DetailFilterProps) {
         </label>
         <Input
           id="StartDate"
-          type="text"
+          type="date"
           value={filters.startDate}
           placeholder="입력"
           onChange={(e) => handleChange("startDate", e.target.value)}
+          min={new Date().toISOString().split("T")[0]}
         />
       </div>
 
@@ -154,12 +146,7 @@ export default function DetailFilter({ onApply }: DetailFilterProps) {
           className={style.resetBtn}
           onClick={handleReset}
         />
-        <Button
-          buttonText="적용하기"
-          type="button"
-          styleButton="primary"
-          onClick={handleApply}
-        />
+        <Button buttonText="적용하기" type="button" styleButton="primary" onClick={handleApply} />
       </div>
     </div>
   );
