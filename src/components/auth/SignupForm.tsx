@@ -84,7 +84,7 @@ const SignupForm = () => {
       });
 
       if (!response?.item?.id) {
-        toast.error("회원가입 실패 🥹");
+        toast("회원가입 실패 🥹");
         return;
       }
 
@@ -92,15 +92,15 @@ const SignupForm = () => {
 
       if (token) {
         await loginUser(token); // Zustand에서 로그인 처리
-        toast.success("환영합니다 🫶🏻");
+        toast("환영합니다 🫶🏻");
         router.push("/");
       } else {
         // 회원가입 후 자동 로그인에 실패 / 로그인 페이지로 이동
-        toast.error("가입 성공 🎉 자동 로그인 실패 🥹");
+        toast("가입 성공 🎉 자동 로그인 실패 🥹");
         router.push("/auth/login");
       }
     } catch (error) {
-      toast.error("회원가입 실패 🥹");
+      toast("회원가입 실패 🥹");
     }
   };
 
