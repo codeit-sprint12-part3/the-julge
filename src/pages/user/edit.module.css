@@ -1,0 +1,35 @@
+.profile-edit-wrapper {
+  position: relative;
+  padding: 6rem 0 22rem;
+}
+
+.profile-edit-wrapper::after {
+  content: "";
+  width: 200vw;
+  position: absolute;
+  height: 100%;
+  left: -100vw;
+  top: 0;
+  z-index: -1;
+  background-color: var(--gray-100);
+}
+
+.profile-edit-title {
+  position: relative;
+}
+
+.form-close-button {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+}
+
+@media (max-width: 480px) {
+  .profile-edit-wrapper {
+    padding: 4rem 0 8rem;
+  }
+
+  .form-close-button svg {
+    width: 1.5rem;
+  }
+}

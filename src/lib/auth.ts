@@ -2,8 +2,8 @@ import { client } from "@/lib/axiosClient";
 import { jwtDecode } from "jwt-decode";
 
 interface DecodedToken {
-  userId: string; // 사용자 ID
-  iat: number; // 발급 시간
+  userId: string;
+  iat: number;
 }
 
 export const login = async (email: string, password: string) => {
@@ -12,8 +12,7 @@ export const login = async (email: string, password: string) => {
 };
 
 export const fetchUserInfo = async (token: string) => {
-  // const userId = JSON.parse(atob(token.split(".")[1])).userId;
-  const decoded: DecodedToken = jwtDecode(token); // JWT 디코딩
+  const decoded: DecodedToken = jwtDecode(token);
   const res = await client.get(`/users/${decoded.userId}`);
   return res.data.item;
 };
