@@ -58,6 +58,8 @@ export interface NoticeRequestParams {
   offset?: number;
   sort?: "pay" | "time" | "hour" | "shop";
   address?: string; // 주소 검색을 위한 배열
+  startsAtGte?: string; // 시작일
+  hourlyPayGte?: number; // 최소 시급
 }
 
 // 사용자 정보 타입
@@ -101,4 +103,10 @@ export interface ApplicationResponse {
   hasNext: boolean;
   items: ApplicationWrapper[];
   links: Link[];
+}
+
+export interface Filters {
+  selectedAddresses: string[]; // 선택된 주소
+  startDate: string; // 시작일
+  price: string; // 금액
 }

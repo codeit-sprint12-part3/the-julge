@@ -39,7 +39,7 @@ export const useAuthUser = create<AuthState>()(
       },
       fetchAndSetUser: async () => {
         const { token, user } = get();
-        if (!token || user) return; // 이미 유저 정보가 있으면 다시 요청하지 않음
+        if (!token) return;
         const userInfo = await fetchUserInfo(token);
         set({ user: userInfo });
       },

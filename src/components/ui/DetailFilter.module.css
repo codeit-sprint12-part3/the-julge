@@ -1,18 +1,21 @@
 .filterContainer {
   max-width: 390px;
   width: 100%;
-  padding: 2.4rem 2.0rem;
+  padding: 2.4rem 2rem;
   box-shadow: 0 2px 8px rgba(120, 116, 134, 0.25);
-  border-radius: 1.0rem;
+  border-radius: 1rem;
+}
+
+.filterContainer > div:first-child > h3 + div {
+  cursor: pointer;
 }
 
 .filterContainer .filterBox {
-  margin-top: -3.0rem;
+  margin-top: -3rem;
   margin-bottom: 2.4rem;
   padding: 2.4rem 0;
   border-bottom: 0.2rem solid var(--gray-200);
 }
-
 
 .filterContainer .filterBox:last-child {
   border-bottom: 0;
@@ -55,7 +58,7 @@
 .filterContainer .addressBox {
   height: 258px;
   margin-bottom: 1.2rem;
-  padding: 2.0rem 2.0rem 0.6rem 2.8rem;
+  padding: 2rem 2rem 2rem 2.8rem;
   overflow-y: auto;
   border: 0.1rem solid var(--gray-300);
   border-radius: 0.6rem;
@@ -64,7 +67,10 @@
 .filterContainer .addressBox .addressList {
   display: flex;
   flex-wrap: wrap;
-  gap: 2.0rem 7.4rem;
+  gap: 2rem 0;
+}
+.filterContainer .addressBox .addressList > li {
+  width: 50%;
 }
 
 .filterContainer .addressBox .addressList li .selectBtn {
@@ -77,7 +83,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-
 }
 
 .filterContainer .selectAddressList li {
@@ -85,7 +90,7 @@
   font-size: 1.4rem;
   color: var(--primary);
   font-weight: 700;
-  border-radius: 5.0rem;
+  border-radius: 5rem;
   background-color: var(--red-100);
 }
 
@@ -100,11 +105,11 @@
   margin-top: 0.6rem;
   width: 10px;
   height: 9px;
-  background: url(/delete_icon.svg)no-repeat center;
+  background: url(/delete_icon.svg) no-repeat center;
 }
 
 .filterContainer .btnBox {
-  margin-top: 4.0rem;
+  margin-top: 4rem;
   display: flex;
   gap: 0 0.8rem;
 }
@@ -115,4 +120,14 @@
 
 .filterContainer .btnBox .resetBtn {
   width: 11rem;
+}
+
+@media (max-width: 744px) {
+  .filterContainer > div:first-child {
+    display: flex;
+    margin-bottom: 24px;
+  }
+  .filterContainer > div:first-child > h3 {
+    margin-bottom: 0;
+  }
 }

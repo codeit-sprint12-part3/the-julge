@@ -2,7 +2,7 @@ import { useAuthUser } from "@/stores/useAuthUser";
 import Head from "next/head";
 import Link from "next/link";
 import { getNotices } from "@/lib/notices";
-import { NoticeResponse, NoticeWrapper, NoticeRequestParams } from "@/type";
+import { NoticeResponse, NoticeWrapper, NoticeRequestParams, Filters } from "@/type";
 import { useEffect, useState } from "react";
 import PostCard from "@/components/ui/PostCard";
 import Title from "@/components/ui/Title";
@@ -10,6 +10,8 @@ import Button from "@/components/ui/Button";
 import styles from "@/styles/index.module.css";
 import { Icon } from "@/components/icon/Icon";
 import Pagination from "@/components/ui/Pagination";
+import DetailFilter from "@/components/ui/DetailFilter";
+import dayjs from "dayjs";
 
 export default function Home() {
   const { token, user } = useAuthUser();
@@ -21,6 +23,18 @@ export default function Home() {
   const itemsPerPage = 6;
   const [totalItems, setTotalItems] = useState(0);
   const [isReady, setIsReady] = useState(false);
+  const [filter, setFilter] = useState<Filters>({
+    selectedAddresses: [],
+    startDate: "",
+    price: "",
+  });
+  const [appliedFilter, setAppliedFilter] = useState<Filters>({
+    selectedAddresses: [],
+    startDate: "",
+    price: "",
+  });
+  const [filterNum, setFilterNum] = useState(0);
+  const [filterOpen, setFilterOpen] = useState(false);
 
   useEffect(() => {
     if (user === undefined) return;
@@ -48,6 +62,10 @@ export default function Home() {
   }, [isReady, user]);
 
   useEffect(() => {
+    const formattedDate = appliedFilter.startDate
+      ? dayjs(appliedFilter.startDate, "YYYY.MM.DD").format("YYYY-MM-DDT00:00:00[Z]")
+      : undefined;
+
     const fetchAllData = async () => {
       try {
         const allData: NoticeResponse = await getNotices({
@@ -57,10 +75,16 @@ export default function Home() {
             sortState === "마감임박순"
               ? "time"
               : sortState === "시급많은순"
-                ? "pay"
-                : sortState === "시간적은순"
-                  ? "hour"
-                  : "shop",
+              ? "pay"
+              : sortState === "시간적은순"
+              ? "hour"
+              : "shop",
+          address:
+            appliedFilter.selectedAddresses.length > 0
+              ? appliedFilter.selectedAddresses
+              : undefined,
+          startsAtGte: formattedDate,
+          hourlyPayGte: appliedFilter.price ? Number(appliedFilter.price) : undefined,
         });
 
         setPostAllData(allData.items || []);
@@ -71,7 +95,7 @@ export default function Home() {
     };
 
     fetchAllData();
-  }, [currentPage, sortState]); // 페이지 또는 정렬 상태 변경 시 실행
+  }, [currentPage, sortState, appliedFilter]); // "적용된 필터"가 변경될 때만 실행
 
   const sortToggle = () => {
     sortOpen ? setSortOpen(false) : setSortOpen(true);
@@ -81,6 +105,18 @@ export default function Home() {
     setSortState(state);
     setSortOpen(false);
   };
+
+  const onApply = (newFilters: Filters) => {
+    setAppliedFilter(newFilters); // 적용 버튼 눌렀을 때만 API 요청 트리거
+    setFilterNum(
+      newFilters.selectedAddresses.length +
+        (newFilters.startDate ? 1 : 0) +
+        (newFilters.price ? 1 : 0)
+    );
+    setFilterOpen(false);
+  };
+
+  const filterCount = filterNum > 0 ? ` (${filterNum})` : "";
 
   return (
     <>
@@ -150,20 +186,37 @@ export default function Home() {
                   )}
                 </div>
                 <div className={styles.filter}>
-                  <Button buttonText="상세 필터" styleButton="primary" size="small" />
+                  <Button
+                    buttonText={`상세 필터${filterCount}`}
+                    styleButton="primary"
+                    size="small"
+                    onClick={() => setFilterOpen(!filterOpen)}
+                  />
+                  {filterOpen && (
+                    <DetailFilter
+                      onApply={onApply}
+                      onClose={() => setFilterOpen(false)}
+                      filters={filter} // 현재 필터 값 유지
+                      setFilters={setFilter} // DetailFilter 내부에서는 filter만 변경
+                    />
+                  )}
                 </div>
               </div>
             </Title>
-            <ul className="post_list">
-              {postAllData.map(({ item }) => {
-                if (!item) return null;
-                return (
-                  <li key={item.id}>
-                    <PostCard data={item} />
-                  </li>
-                );
-              })}
-            </ul>
+            {postAllData.length > 0 ? (
+              <ul className="post_list">
+                {postAllData.map(({ item }) => {
+                  if (!item) return null;
+                  return (
+                    <li key={item.id}>
+                      <PostCard data={item} />
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p className={styles.no_data}>공고가 없습니다.</p>
+            )}
             <div className={styles.page}>
               <Pagination
                 currentPage={currentPage}

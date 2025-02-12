@@ -10,6 +10,7 @@ const Header = () => {
   const { token, user, logout, fetchAndSetUser } = useAuthUser();
   const router = useRouter();
   const [isClient, setIsClient] = useState(false); // 클라이언트 렌더링 체크
+  const [searchValue, setSearchValue] = useState(""); // 검색어
 
   useEffect(() => {
     setIsClient(true);
@@ -21,6 +22,15 @@ const Header = () => {
   const handleLogout = () => {
     logout(); // Zustand에서 로그아웃 실행
     router.push("/");
+  };
+
+  const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+  const onKeyDownSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      router.push(`/search?keyword=${searchValue}`);
+    }
   };
 
   return (
@@ -42,7 +52,13 @@ const Header = () => {
             color={"--gray-500"}
             className={style["header-search-icon"]}
           />
-          <input type="text" placeholder="가게 이름으로 찾아보세요" />
+          <input
+            type="text"
+            placeholder="가게 이름으로 찾아보세요"
+            value={searchValue}
+            onChange={onChangeSearch}
+            onKeyDown={onKeyDownSearch}
+          />
         </div>
         <ul className={style["header-nav"]}>
           {isClient && token && user?.type === "employee" && (
