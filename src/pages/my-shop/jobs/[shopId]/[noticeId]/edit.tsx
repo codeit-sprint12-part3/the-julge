@@ -19,7 +19,7 @@ export default function Page() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalText, setModalText] = useState("");
   const [modalType, setModalType] = useState<"alert" | "confirm" | "notice">("alert");
-  const [onConfirmCallback, setOnConfirmCallback] = useState<(() => void) | null>(null);
+  const [onConfirmCallback, setOnConfirmCallback] = useState<(() => void) | undefined>(undefined);
 
   // 유저 정보 불러오기
   useEffect(() => {
