@@ -211,7 +211,7 @@ export default function MyshopReg() {
 
       if (response) {
         toast.success("가게가 등록되었습니다!");
-        router.push(`/my-shop/detail?shop_Id=${response.item.id}`); // 등록 후 상세 페이지로 이동
+        router.push(`/my-shop/detail?shopId=${response.item.id}`); // 등록 후 상세 페이지로 이동
       }
     } catch (error) {
       toast.error("가게 등록에 실패했습니다.");
