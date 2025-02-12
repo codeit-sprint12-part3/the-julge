@@ -5,7 +5,7 @@ import { getToken } from "@/lib/storage";
 export const getNotices = async (params: {
   offset?: number;
   limit?: number;
-  address?: string;
+  address?: string | string[];
   keyword?: string;
   startsAtGte?: string;
   hourlyPayGte?: number;
