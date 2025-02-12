@@ -56,11 +56,11 @@ function LoginForm() {
     try {
       const token = await login(formData.email, formData.password);
       await loginUser(token);
-      toast.success("로그인 성공 🎉");
+      toast("로그인 성공 🎉");
       router.push("/");
     } catch (error) {
       // 로그인 실패 / 이메일 또는 비밀번호가 올바르지 않음
-      toast.error("로그인 실패 🥹");
+      toast("로그인 실패 🥹");
     }
   };
 
