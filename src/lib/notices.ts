@@ -1,5 +1,6 @@
 import { client } from "@/lib/axiosClient";
 import { getToken } from "@/lib/storage";
+import qs from "qs";
 
 // 1. 공고 목록 조회
 export const getNotices = async (params: {
@@ -12,7 +13,13 @@ export const getNotices = async (params: {
   sort?: "time" | "pay" | "hour" | "shop";
 }) => {
   try {
-    const response = await client.get("/notices", { params });
+    const response = await client.get("/notices", {
+      params,
+      paramsSerializer: (params) => {
+        console.log(params);
+        return qs.stringify(params, { arrayFormat: "repeat" });
+      },
+    });
     return response.data;
   } catch (error) {
     throw error;
