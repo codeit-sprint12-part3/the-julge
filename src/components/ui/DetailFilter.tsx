@@ -3,7 +3,7 @@ import style from "./DetailFilter.module.css";
 import Title from "./Title";
 import Input from "./Input";
 import Button from "./Button";
-import { SEOUL_DISTRICTS } from "@/constants/locations";
+import { SEOUL_DISTRICTS } from "@/constants/constants";
 import { Icon } from "../icon/Icon";
 import { toast } from "@/pages/_app";
 import { Filters } from "@/type";
