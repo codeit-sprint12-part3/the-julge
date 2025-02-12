@@ -12,6 +12,7 @@ const Header = () => {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false); // 클라이언트 렌더링 체크
   const [searchValue, setSearchValue] = useState(""); // 검색어
+  const [isAlertsOpen, setIsAlertsOpen] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
@@ -28,10 +29,15 @@ const Header = () => {
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
+
   const onKeyDownSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       router.push(`/search?keyword=${searchValue}`);
     }
+  };
+
+  const handleAlerts = () => {
+    setIsAlertsOpen((prev) => !prev);
   };
 
   return (
@@ -92,10 +98,10 @@ const Header = () => {
           )}
           {isClient && token && user?.type === "employee" && (
             <li className={style["header-alter-box"]}>
-              <button>
+              <button onClick={handleAlerts}>
                 <Icon name="alter" color={"black"} className={style["header-alter-icon"]} />
               </button>
-              <Alerts />
+              {isAlertsOpen && <Alerts onClose={handleAlerts} />}
             </li>
           )}
         </ul>

@@ -44,7 +44,7 @@ export const useAuthUser = create<AuthState>()(
         toast.success("또 만나요 🫶🏻");
       },
       fetchAndSetUser: async () => {
-        const { token, user } = get();
+        const { token } = get();
         if (!token) return;
         const userInfo = await fetchUserInfo(token);
         set({ user: userInfo });
@@ -53,28 +53,15 @@ export const useAuthUser = create<AuthState>()(
         const { token, user } = get();
         if (!token || !user) return;
 
-        try {
-          const response = await getUserAlerts(user.id, 0, 10);
-          const unreadAlert = response.items.filter((itemData: any) => !itemData.item.read);
-          set({ alerts: unreadAlert });
-        } catch (error) {
-          console.error("알림 데이터 불러오기 실패:", error);
-        }
+        const response = await getUserAlerts(user.id, 0, 10);
+        const unreadAlert = response.items.filter((itemData: any) => !itemData.item.read);
+        set({ alerts: unreadAlert });
       },
       markAlertAsRead: async (alertId: string) => {
         const user = get().user;
         if (!user) return;
-
-        try {
-          const response = await markAlertAsRead(user.id, alertId);
-          console.log(response);
-
-          // set((state) => ({
-          //   alerts: state.alerts.filter((alert) => alert.id !== alertId),
-          // }));
-        } catch (error) {
-          console.error("Failed to mark alert as read:", error);
-        }
+        const response = await markAlertAsRead(user.id, alertId);
+        return response;
       },
     }),
     { name: "auth-storage" }

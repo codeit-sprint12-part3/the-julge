@@ -6,9 +6,11 @@ import { AlertItem } from "@/components/alerts/AlertsTypes";
 
 interface AlertsItemProps {
   alertItem: AlertItem;
+  handleAlertRead: (alertId: string) => void;
 }
-const AlertsItem = ({ alertItem }: AlertsItemProps) => {
-  const { shop, notice, result } = alertItem;
+
+const AlertsItem = ({ alertItem, handleAlertRead }: AlertsItemProps) => {
+  const { id, shop, notice, result } = alertItem;
   const shopName = shop.item.name;
 
   dayjs.locale("ko");
@@ -32,7 +34,10 @@ const AlertsItem = ({ alertItem }: AlertsItemProps) => {
   }
 
   return (
-    <div className={`${styles["alert-item"]} ${styles[result]}`}>
+    <div
+      className={`${styles["alert-item"]} ${styles[result]}`}
+      onClick={() => handleAlertRead(id)}
+    >
       <span className={`${styles["alert-state-icon"]}`}></span>
       <p>
         {`${shopName} (${startsAt}~${endsAt}) 공고 지원이 `}
