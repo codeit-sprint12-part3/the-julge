@@ -215,7 +215,7 @@ function Page() {
                 onChange={handlePriceChange}
                 onBlur={handleBlurPrice}  // onBlur 이벤트 추가
                 error={priceError}  // 에러 메시지 전달
-                text="원"
+              // text="원"
               />
             </div>
           </div>
@@ -250,7 +250,7 @@ function Page() {
                 onChange={handleTimeChange}
                 onBlur={handleBlurTime}  // onBlur 이벤트 추가
                 error={timeError}  // 에러 메시지 전달
-                text="시간"
+              // text="시간"
               />
             </div>
           </div>

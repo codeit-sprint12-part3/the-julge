@@ -227,7 +227,7 @@ export default function Page() {
                 onChange={handlePriceChange}
                 onBlur={handleBlurPrice}
                 error={priceError}
-                text="원"
+              // text="원"
               />
             </div>
           </div>
@@ -264,7 +264,7 @@ export default function Page() {
                 onChange={handleTimeChange}
                 onBlur={handleBlurTime}
                 error={timeError}
-                text="시간"
+              // text="시간"
               />
             </div>
           </div>
