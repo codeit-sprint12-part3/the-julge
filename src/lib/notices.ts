@@ -16,7 +16,6 @@ export const getNotices = async (params: {
     const response = await client.get("/notices", {
       params,
       paramsSerializer: (params) => {
-        console.log(params);
         return qs.stringify(params, { arrayFormat: "repeat" });
       },
     });
