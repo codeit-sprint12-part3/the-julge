@@ -1,3 +1,5 @@
+import "@/styles/reset.css";
+import "@/styles/globals.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
@@ -6,8 +8,6 @@ import { ModalProvider } from "@/context/ModalContext";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 import { Slide, toast, ToastContainer } from "react-toastify";
-import "@/styles/reset.css";
-import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import "@/styles/Toast.css";
 

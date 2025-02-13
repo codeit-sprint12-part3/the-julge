@@ -1,105 +1,105 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+@layer base {
+  :root {
+    /* gray */
+    --font-color: #111322;
+    --primary: #ea3c12;
+    --gray-100: #fafafa;
+    --gray-200: #f2f2f3;
+    --gray-300: #e5e4e7;
+    --gray-400: #cbc9cf;
+    --gray-500: #a4a1aa;
+    --gray-600: #7d7986;
 
-:root {
-  /* gray */
-  --font-color: #111322;
-  --primary: #ea3c12;
-  --gray-100: #fafafa;
-  --gray-200: #f2f2f3;
-  --gray-300: #e5e4e7;
-  --gray-400: #cbc9cf;
-  --gray-500: #a4a1aa;
-  --gray-600: #7d7986;
+    --red-100: #ffebe7;
+    --red-200: #ffaf9b;
+    --red-300: #ff8d72;
+    --red-400: #ff4040;
 
-  --red-100: #ffebe7;
-  --red-200: #ffaf9b;
-  --red-300: #ff8d72;
-  --red-400: #ff4040;
+    --blue-100: #cce6ff;
+    --blue-200: #0080ff;
 
-  --blue-100: #cce6ff;
-  --blue-200: #0080ff;
+    --green-100: #d4f7d4;
+    --green-200: #20a81e;
 
-  --green-100: #d4f7d4;
-  --green-200: #20a81e;
+    --kakao: #fee500;
 
-  --kakao: #fee500;
+    --white: #ffffff;
+    --black: #000000;
 
-  --white: #ffffff;
-  --black: #000000;
+    /* Border Radius */
+    --border-radius-xs: 0.4rem;
+    /* 4px */
+    --border-radius-sm: 0.6rem;
+    /* 6px */
+    --border-radius-md: 0.8rem;
+    /* 8px */
+    --border-radius-lg: 1rem;
+    /* 10px */
+    --border-radius-xl: 1.2rem;
+    /* 12px */
+    --border-radius-xxl: 1.4rem;
+    /* 14px */
+    --border-radius-round: 50%;
+    /* 원형 */
+    --border-radius-circle: 100%;
+    /* 정사각형 요소에 원 모양 */
+    --border-radius-pill: 2.4rem;
+    /* pill 모양 */
 
-  /* Border Radius */
-  --border-radius-xs: 0.4rem;
-  /* 4px */
-  --border-radius-sm: 0.6rem;
-  /* 6px */
-  --border-radius-md: 0.8rem;
-  /* 8px */
-  --border-radius-lg: 1rem;
-  /* 10px */
-  --border-radius-xl: 1.2rem;
-  /* 12px */
-  --border-radius-xxl: 1.4rem;
-  /* 14px */
-  --border-radius-round: 50%;
-  /* 원형 */
-  --border-radius-circle: 100%;
-  /* 정사각형 요소에 원 모양 */
-  --border-radius-pill: 2.4rem;
-  /* pill 모양 */
+    /* Typography */
+    --font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+      Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    --font-size-xxs: 1.2rem;
+    /* 12px */
+    --font-size-xs: 1.4rem;
+    /* 14px */
+    --font-size-sm: 1.6rem;
+    /* 16px */
+    --font-size-md: 1.8rem;
+    /* 18px */
+    --font-size-h3: 2rem;
+    /* 20px */
+    --font-size-h2: 2.4rem;
+    /* 24px */
+    --font-size-h1: 2.8rem;
+    /* 28px */
 
-  /* Typography */
-  --font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
-    Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-  --font-size-xxs: 1.2rem;
-  /* 12px */
-  --font-size-xs: 1.4rem;
-  /* 14px */
-  --font-size-sm: 1.6rem;
-  /* 16px */
-  --font-size-md: 1.8rem;
-  /* 18px */
-  --font-size-h3: 2rem;
-  /* 20px */
-  --font-size-h2: 2.4rem;
-  /* 24px */
-  --font-size-h1: 2.8rem;
-  /* 28px */
+    /* Font Weight */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    /* normal */
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
 
-  /* Font Weight */
-  --font-weight-light: 300;
-  --font-weight-regular: 400;
-  /* normal */
-  --font-weight-medium: 500;
-  --font-weight-bold: 700;
-
-  /* Spacing System */
-  --spacing-34: 3.4rem;
-  /* 34px */
-  --spacing-32: 3.2rem;
-  /* 32px */
-  --spacing-24: 2.4rem;
-  /* 24px */
-  --spacing-20: 2rem;
-  /* 20px */
-  --spacing-16: 1.6rem;
-  /* 16px */
-  --spacing-14: 1.4rem;
-  /* 14px */
-  --spacing-12: 1.2rem;
-  /* 12px */
-  --spacing-10: 1rem;
-  /* 10px */
-  --spacing-8: 0.8rem;
-  /* 8px */
-  --spacing-6: 0.6rem;
-  /* 6px */
-  --spacing-4: 0.4rem;
-  /* 4px */
-  --spacing-2: 0.2rem;
-  /* 2px */
+    /* Spacing System */
+    --spacing-34: 3.4rem;
+    /* 34px */
+    --spacing-32: 3.2rem;
+    /* 32px */
+    --spacing-24: 2.4rem;
+    /* 24px */
+    --spacing-20: 2rem;
+    /* 20px */
+    --spacing-16: 1.6rem;
+    /* 16px */
+    --spacing-14: 1.4rem;
+    /* 14px */
+    --spacing-12: 1.2rem;
+    /* 12px */
+    --spacing-10: 1rem;
+    /* 10px */
+    --spacing-8: 0.8rem;
+    /* 8px */
+    --spacing-6: 0.6rem;
+    /* 6px */
+    --spacing-4: 0.4rem;
+    /* 4px */
+    --spacing-2: 0.2rem;
+    /* 2px */
+  }
 }
-
 html {
   font-size: 62.5%;
 }
@@ -145,7 +145,7 @@ a {
   margin: 0 -7px -32px;
 }
 
-.post_list>li {
+.post_list > li {
   width: 33.3333%;
   padding: 0 7px;
   margin-bottom: 32px;
@@ -178,7 +178,7 @@ a {
 }
 
 @media (max-width: 964px) {
-  .post_list>li {
+  .post_list > li {
     width: 50%;
   }
 }
@@ -188,7 +188,7 @@ a {
     margin: 0 -4px -16px;
   }
 
-  .post_list>li {
+  .post_list > li {
     padding: 0 4px;
     margin-bottom: 16px;
   }
