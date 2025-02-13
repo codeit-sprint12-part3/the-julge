@@ -52,18 +52,22 @@ function Page() {
           />
         )}
       </section>
-      <section className={style["history-section"]}>
-        <Title text="신청 내역" />
-        {isHistory ? (
-          <Application data={detailData} />
-        ) : (
-          <EmptyState
-            message={"아직 신청 내역이 없어요."}
-            buttonText={"공고 보러가기"}
-            href={"/"}
-          />
-        )}
-      </section>
+      {isProfile ? (
+        <section className={style["history-section"]}>
+          <Title text="신청 내역" />
+          {isHistory ? (
+            <Application data={detailData} />
+          ) : (
+            <EmptyState
+              message={"아직 신청 내역이 없어요."}
+              buttonText={"공고 보러가기"}
+              href={"/"}
+            />
+          )}
+        </section>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
