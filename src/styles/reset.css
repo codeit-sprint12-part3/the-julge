@@ -1,5 +1,5 @@
 * {
-  box-sizing: border-box
+  box-sizing: border-box;
 }
 
 /* prettier-ignore */
@@ -89,7 +89,6 @@ textarea {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
   vertical-align: baseline;
   box-sizing: border-box;
@@ -149,7 +148,7 @@ button {
   border-radius: 0;
   padding: 0;
   overflow: visible;
-  cursor: pointer
+  cursor: pointer;
 }
 
 textarea {
