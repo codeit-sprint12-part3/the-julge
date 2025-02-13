@@ -7,19 +7,17 @@ import Title from "@/components/ui/Title";
 import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
 import { Icon } from "@/components/icon/Icon";
-import { useRouter } from "next/router";
+import router from "next/router";
 import { useAuthUser } from "@/stores/useAuthUser";
 import { applyToNotice, getUserApplications, updateApplicationStatus } from "@/lib/applications";
 import { useModal } from "@/context/ModalContext";
 import { toast } from "@/pages/_app";
 
 const DetailTopBox = () => {
-  const router = useRouter();
   const [postData, setPostData] = useState<NoticeWrapper>();
   const { openModal, closeModal } = useModal();
   const [statusText, setStatusText] = useState("");
-  const [shopId, setShopId] = useState<string | null>(null);
-  const [noticeId, setNoticeId] = useState<string | null>(null);
+  const { shopId, noticeId } = router.query;
   const [isClient, setIsClient] = useState(false);
   const [hasApplied, setHasApplied] = useState(false);
   const { token, user, logout, fetchAndSetUser } = useAuthUser();
