@@ -33,6 +33,13 @@ const DetailTopBox = () => {
   }, [token, user, fetchAndSetUser]);
   // 유저 정보 불러오기 [종료]
 
+  useEffect(() => {
+    if (router.isReady) {
+      setShopId((router.query.shopId as string) ?? null);
+      setNoticeId((router.query.noticeId as string) ?? null);
+    }
+  }, [router.isReady, router.query.shopId, router.query.noticeId]);
+
   // 공고 데이터 불러오기 [시작]
   useEffect(() => {
     const fetchData = async () => {
