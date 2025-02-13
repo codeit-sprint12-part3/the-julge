@@ -1,5 +1,5 @@
-import "@/styles/reset.css";
-import "@/styles/globals.css";
+import "../styles/reset.css";
+import "../styles/globals.css";
 import { ModalProvider } from "@/context/ModalContext";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
