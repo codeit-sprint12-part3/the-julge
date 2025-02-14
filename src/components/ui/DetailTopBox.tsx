@@ -38,7 +38,7 @@ const DetailTopBox = () => {
       setShopId((router.query.shopId as string) ?? null);
       setNoticeId((router.query.noticeId as string) ?? null);
     }
-  }, [router.isReady, router.query.shopId, router.query.noticeId]);
+  }, [router.isReady, router.query.shopId, router.query.noticeId, postData]);
 
   // 공고 데이터 불러오기 [시작]
   useEffect(() => {
@@ -222,7 +222,7 @@ const DetailTopBox = () => {
         setButtonAction(() => handleApply);
       }
     }
-  }, [isClient, closed, isPast, isLoggedIn, user, hasProfile, hasApplied]);
+  }, [isClient, closed, isPast, isLoggedIn, user, hasProfile, hasApplied, postData]);
 
   const button = (
     <Button
