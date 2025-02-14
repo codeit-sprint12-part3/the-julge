@@ -105,7 +105,7 @@ const DetailTopBox = () => {
   const handleGoToProfile = () => {
     const onConfirm = () => {
       closeModal();
-      router.push("/user/write");
+      router.push("/user/edit");
     };
     openModal(
       "confirm",
