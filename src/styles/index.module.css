@@ -22,25 +22,13 @@
 }
 
 @media (max-width: 964px) {
-  .fit_list {
-    flex-wrap: nowrap;
-    overflow-y: auto;
-    margin: 0 -2rem;
-    padding: 0 2rem;
-  }
-  .fit_list::-webkit-scrollbar {
+  .fit_list > li:last-child {
     display: none;
-  }
-  .fit_list > li {
-    min-width: 312px;
   }
 }
 @media (max-width: 744px) {
   .main_fit {
     padding: 40px 0;
-  }
-  .fit_list > li {
-    min-width: 171px;
   }
   .no_data {
     height: 100px;
