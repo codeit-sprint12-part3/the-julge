@@ -23,6 +23,7 @@ const DetailTopBox = () => {
   const [isClient, setIsClient] = useState(false);
   const [hasApplied, setHasApplied] = useState(false);
   const { token, user, logout, fetchAndSetUser } = useAuthUser();
+  const [isLoading, setIsLoading] = useState(false);
 
   // 유저 정보 불러오기 [시작]
   useEffect(() => {
@@ -44,11 +45,14 @@ const DetailTopBox = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!shopId || !noticeId) return;
+      setIsLoading(true);
       try {
         const data = await getShopNotice(shopId as string, noticeId as string);
         setPostData(data);
       } catch (error) {
         console.error("API 요청 중 오류 발생:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -234,6 +238,22 @@ const DetailTopBox = () => {
     />
   );
   // 버튼 렌더링 [종료]
+
+  if (!postData || isLoading) {
+    return (
+      <section className={`${styles.view_content} ${styles.loading}`}>
+        <div className={styles.category}>&nbsp;</div>
+        <Title text="&nbsp;" />
+        <div className={styles.box}>
+          <div className={styles.thumbnail}></div>
+        </div>
+        <div className={styles.description}>
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={styles.view_content}>

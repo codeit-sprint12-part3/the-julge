@@ -221,3 +221,25 @@
     font-size: 1.4rem;
   }
 }
+
+/* 로딩 중일 때 */
+.view_content.loading .description,
+.view_content.loading .box {
+  background: linear-gradient(
+    125deg,
+    var(--gray-200) 25%,
+    var(--gray-300) 50%,
+    var(--gray-200) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite linear;
+}
+/* 로딩 애니메이션 */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
