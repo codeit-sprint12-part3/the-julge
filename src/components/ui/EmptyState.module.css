@@ -7,6 +7,12 @@
   border: 1px solid var(--gray-300);
   border-radius: var(--border-radius-xl);
 }
+.empty-wrapper.white {
+  border-color: var(--white);
+}
+.empty-wrapper.black {
+  border-color: var(--gray-600);
+}
 
 .empty-message {
   margin-bottom: 2.7rem;

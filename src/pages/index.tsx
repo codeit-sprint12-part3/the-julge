@@ -7,10 +7,12 @@ import PostCard from "@/components/ui/PostCard";
 import Title from "@/components/ui/Title";
 import styles from "@/styles/index.module.css";
 import DataList from "@/components/ui/DataList";
+import EmptyState from "@/components/ui/EmptyState";
 
 export default function Home() {
   const { token, user } = useAuthUser();
   const [postFitData, setPostFitData] = useState<NoticeWrapper[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -22,6 +24,7 @@ export default function Home() {
     if (!isReady) return;
 
     const fetchFitData = async () => {
+      setIsLoading(true);
       try {
         let fitParams: NoticeRequestParams;
         if (user?.type === "employee" && user?.address) {
@@ -33,6 +36,8 @@ export default function Home() {
         setPostFitData(fitData.items || []);
       } catch (error) {
         console.error("맞춤 공고 API 요청 중 오류 발생:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchFitData();
@@ -52,7 +57,18 @@ export default function Home() {
         <main className={styles.main}>
           <section className={styles.main_fit}>
             <Title text="맞춤 공고" />
-            {postFitData.length > 0 ? (
+
+            {isLoading ? (
+              <ul className={`post_list ${styles.fit_list}`}>
+                {Array(3)
+                  .fill({})
+                  .map((_, index) => (
+                    <li key={index} className="loading_wrap">
+                      <PostCard isLoading={true} />
+                    </li>
+                  ))}
+              </ul>
+            ) : postFitData.length > 0 ? (
               <ul className={`post_list ${styles.fit_list}`}>
                 {postFitData.map(({ item }) => (
                   <li key={item.id}>
@@ -61,7 +77,12 @@ export default function Home() {
                 ))}
               </ul>
             ) : (
-              <p className={styles.no_data}>우리 동네에 공고가 없습니다.</p>
+              <EmptyState
+                message="선호하는 동네에 공고가 없습니다."
+                buttonText="동네 변경하기"
+                href="/user/edit"
+                lineStyle="black"
+              />
             )}
           </section>
           <DataList />

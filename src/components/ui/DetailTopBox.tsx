@@ -23,6 +23,7 @@ const DetailTopBox = () => {
   const [isClient, setIsClient] = useState(false);
   const [hasApplied, setHasApplied] = useState(false);
   const { token, user, logout, fetchAndSetUser } = useAuthUser();
+  const [isLoading, setIsLoading] = useState(false);
 
   // 유저 정보 불러오기 [시작]
   useEffect(() => {
@@ -38,17 +39,20 @@ const DetailTopBox = () => {
       setShopId((router.query.shopId as string) ?? null);
       setNoticeId((router.query.noticeId as string) ?? null);
     }
-  }, [router.isReady, router.query.shopId, router.query.noticeId]);
+  }, [router.isReady, router.query.shopId, router.query.noticeId, postData]);
 
   // 공고 데이터 불러오기 [시작]
   useEffect(() => {
     const fetchData = async () => {
       if (!shopId || !noticeId) return;
+      setIsLoading(true);
       try {
         const data = await getShopNotice(shopId as string, noticeId as string);
         setPostData(data);
       } catch (error) {
         console.error("API 요청 중 오류 발생:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -105,7 +109,7 @@ const DetailTopBox = () => {
   const handleGoToProfile = () => {
     const onConfirm = () => {
       closeModal();
-      router.push("/user/write");
+      router.push("/user/edit");
     };
     openModal(
       "confirm",
@@ -222,7 +226,7 @@ const DetailTopBox = () => {
         setButtonAction(() => handleApply);
       }
     }
-  }, [isClient, closed, isPast, isLoggedIn, user, hasProfile, hasApplied]);
+  }, [isClient, closed, isPast, isLoggedIn, user, hasProfile, hasApplied, postData]);
 
   const button = (
     <Button
@@ -234,6 +238,22 @@ const DetailTopBox = () => {
     />
   );
   // 버튼 렌더링 [종료]
+
+  if (!postData || isLoading) {
+    return (
+      <section className={`${styles.view_content} loading_wrap`}>
+        <div className={styles.category}>&nbsp;</div>
+        <Title text="&nbsp;" />
+        <div className={`${styles.box} loading_box`}>
+          <div className={styles.thumbnail}></div>
+        </div>
+        <div className={`${styles.description} loading_box`}>
+          <h3>&nbsp;</h3>
+          <p>&nbsp;</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={styles.view_content}>

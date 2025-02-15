@@ -6,11 +6,12 @@ interface EmptyStateProps {
   message: string;
   buttonText?: string;
   href?: string;
+  lineStyle?: "white" | "black";
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({ message, buttonText, href }) => {
+const EmptyState: React.FC<EmptyStateProps> = ({ message, buttonText, href, lineStyle }) => {
   return (
-    <div className={style["empty-wrapper"]}>
+    <div className={`${style["empty-wrapper"]} ${lineStyle ? style[lineStyle] : ""}`}>
       <p className={style["empty-message"]}>{message}</p>
       {buttonText && href && (
         <Link href={href}>

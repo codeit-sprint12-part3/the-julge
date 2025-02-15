@@ -200,3 +200,24 @@ footer {
   position: relative;
   z-index: 99;
 }
+
+/* loading */
+.loading_wrap .loading_box {
+  background: linear-gradient(
+    125deg,
+    var(--gray-200) 25%,
+    var(--gray-300) 50%,
+    var(--gray-200) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite linear;
+}
+/* loading animation */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

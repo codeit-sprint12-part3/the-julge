@@ -6,10 +6,37 @@ import Badge from "./Badge";
 import { NoticeItem } from "@/type";
 
 interface PostCardProps {
-  data: NoticeItem;
+  data?: NoticeItem;
+  isLoading?: boolean;
 }
 
-const PostCard = ({ data }: PostCardProps) => {
+const PostCard = ({ data, isLoading = false }: PostCardProps) => {
+  if (isLoading) {
+    return (
+      <div className={`${styles.post_box} loading_box`}>
+        <a>
+          <div className={styles.thumbnail}></div>
+        </a>
+        <div className={styles.content}>
+          <h3>&nbsp;</h3>
+          <ul>
+            <li>
+              <span>&nbsp;</span>
+            </li>
+            <li>
+              <span>&nbsp;</span>
+            </li>
+          </ul>
+          <div className={styles.price}>
+            <p>&nbsp;</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!data) return null;
+
   const { id, workhour, startsAt, hourlyPay, description, closed, shop } = data;
   const shopId = shop.item.id;
   const formatStartsAt = dayjs(startsAt);
