@@ -241,13 +241,13 @@ const DetailTopBox = () => {
 
   if (!postData || isLoading) {
     return (
-      <section className={`${styles.view_content} ${styles.loading}`}>
+      <section className={`${styles.view_content} loading_wrap`}>
         <div className={styles.category}>&nbsp;</div>
         <Title text="&nbsp;" />
-        <div className={styles.box}>
+        <div className={`${styles.box} loading_box`}>
           <div className={styles.thumbnail}></div>
         </div>
-        <div className={styles.description}>
+        <div className={`${styles.description} loading_box`}>
           <h3>&nbsp;</h3>
           <p>&nbsp;</p>
         </div>

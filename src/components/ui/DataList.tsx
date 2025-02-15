@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 const DataList = () => {
   const { token, user } = useAuthUser();
   const [postAllData, setPostAllData] = useState<NoticeWrapper[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [sortOpen, setSortOpen] = useState(false);
   const [sortState, setSortState] = useState("마감임박순");
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,6 +51,7 @@ const DataList = () => {
       : undefined;
 
     const fetchAllData = async () => {
+      setIsLoading(true);
       try {
         const allData: NoticeResponse = await getNotices({
           offset: (currentPage - 1) * itemsPerPage,
@@ -75,6 +77,8 @@ const DataList = () => {
         setTotalItems(allData.count || 0);
       } catch (error) {
         console.error("전체 공고 API 요청 중 오류 발생:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -171,7 +175,15 @@ const DataList = () => {
           </div>
         </Title>
       )}
-      {postAllData.length > 0 ? (
+      {isLoading ? (
+        <ul className="post_list">
+          {Array.from({ length: itemsPerPage }).map((_, index) => (
+            <li key={index} className="loading_wrap">
+              <PostCard isLoading={true} />
+            </li>
+          ))}
+        </ul>
+      ) : postAllData.length > 0 ? (
         <ul className="post_list">
           {postAllData.map(({ item }) => {
             if (!item) return null;
