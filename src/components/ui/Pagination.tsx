@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+import { Icon } from "../icon/Icon";
 import styles from "./Pagination.module.css";
+import { useRouter } from "next/router";
 
 interface PaginationProps {
   totalPosts: number;
@@ -8,9 +11,28 @@ interface PaginationProps {
 }
 
 const Pagination = ({ totalPosts, postsPerPage, currentPage, setCurrentPage }: PaginationProps) => {
+  const router = useRouter();
   const totalPages = Math.ceil(totalPosts / postsPerPage);
   const maxVisiblePages = 7; // 한 번에 보여줄 최대 페이지 개수
   const shouldHideArrows = totalPages <= maxVisiblePages; // 페이지 개수가 7개 이하일 때 화살표 숨김
+
+  // ✅ URL에서 page 값을 가져와 초기값 설정
+  useEffect(() => {
+    const pageFromQuery = Number(router.query.page) || 1;
+    if (pageFromQuery !== currentPage) {
+      setCurrentPage(pageFromQuery);
+    }
+  }, [router.query.page]);
+
+  // ✅ 페이지 변경 시 URL 업데이트
+  const updatePage = (page: number) => {
+    router.push(
+      { pathname: router.pathname, query: { ...router.query, page } }, // URL 쿼리스트링에 page 값 반영
+      undefined,
+      { shallow: true } // 페이지 전체 새로고침 없이 URL만 변경
+    );
+    setCurrentPage(page);
+  };
 
   // 페이지 리스트 생성
   const getPageNumbers = () => {
@@ -30,23 +52,10 @@ const Pagination = ({ totalPosts, postsPerPage, currentPage, setCurrentPage }: P
         {/* 왼쪽 화살표 */}
         <li>
           <button
-            onClick={() => setCurrentPage(Math.max(currentPage - 1, 1))}
+            onClick={() => updatePage(Math.max(currentPage - 1, 1))}
             className={currentPage === 1 || shouldHideArrows ? styles.hide : ""}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M13.4629 17.4702C13.1701 17.7631 12.6952 17.7631 12.4023 17.4702L5.53048 10.5984C5.38983 10.4577 5.31081 10.2669 5.31081 10.068C5.31081 9.86911 5.38983 9.67834 5.53048 9.53769L12.4023 2.66588C12.6952 2.37299 13.1701 2.37299 13.4629 2.66588C13.7558 2.95878 13.7558 3.43365 13.4629 3.72654L7.12147 10.068L13.4629 16.4095C13.7558 16.7024 13.7558 17.1773 13.4629 17.4702Z"
-                fill="#111322"
-              />
-            </svg>
+            <Icon name="leftArr" color="var(--black)" size={16} />
           </button>
         </li>
 
@@ -54,7 +63,7 @@ const Pagination = ({ totalPosts, postsPerPage, currentPage, setCurrentPage }: P
         {getPageNumbers().map((page) => (
           <li key={page}>
             <button
-              onClick={() => setCurrentPage(page)}
+              onClick={() => updatePage(page)}
               className={currentPage === page ? styles.active : ""}
             >
               {page}
@@ -65,23 +74,10 @@ const Pagination = ({ totalPosts, postsPerPage, currentPage, setCurrentPage }: P
         {/* 오른쪽 화살표 */}
         <li>
           <button
-            onClick={() => setCurrentPage(Math.min(currentPage + 1, totalPages))}
+            onClick={() => updatePage(Math.min(currentPage + 1, totalPages))}
             className={currentPage === totalPages || shouldHideArrows ? styles.hide : ""}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M6.46967 17.4702C6.76256 17.7631 7.23744 17.7631 7.53033 17.4702L14.4021 10.5984C14.5428 10.4577 14.6218 10.2669 14.6218 10.068C14.6218 9.86911 14.5428 9.67834 14.4021 9.53769L7.53033 2.66588C7.23744 2.37299 6.76256 2.37299 6.46967 2.66588C6.17678 2.95878 6.17678 3.43365 6.46967 3.72654L12.8111 10.068L6.46967 16.4095C6.17678 16.7024 6.17678 17.1773 6.46967 17.4702Z"
-                fill="#111322"
-              />
-            </svg>
+            <Icon name="rightArr" color="var(--black)" size={16} />
           </button>
         </li>
       </ul>
