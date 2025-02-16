@@ -29,6 +29,9 @@ const AlertsItem = ({ alertItem, handleAlertRead }: AlertsItemProps) => {
     case "rejected":
       resultText = "거절";
       break;
+    case "canceled":
+      resultText = "취소";
+      break;
     default:
       resultText = "";
   }

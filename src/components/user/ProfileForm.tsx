@@ -10,11 +10,12 @@ import { useAuthUser } from "@/stores/useAuthUser";
 import { updateUserInfo } from "@/lib/users";
 import { SEOUL_DISTRICTS } from "@/constants/constants";
 import style from "@/components/user/ProfileForm.module.css";
+import { useEffect, useState } from "react";
 
 const profileSchema = z.object({
   name: z.string().min(2, "이름은 최소 2자 이상이어야 합니다."),
   phone: z.string().regex(/^\d{3}-\d{3,4}-\d{4}$/, "올바른 연락처 형식이 아닙니다."),
-  address: z.string().min(1, "선호 지역을 선택해주세요."),
+  address: z.string().nonempty("선호 지역을 선택해주세요."),
   bio: z.string().max(200, "소개는 최대 200자까지 입력 가능합니다.").optional(),
 });
 
@@ -23,6 +24,7 @@ type FormVal = z.infer<typeof profileSchema>;
 const ProfileForm = () => {
   const { user, fetchAndSetUser } = useAuthUser();
   const router = useRouter();
+  const [phone, setPhone] = useState("");
 
   const {
     register,
@@ -43,7 +45,26 @@ const ProfileForm = () => {
         : undefined,
   });
 
+  useEffect(() => {
+    if (user?.address === undefined) {
+      setValue("address", ""); // address를 빈 문자열로 설정하여 nonempty가 정상 동작하도록 함
+    }
+  }, [user?.address, setValue]);
+
   const address = watch("address");
+
+  const formatPhoneNumber = (value: string) => {
+    const cleaned = value.replace(/\D/g, "");
+    if (cleaned.length <= 3) return cleaned;
+    if (cleaned.length <= 7) return `${cleaned.slice(0, 3)}-${cleaned.slice(3)}`;
+    return `${cleaned.slice(0, 3)}-${cleaned.slice(3, 7)}-${cleaned.slice(7, 11)}`;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setPhone(formatted);
+    setValue("phone", formatted, { shouldValidate: true });
+  };
 
   const onSubmit = async (formVal: FormVal) => {
     if (!user?.id) {
@@ -80,6 +101,7 @@ const ProfileForm = () => {
             type="text"
             {...register("phone")}
             error={errors.phone?.message}
+            onChange={handleChange}
             required={true}
             placeholder="입력"
           />
@@ -91,16 +113,20 @@ const ProfileForm = () => {
           <CustomSelect
             menuItems={SEOUL_DISTRICTS}
             type="button"
-            onChange={(value) => setValue("address", value)}
+            onChange={(value) => setValue("address", value, { shouldValidate: true })}
             value={address}
           />
-          {errors.address && <p className={style.errorText}>{errors.address.message}</p>}
+          <div className={style["errorMessage"]}>
+            {errors.address && <p className={style.errorText}>{errors.address.message}</p>}
+          </div>
         </div>
       </div>
       <div>
         <span className={style["label-text"]}>소개</span>
         <textarea {...register("bio")} placeholder="입력" className={style["form-textarea"]} />
-        {errors.bio && <p className={style.errorText}>{errors.bio.message}</p>}
+        <div className={style["errorMessage"]}>
+          {errors.bio && <p className={style.errorText}>{errors.bio.message}</p>}
+        </div>
       </div>
       <div className={style["form-button-box"]}>
         <Button buttonText="등록하기" type="submit" size="large" styleButton="primary" />
