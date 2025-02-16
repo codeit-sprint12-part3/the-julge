@@ -9,6 +9,10 @@
   gap: 18rem;
 }
 
+.user-wrapper > .is-empty {
+  padding-bottom: 45rem;
+}
+
 .user-wrapper .history-section {
   position: relative;
   padding-bottom: 12rem;
@@ -36,5 +40,11 @@
 
   .user-wrapper .history-section {
     padding-bottom: 8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-wrapper > .is-empty {
+    padding-bottom: 28rem;
   }
 }

@@ -10,19 +10,19 @@ import Alerts from "../alerts/Alerts";
 const Header = () => {
   const { token, user, logout, fetchAndSetUser } = useAuthUser();
   const router = useRouter();
-  const [isClient, setIsClient] = useState(false); // 클라이언트 렌더링 체크
-  const [searchValue, setSearchValue] = useState(""); // 검색어
+  const [isClient, setIsClient] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const [isAlertsOpen, setIsAlertsOpen] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
     if (token && !user) {
-      fetchAndSetUser(); // 유저 정보 자동 로드
+      fetchAndSetUser();
     }
   }, [token, user, fetchAndSetUser]);
 
   const handleLogout = () => {
-    logout(); // Zustand에서 로그아웃 실행
+    logout();
     router.push("/");
   };
 

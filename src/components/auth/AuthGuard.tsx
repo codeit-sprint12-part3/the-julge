@@ -22,7 +22,9 @@ const AuthGuard = (Component: any, requiredType?: "employer" | "employee") => {
 
     useEffect(() => {
       if (isFetched) {
-        if (requiredType && user?.type !== requiredType) {
+        if (!token && !user) {
+          router.replace("/");
+        } else if (requiredType && user?.type !== requiredType) {
           router.replace("/403");
         } else {
           setIsLoading(false);

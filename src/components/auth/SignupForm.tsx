@@ -8,6 +8,7 @@ import { registerUser } from "@/lib/users";
 import { useRouter } from "next/router";
 import { login } from "@/lib/auth";
 import { useAuthUser } from "@/stores/useAuthUser";
+import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import Button from "@/components/ui/Button";
 import style from "@/components/auth/Auth.module.css";
@@ -100,7 +101,15 @@ const SignupForm = () => {
         router.push("/auth/login");
       }
     } catch (error) {
-      toast("회원가입 실패 🥹");
+      if (error instanceof AxiosError) {
+        const messages: Record<number, string> = {
+          400: "입력한 값을 확인해주세요",
+          409: "이미 존재하는 이메일 입니다",
+        };
+        toast(messages[error.response?.status!] || "회원가입 실패 🥹");
+      } else {
+        toast("회원가입 실패 🥹");
+      }
     }
   };
 

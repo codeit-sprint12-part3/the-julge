@@ -60,7 +60,7 @@ function LoginForm() {
       router.push("/");
     } catch (error) {
       // 로그인 실패 / 이메일 또는 비밀번호가 올바르지 않음
-      toast("로그인 실패 🥹");
+      toast("존재하지 않거나 비밀번호가 일치하지 않아요");
     }
   };
 

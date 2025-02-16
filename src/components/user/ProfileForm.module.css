@@ -30,6 +30,13 @@
   min-height: 8rem;
 }
 
+.errorMessage {
+  margin: 0.8rem 0;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  color: var(--red-400);
+}
+
 @media (max-width: 768px) {
   .grid-box {
     grid-template-columns: repeat(2, 1fr);
