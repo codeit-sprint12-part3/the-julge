@@ -12,11 +12,7 @@ export default function SearchPage() {
         <meta property="og:image" content="/thumbnail.jpg" />
         <meta property="og:title" content="더 줄게 - 일자리 매칭 플랫폼" />
       </Head>
-      <div>
-        <main className={styles.main}>
-          <DataList />
-        </main>
-      </div>
+      <DataList />
     </>
   );
 }

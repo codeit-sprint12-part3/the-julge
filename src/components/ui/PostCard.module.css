@@ -159,3 +159,15 @@
     fill: var(--gray-300);
   }
 }
+
+@media (max-width: 414px) {
+  .post_box > a {
+    display: flex;
+  }
+  .post_box > a > .thumbnail {
+    width: 60%;
+    margin-right: 10px;
+    padding-top: 0;
+    height: auto;
+  }
+}

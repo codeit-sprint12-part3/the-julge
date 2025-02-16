@@ -4,6 +4,7 @@ import { Icon } from "../icon/Icon";
 import dayjs from "dayjs";
 import Badge from "./Badge";
 import { NoticeItem } from "@/type";
+import { motion } from "framer-motion";
 
 interface PostCardProps {
   data?: NoticeItem;
@@ -48,7 +49,13 @@ const PostCard = ({ data, isLoading = false }: PostCardProps) => {
   const statusText = closed ? "마감 완료" : isPast ? "지난공고" : "";
 
   return (
-    <div className={`${styles.post_box} ${closed ? styles.end : ""} ${isPast ? styles.end : ""}`}>
+    <motion.div
+      whileHover={{
+        scale: 1.02,
+        boxShadow: "0 3px 6px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06)",
+      }}
+      className={`${styles.post_box} ${closed ? styles.end : ""} ${isPast ? styles.end : ""}`}
+    >
       <Link href={`/view/${shopId}/${id}`}>
         <div className={styles.thumbnail}>
           <span className={styles.end}>{statusText}</span>
@@ -78,7 +85,7 @@ const PostCard = ({ data, isLoading = false }: PostCardProps) => {
           </div>
         </div>
       </Link>
-    </div>
+    </motion.div>
   );
 };
 

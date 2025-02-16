@@ -196,6 +196,18 @@ a {
   }
 }
 
+@media (max-width: 414px) {
+  .post_list {
+    margin: 0 0px -10px;
+  }
+
+  .post_list > li {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+}
+
 footer {
   position: relative;
   z-index: 99;
