@@ -44,7 +44,7 @@ export interface AlertItem {
   id: string;
   notice: Notice;
   read: boolean;
-  result: "accepted" | "rejected";
+  result: "accepted" | "rejected" | "canceled";
   shop: Shop;
 }
 

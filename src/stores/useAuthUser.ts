@@ -41,7 +41,7 @@ export const useAuthUser = create<AuthState>()(
       logout: () => {
         removeToken();
         set({ token: null, user: null });
-        toast.success("또 만나요 🫶🏻");
+        toast("또 만나요 🫶🏻");
       },
       fetchAndSetUser: async () => {
         const { token } = get();

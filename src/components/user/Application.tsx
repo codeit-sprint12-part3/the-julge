@@ -116,13 +116,7 @@ const Application: React.FC<ApplicationProps> = ({ data }) => {
                 </li>
                 <li className={styles.td}>{app.notice.hourlyPay.toLocaleString()}원</li>
                 <li className={styles.td}>
-                  {app.status === "rejected" ? (
-                    <Badge type="rejected" />
-                  ) : app.status === "pending" ? (
-                    <Badge type="pending" />
-                  ) : app.status === "accepted" ? (
-                    <Badge type="accepted" />
-                  ) : null}
+                  <Badge type={app.status} />
                 </li>
               </ul>
             ))}

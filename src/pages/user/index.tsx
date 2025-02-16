@@ -40,7 +40,7 @@ function Page() {
 
   return (
     <div className={style["user-wrapper"]}>
-      <section className={isProfile ? style["is-profile"] : ""}>
+      <section className={isProfile ? style["is-profile"] : style["is-empty"]}>
         <Title text="내 프로필" />
         {isProfile ? (
           <Profile userInfo={user} />

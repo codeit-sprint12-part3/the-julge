@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^4.0.0",
     "@mui/material": "^6.4.2",
     "@types/qs": "^6.9.18",
+    "@types/react-input-mask": "^3.0.6",
     "axios": "^1.7.9",
     "cookie": "^1.0.2",
     "dayjs": "^1.11.13",
