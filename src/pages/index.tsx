@@ -53,41 +53,39 @@ export default function Home() {
         <meta property="og:image" content="/thumbnail.jpg" />
         <meta property="og:title" content="더 줄게 - 일자리 매칭 플랫폼" />
       </Head>
-      <div>
-        <main className={styles.main}>
-          <section className={styles.main_fit}>
-            <Title text="맞춤 공고" />
+      <>
+        <section className={styles.main_fit}>
+          <Title text="맞춤 공고" />
 
-            {isLoading ? (
-              <ul className={`post_list ${styles.fit_list}`}>
-                {Array(3)
-                  .fill({})
-                  .map((_, index) => (
-                    <li key={index} className="loading_wrap">
-                      <PostCard isLoading={true} />
-                    </li>
-                  ))}
-              </ul>
-            ) : postFitData.length > 0 ? (
-              <ul className={`post_list ${styles.fit_list}`}>
-                {postFitData.map(({ item }) => (
-                  <li key={item.id}>
-                    <PostCard data={item} />
+          {isLoading ? (
+            <ul className={`post_list ${styles.fit_list}`}>
+              {Array(3)
+                .fill({})
+                .map((_, index) => (
+                  <li key={index} className="loading_wrap">
+                    <PostCard isLoading={true} />
                   </li>
                 ))}
-              </ul>
-            ) : (
-              <EmptyState
-                message="선호하는 동네에 공고가 없습니다."
-                buttonText="동네 변경하기"
-                href="/user/edit"
-                lineStyle="black"
-              />
-            )}
-          </section>
-          <DataList />
-        </main>
-      </div>
+            </ul>
+          ) : postFitData.length > 0 ? (
+            <ul className={`post_list ${styles.fit_list}`}>
+              {postFitData.map(({ item }) => (
+                <li key={item.id}>
+                  <PostCard data={item} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <EmptyState
+              message="선호하는 동네에 공고가 없습니다."
+              buttonText="동네 변경하기"
+              href="/user/edit"
+              lineStyle="black"
+            />
+          )}
+        </section>
+        <DataList />
+      </>
     </>
   );
 }
