@@ -5,8 +5,9 @@ import { useAuthUser } from "@/stores/useAuthUser";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getUserInfo } from "@/lib/users";
+import AuthGuard from "@/components/auth/AuthGuard";
 
-export default function Myshop() {
+function Page() {
   const { token, user, fetchAndSetUser } = useAuthUser();
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
@@ -60,3 +61,5 @@ export default function Myshop() {
     </div>
   );
 }
+
+export default AuthGuard(Page, "employer");
