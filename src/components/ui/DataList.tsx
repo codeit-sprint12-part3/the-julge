@@ -18,7 +18,7 @@ const DataList = () => {
   const [postAllData, setPostAllData] = useState<NoticeWrapper[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [sortOpen, setSortOpen] = useState(false);
-  const [sortState, setSortState] = useState("마감임박순");
+  const [sortState, setSortState] = useState("가나다순");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const [totalItems, setTotalItems] = useState(0);
@@ -57,13 +57,13 @@ const DataList = () => {
           offset: (currentPage - 1) * itemsPerPage,
           limit: itemsPerPage,
           sort:
-            sortState === "마감임박순"
-              ? "time"
+            sortState === "가나다순"
+              ? "shop"
               : sortState === "시급많은순"
               ? "pay"
               : sortState === "시간적은순"
               ? "hour"
-              : "shop",
+              : "time",
           address:
             appliedFilter.selectedAddresses.length > 0
               ? appliedFilter.selectedAddresses
@@ -127,10 +127,10 @@ const DataList = () => {
                 <ul>
                   <li
                     onClick={() => {
-                      sortSet("마감임박순");
+                      sortSet("가나다순");
                     }}
                   >
-                    마감임박순
+                    가나다순
                   </li>
                   <li
                     onClick={() => {
@@ -148,10 +148,10 @@ const DataList = () => {
                   </li>
                   <li
                     onClick={() => {
-                      sortSet("가나다순");
+                      sortSet("마감임박순");
                     }}
                   >
-                    가나다순
+                    마감임박순
                   </li>
                 </ul>
               )}

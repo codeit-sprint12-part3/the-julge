@@ -81,10 +81,22 @@
 .post_box > a > .content > .price > p {
   font-size: 2.4rem;
   font-weight: 600;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 .post_box > a > .content > .price > span {
   margin: 0;
   font-weight: 600;
+  max-width: 155px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 /* 마감완료, 지난공고  */
