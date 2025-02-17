@@ -5,11 +5,12 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   className?: string;
   error?: string;
+  subText?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   (
-    { placeholder, type, id, name, label, className, required, error, onBlur, onChange, ...rest },
+    { subText, placeholder, type, id, name, label, className, required, error, onBlur, onChange, ...rest },
     ref
   ) => {
     return (
@@ -24,23 +25,28 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             )}
           </label>
         )}
-        <input
-          ref={ref}
-          id={id}
-          className={`${style.input} ${className} ${error ? style.errorInput : ""}`}
-          placeholder={placeholder}
-          type={type}
-          name={name}
-          onChange={onChange}
-          onBlur={onBlur}
-          {...rest}
-        />
+        <div className={style.inputBox}>
+          <input
+            ref={ref}
+            id={id}
+            className={`${style.input} ${className} ${error ? style.errorInput : ""}`}
+            placeholder={placeholder}
+            type={type}
+            name={name}
+            onChange={onChange}
+            onBlur={onBlur}
+            {...rest}
+          />
+          {
+            subText && <span className={style.subText}>{subText}</span>
+          }
+        </div>
         {error && <div className={style.errorMessage}>{error}</div>}
       </>
     );
   }
 );
 
-Input.displayName = "Input"; // React DevTools에서 표시될 이름
+Input.displayName = "Input";
 
 export default Input;

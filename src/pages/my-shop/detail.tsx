@@ -10,7 +10,7 @@ import AuthGuard from "@/components/auth/AuthGuard";
 
 function Page() {
   const router = useRouter();
-  const { shopId } = router.query; // URL에서 shopId 가져오기
+  const { shopId } = router.query;
   const [shop, setShop] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -19,7 +19,7 @@ function Page() {
       setLoading(true);
       getShopInfo(shopId as string)
         .then((data) => {
-          setShop(data.item); // data.item으로 설정
+          setShop(data.item);
           setLoading(false);
         })
         .catch((error) => {

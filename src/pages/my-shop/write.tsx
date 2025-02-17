@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import style from "./Myshop.module.css";
 import axios from "axios";
-import { toast } from "react-toastify";
 import CustomSelect from "@/components/ui/CustomSelect";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
@@ -39,8 +38,11 @@ function useAuth() {
 }
 
 function Page() {
+
   const router = useRouter();
   const token = useAuth(); // 토큰 관리
+
+  type Category = "한식" | "중식" | "일식" | "양식" | "분식" | "카페" | "편의점" | "기타";
   const [shopName, setShopName] = useState("");
   const [shopClassification, setShopClassification] = useState("");
   const [shopAddress, setShopAddress] = useState("");
@@ -48,47 +50,62 @@ function Page() {
   const [shopImage, setShopImage] = useState<File | null>(null);
   const [shopDescription, setShopDescription] = useState("");
   const [error, setError] = useState<{ [key: string]: string }>({});
-
-  const { shopId } = router.query; // 쿼리에서 shopId 가져오기
-
+  const { shopId } = router.query;
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"alert" | "confirm" | "notice">("alert");
   const [modalText, setModalText] = useState("");
-  const [registeredShopId, setRegisteredShopId] = useState<string | null>(null); // Store shopId here
+  const [registeredShopId, setRegisteredShopId] = useState<string | null>(null);
+  const [basicSalary, setBasicSalary] = useState("");
 
   useEffect(() => {
     if (shopId) {
-      console.log("shopId 값 확인:", shopId); // shopId가 제대로 받아졌는지 확인
+      console.log("shopId 값 확인:", shopId);
     }
   }, [shopId]);
+
+
+  const formatCurrency = (value: string) => {
+    const cleanedValue = value.replace(/[^0-9]/g, "");
+    return cleanedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  const removeCommas = (value: string) => {
+    return value.replace(/[^0-9]/g, "");
+  };
+
+  const handleBasicSalaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatCurrency(e.target.value);
+    setBasicSalary(formattedValue);
+  };
+
+  const handleBasicSalaryBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const numericValue = removeCommas(e.target.value);
+
+    const errorMessage = validateField("basicSalary", numericValue);
+    setError((prevError) => ({
+      ...prevError,
+      basicSalary: errorMessage,
+    }));
+
+    setBasicSalary(e.target.value);
+  };
 
   // 필드 검증 함수
   const validateField = (field: string, value: string) => {
     switch (field) {
       case "shopName":
-        if (!value) {
-          return "가게 이름은 필수 입력 항목입니다.";
-        }
-        break;
+        return value ? "" : "가게 이름은 필수 입력 항목입니다.";
       case "shopClassification":
-        if (!value) {
-          return "가게 분류는 필수 입력 항목입니다.";
-        }
-        break;
+        return value ? "" : "가게 분류는 필수 입력 항목입니다."; // 필수 입력 검사 추가
       case "shopAddress":
-        if (!value) {
-          return "주소는 필수 입력 항목입니다.";
-        }
-        break;
+        return value ? "" : "주소는 필수 입력 항목입니다."; // 필수 입력 검사 추가
       case "detailShopAddress":
-        if (!value) {
-          return "상세주소는 필수 입력 항목입니다.";
-        }
-        break;
+        return value ? "" : "상세주소는 필수 입력 항목입니다.";
+      case "basicSalary":
+        return value ? "" : "기본 시급은 필수 입력 항목입니다.";
       default:
         return "";
     }
-    return "";
   };
 
   const handleBlur = (field: string, value: string) => {
@@ -99,33 +116,23 @@ function Page() {
     }));
   };
 
+  // 전체 폼 유효성 검사 함수
   const validateForm = () => {
     const errors: { [key: string]: string } = {};
     let isValid = true;
 
-    // 필수 입력 항목 검증
-    if (!shopName) {
-      errors.shopName = "가게 이름은 필수 입력 항목입니다.";
-      isValid = false;
-    }
-    if (!shopClassification) {
-      errors.shopClassification = "가게 분류는 필수 입력 항목입니다.";
-      isValid = false;
-    }
-    if (!shopAddress) {
-      errors.shopAddress = "주소는 필수 입력 항목입니다.";
-      isValid = false;
-    }
-    if (!detailShopAddress) {
-      errors.detailShopAddress = "상세주소는 필수 입력 항목입니다.";
-      isValid = false;
-    }
+    ["shopName", "shopClassification", "shopAddress", "detailShopAddress", "basicSalary"].forEach((field) => {
+      const errorMessage = validateField(field, eval(field));
+      if (errorMessage) {
+        errors[field] = errorMessage;
+        isValid = false;
+      }
+    });
 
-    setError(errors); // 에러 상태 업데이트
+    setError(errors);
     return isValid;
   };
 
-  // Presigned URL을 생성하여 이미지 업로드
   const getPresignedUrl = async (file: File) => {
     try {
       const response = await axios.post(
@@ -147,23 +154,21 @@ function Page() {
     }
   };
 
-  // S3에 이미지를 업로드하는 함수
   const uploadImageToS3 = async (file: File) => {
     try {
-      const presignedUrl = await getPresignedUrl(file); // presigned URL 얻기
+      const presignedUrl = await getPresignedUrl(file);
       await axios.put(presignedUrl, file, {
-        headers: { "Content-Type": file.type }, // 파일의 MIME 타입을 설정
+        headers: { "Content-Type": file.type },
       });
 
       console.log("이미지 업로드 성공:", presignedUrl);
-      return presignedUrl.split("?")[0]; // 쿼리 파라미터를 제외한 URL 반환
+      return presignedUrl.split("?")[0];
     } catch (error) {
       console.error("이미지 업로드 실패:", error);
       throw error;
     }
   };
 
-  // 가게가 이미 등록되어 있는지 확인하는 함수
   const checkIfShopExists = async (shopName: string) => {
     try {
       const response = await axios.get(
@@ -174,15 +179,13 @@ function Page() {
       );
 
       if (response.data && response.data.items.length > 0) {
-        // 이미 가게가 존재하는 경우
         return true;
       }
 
-      // 가게가 존재하지 않는 경우
       return false;
     } catch (error) {
       console.error("가게 존재 여부 확인 실패:", error);
-      return false; // 실패시에는 false로 처리
+      return false;
     }
   };
 
@@ -203,8 +206,10 @@ function Page() {
     try {
       let imageUrl = "";
       if (shopImage) {
-        imageUrl = await uploadImageToS3(shopImage); // 이미지 업로드 처리
+        imageUrl = await uploadImageToS3(shopImage);
       }
+
+      const numericSalary = removeCommas(basicSalary);
 
       const dataToSend = {
         name: shopName,
@@ -212,16 +217,16 @@ function Page() {
         address1: shopAddress,
         address2: detailShopAddress,
         description: shopDescription,
-        imageUrl: imageUrl || "", // 업로드된 이미지 URL
-        originalHourlyPay: 9860, // 기본 시급
+        imageUrl: imageUrl || "",
+        originalHourlyPay: parseInt(numericSalary, 10) || 0,  // Ensure it's a number, default to 0
       };
 
-      const response = await registerShop(dataToSend); // 가게 등록 API 호출
+      const response = await registerShop(dataToSend);
 
       if (response) {
         setModalType("alert");
         setModalText("가게가 등록되었습니다.");
-        setRegisteredShopId(response.item.id); // Store shopId
+        setRegisteredShopId(response.item.id);
         setModalOpen(true);
       }
     } catch (error) {
@@ -245,7 +250,7 @@ function Page() {
               placeholder="입력"
               value={shopName}
               onChange={(e) => setShopName(e.target.value)}
-              onBlur={(e) => handleBlur("shopName", e.target.value)} // 포커스 아웃 시 검증
+              onBlur={(e) => handleBlur("shopName", e.target.value)}
               required
               error={error.shopName}
             />
@@ -256,11 +261,17 @@ function Page() {
               분류
               <em title="필수 입력">*</em>
             </span>
+
             <CustomSelect
               menuItems={categoryOptions}
               type="button"
-              onChange={setShopClassification}
+              onChange={(value) => {
+                setShopClassification(value as Category);
+                handleBlur("shopClassification", value);  // 유효성 검사 추가
+              }}
               value={shopClassification}
+              error={error.shopClassification} // error prop 전달
+              onBlur={(e) => handleBlur("shopClassification", shopClassification)}  // onBlur 수정
             />
           </div>
         </div>
@@ -274,9 +285,15 @@ function Page() {
             <CustomSelect
               menuItems={addressOptions}
               type="button"
-              onChange={setShopAddress}
+              onChange={(value) => {
+                setShopAddress(value);
+                handleBlur("shopAddress", value);  // 유효성 검사 추가
+              }}
               value={shopAddress}
+              error={error.shopAddress}
+              onBlur={(e) => handleBlur("shopAddress", shopAddress)}  // onBlur 수정
             />
+
           </div>
           <div className={style.box}>
             <Input
@@ -286,9 +303,26 @@ function Page() {
               placeholder="입력"
               value={detailShopAddress}
               onChange={(e) => setDetailShopAddress(e.target.value)}
-              onBlur={(e) => handleBlur("detailShopAddress", e.target.value)} // 포커스 아웃 시 검증
+              onBlur={(e) => handleBlur("detailShopAddress", e.target.value)}
               required
               error={error.detailShopAddress}
+            />
+          </div>
+        </div>
+
+        <div className={style.inputContainer}>
+          <div className={style.box}>
+            <Input
+              label="기본 시급"
+              id="BasicSalary"
+              type="text"
+              placeholder="입력"
+              value={basicSalary}
+              onChange={handleBasicSalaryChange}
+              onBlur={handleBasicSalaryBlur}
+              required
+              error={error.basicSalary}
+              subText="원"
             />
           </div>
         </div>
@@ -324,7 +358,7 @@ function Page() {
         onClose={() => {
           setModalOpen(false);
           if (registeredShopId) {
-            router.push(`/my-shop/detail?shopId=${registeredShopId}`); // 이미 등록된 shopId로 상세 페이지로 이동
+            router.push(`/my-shop/detail?shopId=${registeredShopId}`);
           }
         }}
         type={modalType}
