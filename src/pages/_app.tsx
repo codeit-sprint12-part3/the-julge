@@ -16,33 +16,33 @@ export { toast };
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 800);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 800);
 
-    const handleStart = () => setLoading(true);
-    const handleComplete = () => setLoading(false);
+  //   const handleStart = () => setLoading(true);
+  //   const handleComplete = () => setLoading(false);
 
-    router.events.on("routeChangeStart", handleStart);
-    router.events.on("routeChangeComplete", handleComplete);
-    router.events.on("routeChangeError", handleComplete);
+  //   router.events.on("routeChangeStart", handleStart);
+  //   router.events.on("routeChangeComplete", handleComplete);
+  //   router.events.on("routeChangeError", handleComplete);
 
-    return () => {
-      router.events.off("routeChangeStart", handleStart);
-      router.events.off("routeChangeComplete", handleComplete);
-      router.events.off("routeChangeError", handleComplete);
-    };
-  }, [router]);
+  //   return () => {
+  //     router.events.off("routeChangeStart", handleStart);
+  //     router.events.off("routeChangeComplete", handleComplete);
+  //     router.events.off("routeChangeError", handleComplete);
+  //   };
+  // }, [router]);
 
   const noLayout = ["/auth/signup", "/auth/login", "/404", "/403"].includes(router.pathname);
 
   return (
     <ModalProvider>
-      {loading && <SpinnerLoader />}
-      <div style={{ overflow: "Hidden", display: loading ? "none" : "block" }}>
+      {/* {loading && <SpinnerLoader />} */}
+      <div style={{ overflow: "Hidden" }}>
         {!noLayout && <Header />}
         <main className={noLayout ? "" : "main-container"}>
           <Component {...pageProps} />
