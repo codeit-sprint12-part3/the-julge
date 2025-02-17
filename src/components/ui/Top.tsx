@@ -35,14 +35,9 @@ const Top = () => {
 
   return (
     <>
-      {isVisible && (
-        <button
-          onClick={scrollToTop}
-          className={`${style.top} ${isVisible ? style.active : ""}`}
-        >
-          TOP
-        </button>
-      )}
+      <button onClick={scrollToTop} className={`${style.top} ${isVisible ? style.active : ""}`}>
+        TOP
+      </button>
     </>
   );
 };
