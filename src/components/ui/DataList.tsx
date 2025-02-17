@@ -91,6 +91,7 @@ const DataList = () => {
 
   const sortSet = (state: string) => {
     setSortState(state);
+    setCurrentPage(1);
     setSortOpen(false);
   };
 
@@ -101,6 +102,7 @@ const DataList = () => {
         (newFilters.startDate ? 1 : 0) +
         (newFilters.price ? 1 : 0)
     );
+    setCurrentPage(1);
     setFilterOpen(false);
   };
 
