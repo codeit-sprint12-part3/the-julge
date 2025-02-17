@@ -96,3 +96,14 @@
     padding: 1.5rem 1rem 1.4rem 2rem !important;
   }
 }
+
+.errorSelect {
+  border: 1px solid var(--red-400) !important;
+}
+
+.errorMessage {
+  margin: 0.8rem 0;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  color: var(--red-400);
+}

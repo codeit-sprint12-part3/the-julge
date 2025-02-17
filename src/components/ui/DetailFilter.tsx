@@ -50,6 +50,16 @@ export default function DetailFilter({
     }));
   };
 
+  // 금액에 콤마 추가
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 추출
+    const formattedValue = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, ','); // 콤마 추가
+    setFilters((prev) => ({
+      ...prev,
+      price: formattedValue,
+    }));
+  };
+
   // 초기화
   const handleReset = () => {
     setFilters({
@@ -75,7 +85,7 @@ export default function DetailFilter({
       {/* 위치 선택 */}
       <div className={style.filterBox}>
         <span className={style.text}>위치</span>
-        <div className={style.addressBox}>
+        <div className={`${style.addressBox} scrollable`}>
           <ul className={style.addressList}>
             {SEOUL_DISTRICTS.map((data) => (
               <li key={data}>
@@ -129,7 +139,7 @@ export default function DetailFilter({
               type="text"
               value={filters.price}
               placeholder="입력"
-              onChange={(e) => handleChange("price", e.target.value)}
+              onChange={handlePriceChange} // 콤마 처리된 값으로 변경
             />
             <span className={style.priceText}>원</span>
           </div>

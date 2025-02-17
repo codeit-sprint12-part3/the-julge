@@ -10,6 +10,7 @@ import Header from "@/components/layout/Header";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "@/styles/Toast.css";
+import Top from "@/components/ui/Top";
 
 export { toast };
 
@@ -45,6 +46,7 @@ export default function App({ Component, pageProps }: AppProps) {
         {!noLayout && <Header />}
         <main className={noLayout ? "" : "main-container"}>
           <Component {...pageProps} />
+          <Top />
         </main>
         {!noLayout && <Footer />}
       </div>

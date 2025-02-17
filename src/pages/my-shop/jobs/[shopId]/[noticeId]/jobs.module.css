@@ -32,37 +32,41 @@
   z-index: -1;
 }
 
-.inputWrap {
+.announcementContainer .inputWrap {
   display: flex;
   gap: 0 2rem;
 }
 
-.inputWrap label {
+.announcementContainer .inputWrap label {
   display: block;
   margin-bottom: 0.8rem;
   color: var(--font-color);
   line-height: 1.6;
 }
 
-.inputWrap .inputContainer {
+.announcementContainer .inputWrap .inputContainer {
   width: 33.33%;
 }
 
-.inputWrap .inputBox input {
+.announcementContainer .inputWrap .inputBox {
+  position: relative;
+}
+
+.announcementContainer .inputWrap .inputBox input {
   padding-right: 5rem;
 }
 
-.inputWrap .startDateInputBox input {
+.announcementContainer .inputWrap .startDateInputBox input {
   padding-right: 2rem;
 }
 
 @media (max-width: 767px) {
-  .inputWrap {
+  .announcementContainer .inputWrap {
     flex-direction: column;
     gap: 2rem 0;
   }
 
-  .inputWrap .inputContainer {
+  .announcementContainer .inputWrap .inputContainer {
     width: 100%;
   }
 }

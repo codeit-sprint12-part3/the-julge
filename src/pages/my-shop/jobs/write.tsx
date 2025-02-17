@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import Modal from "@/components/ui/Modal";
 
 function Page() {
+
   const router = useRouter();
   const { shopId } = router.query;
 
@@ -34,8 +35,8 @@ function Page() {
   const [priceData, setPriceData] = useState("");
   const [priceError, setPriceError] = useState("");
 
-  // 시작일 상태관리
-  const [startDate, setStartDate] = useState("");
+  // 시작일시 상태관리 (날짜와 시간)
+  const [startDateTime, setStartDateTime] = useState("");
   const [startDateError, setStartDateError] = useState("");
 
   // 시간 상태관리 
@@ -46,21 +47,16 @@ function Page() {
   const [descriptionData, setDescriptionData] = useState("");
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/[^0-9]/g, "");
-    setPriceData(value);
+    const rawValue = e.target.value.replace(/[^0-9]/g, "");
+    const formattedValue = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    setPriceData(formattedValue);
     setPriceError("");  // 에러 초기화
   };
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputDate = e.target.value;
-    const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(inputDate);
-
-    if (isValidDate) {
-      setStartDate(inputDate);
-      setStartDateError("");  // 에러 초기화
-    } else {
-      setStartDateError("올바른 날짜 형식을 입력해주세요. (예: 2023-12-23)");
-    }
+  const handleDateTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputDateTime = e.target.value;
+    setStartDateTime(inputDateTime);
+    setStartDateError("");  // 에러 초기화
   };
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +72,7 @@ function Page() {
   };
 
   const handleBlurStartDate = () => {
-    if (!startDate) {
+    if (!startDateTime) {
       setStartDateError("시작일시는 필수 입력 사항입니다.");
     }
   };
@@ -109,7 +105,7 @@ function Page() {
       isValid = false;
     }
 
-    if (!startDate) {
+    if (!startDateTime) {
       setStartDateError("시작일시는 필수 입력 사항입니다.");
       isValid = false;
     }
@@ -126,7 +122,7 @@ function Page() {
       return;
     }
 
-    const hourlyPay = parseInt(priceData, 10);
+    const hourlyPay = parseInt(priceData.replace(/,/g, ''), 10);
 
     if (hourlyPay < 1000) {
       setPriceError("최저시급 이상으로 입력해주세요.");
@@ -153,9 +149,7 @@ function Page() {
       return;
     }
 
-    const formattedStartTime = `${startDate}T${String(timeNumber).padStart(2, '0')}:00:00Z`;
-    const selectedDateTime = new Date(formattedStartTime);
-
+    const selectedDateTime = new Date(startDateTime);
     const currentTime = new Date();
     if (selectedDateTime <= currentTime) {
       setModalType("alert");
@@ -166,7 +160,7 @@ function Page() {
 
     const data = {
       hourlyPay: hourlyPay,
-      startsAt: formattedStartTime,
+      startsAt: selectedDateTime.toISOString(),
       workhour: timeNumber,
       description: descriptionData,
     };
@@ -199,43 +193,44 @@ function Page() {
         <div className={styles.inputWrap}>
           <div className={styles.inputContainer}>
             <label htmlFor="price">
-              금액
+              시급
               <span title="필수입력">*</span>
             </label>
-            <div className={styles.inputBox}>
-              <Input
-                id="price"
-                type="text"
-                required={true}
-                value={priceData}
-                onChange={handlePriceChange}
-                onBlur={handleBlurPrice}  // onBlur 이벤트 추가
-                error={priceError}  // 에러 메시지 전달
-              // text="원"
-              />
-            </div>
+
+            <Input
+              id="price"
+              type="text"
+              required={true}
+              value={priceData}
+              onChange={handlePriceChange}
+              onBlur={handleBlurPrice}
+              error={priceError}
+              subText="원"
+            />
+
           </div>
 
           <div className={styles.inputContainer}>
-            <label htmlFor="StartDate">
+            <label htmlFor="StartDateTime">
               시작 일시
               <span title="필수입력">*</span>
             </label>
-            <div className={`${styles.inputBox} ${styles.startDateInputBox}`}>
+            <div className={styles.startDateInputBox}>
               <Input
-                id="StartDate"
-                type="date"
+                id="StartDateTime"
+                type="datetime-local" // 날짜와 시간 모두 선택 가능
                 required={true}
-                onChange={handleDateChange}
-                onBlur={handleBlurStartDate}  // onBlur 이벤트 추가
-                error={startDateError}  // 에러 메시지 전달
+                value={startDateTime}
+                onChange={handleDateTimeChange}
+                onBlur={handleBlurStartDate}
+                error={startDateError}
               />
             </div>
           </div>
 
           <div className={styles.inputContainer}>
             <label htmlFor="time">
-              시간
+              업무 시간
               <span title="필수입력">*</span>
             </label>
             <div className={styles.inputBox}>
@@ -246,7 +241,7 @@ function Page() {
                 onChange={handleTimeChange}
                 onBlur={handleBlurTime}  // onBlur 이벤트 추가
                 error={timeError}  // 에러 메시지 전달
-              // text="시간"
+                subText="시간"
               />
             </div>
           </div>

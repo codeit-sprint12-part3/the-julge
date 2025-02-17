@@ -56,7 +56,6 @@ export default function Home() {
       <>
         <section className={styles.main_fit}>
           <Title text="맞춤 공고" />
-
           {isLoading ? (
             <ul className={`post_list ${styles.fit_list}`}>
               {Array(3)
