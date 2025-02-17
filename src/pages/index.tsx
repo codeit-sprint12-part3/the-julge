@@ -28,9 +28,9 @@ export default function Home() {
       try {
         let fitParams: NoticeRequestParams;
         if (user?.type === "employee" && user?.address) {
-          fitParams = { limit: 3, sort: "pay", address: user.address };
+          fitParams = { limit: 3, sort: "shop", address: user.address };
         } else {
-          fitParams = { limit: 3, sort: "pay" };
+          fitParams = { limit: 3, sort: "shop" };
         }
         const fitData: NoticeResponse = await getNotices(fitParams);
         setPostFitData(fitData.items || []);
