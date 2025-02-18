@@ -37,7 +37,7 @@ const PostCard = ({ link, data, isLoading = false }: PostCardProps) => {
     );
   }
 
-  if (!data) return null;
+  if (!data || !data.shop || !data.shop.item) return null;
 
   const { id, workhour, startsAt, hourlyPay, description, closed, shop } = data;
   const shopId = shop.item.id;
@@ -57,7 +57,7 @@ const PostCard = ({ link, data, isLoading = false }: PostCardProps) => {
       }}
       className={`${styles.post_box} ${closed ? styles.end : ""} ${isPast ? styles.end : ""}`}
     >
-      <Link href={link ? link : `/view/${shopId}/${id}`}>
+      <Link href={link || `/view/${shopId}/${id}`} passHref>
         <div className={styles.thumbnail}>
           <span className={styles.end}>{statusText}</span>
           <figure>
