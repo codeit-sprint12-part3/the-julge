@@ -1,114 +1,37 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { getShopInfo } from "@/lib/shops";
-import { getShopNotice, getShopNotices } from "@/lib/notices";
 import Title from "@/components/ui/Title";
 import Button from "@/components/ui/Button";
 import style from "./Myshop.module.css";
 import MyshopRegInfo from "@/components/my-shop/MyshopRegInfo";
 import AuthGuard from "@/components/auth/AuthGuard";
-import PostCard from "@/components/ui/PostCard";
-import SpinnerLoader from "@/components/ui/SpinnerLoader";
+import { getShopNotices } from "@/lib/notices";
 
 function Page() {
   const router = useRouter();
   const { shopId } = router.query;
   const [shop, setShop] = useState<any>(null);
   const [notices, setNotices] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(1);
-  const [hasMoreNotices, setHasMoreNotices] = useState<boolean>(true);
 
-  // 스피너 표시 여부 상태 추가
-  const [showSpinner, setShowSpinner] = useState<boolean>(false);
-
-  // 로딩 상태가 변경될 때마다 스피너 표시 여부 관리
-  useEffect(() => {
-    if (loading) {
-      setShowSpinner(true); // 로딩 시작 시 스피너 표시
-    } else {
-      setShowSpinner(false); // 로딩 끝나면 스피너 숨김
-    }
-  }, [loading]);
-
-  // 가게 정보 가져오기
   useEffect(() => {
     if (!shopId) return;
-    setLoading(true);
+
+    // 가게 정보 가져오기
     getShopInfo(shopId as string)
       .then((data) => setShop(data.item))
-      .catch((error) => console.error("가게 정보 가져오기 오류:", error))
-      .finally(() => setLoading(false));
+      .catch((error) => console.error("가게 정보 가져오기 오류:", error));
+
+    // 가게 공고 목록 가져오기
+    getShopNotices(shopId as string, { offset: 0, limit: 10 })
+      .then((data) => {
+        setNotices(data.items);
+      })
+      .catch((error) => console.error("공고 목록 가져오기 오류:", error));
+
   }, [shopId]);
 
-  // 공고 목록 가져오기
-  useEffect(() => {
-    if (!shopId || !hasMoreNotices || loading) return;
-
-    const fetchNotices = async () => {
-      setLoading(true);
-
-      try {
-        const data = await getShopNotices(shopId as string, {
-          offset: (page - 1) * 6,
-          limit: 6,
-        });
-
-        const detailedNotices = await Promise.all(
-          data.items.map(async (notice: any) => {
-            const detail = await getShopNotice(shopId as string, notice.item.id);
-            return detail.item;
-          })
-        );
-
-        setNotices((prevNotices) => {
-          const newNotices = detailedNotices.filter(
-            (notice: any) =>
-              !prevNotices.some((prevNotice) => prevNotice.id === notice.id)
-          );
-          return [...prevNotices, ...newNotices];
-        });
-
-        // 공고가 6개 미만일 경우 더 이상 데이터가 없으므로 종료
-        if (detailedNotices.length < 6) {
-          setHasMoreNotices(false); // 공고가 더 이상 없으면 상태 변경
-        }
-      } catch (error) {
-        console.error("공고 목록 가져오기 오류:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNotices();
-  }, [shopId, page]);
-
-  // 스크롤 이벤트 핸들러 (window 사용)
-  const handleScroll = () => {
-    if (loading || !hasMoreNotices) return;  // 더 이상 스크롤 이벤트를 처리하지 않음
-
-    const scrollTop = window.innerHeight + window.scrollY;
-    const documentHeight = document.documentElement.offsetHeight;
-
-    // 끝에 도달한 경우
-    if (scrollTop >= documentHeight - 10) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
-
-  // 스크롤 이벤트 추가 및 제거
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading, hasMoreNotices]);
-
-  if (loading && page === 1) {
-    return <div className={style.spinner}><SpinnerLoader /></div>;
-  }
-
-  if (!shop) {
-    return <p>가게 정보를 찾을 수 없습니다.</p>;
-  }
+  if (!shop) return <p>가게 정보를 찾을 수 없습니다.</p>;
 
   return (
     <div className={style.myshopContainer}>
@@ -144,21 +67,16 @@ function Page() {
 
       <div className={style.announcementRegBox}>
         {notices.length > 0 ? (
-          <div className={style.noticeBox}>
+          <>
             <Title text="내가 등록한 공고" />
             <ul className="post_list">
               {notices.map((noticeItem) => (
-                <li key={noticeItem.id}>
-                  <PostCard data={noticeItem} />
+                <li key={noticeItem.id} className={style.noticeItem}>
+                  {noticeItem.item.description}
                 </li>
               ))}
             </ul>
-            {showSpinner && (
-              <div className={style.spinner}>
-                <SpinnerLoader className={`${style.coustomClass}`} />
-              </div>
-            )}
-          </div>
+          </>
         ) : (
           <>
             <Title text="등록한 공고" />
@@ -170,7 +88,7 @@ function Page() {
           </>
         )}
       </div>
-    </div >
+    </div>
   );
 }
 
