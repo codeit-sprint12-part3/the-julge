@@ -9,9 +9,10 @@ import { motion } from "framer-motion";
 interface PostCardProps {
   data?: NoticeItem;
   isLoading?: boolean;
+  link?: string
 }
 
-const PostCard = ({ data, isLoading = false }: PostCardProps) => {
+const PostCard = ({ link, data, isLoading = false }: PostCardProps) => {
   if (isLoading) {
     return (
       <div className={`${styles.post_box} loading_box`}>
@@ -56,7 +57,7 @@ const PostCard = ({ data, isLoading = false }: PostCardProps) => {
       }}
       className={`${styles.post_box} ${closed ? styles.end : ""} ${isPast ? styles.end : ""}`}
     >
-      <Link href={`/view/${shopId}/${id}`}>
+      <Link href={link ? link : `/view/${shopId}/${id}`}>
         <div className={styles.thumbnail}>
           <span className={styles.end}>{statusText}</span>
           <figure>

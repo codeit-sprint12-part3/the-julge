@@ -9,12 +9,14 @@ import MyshopRegInfo from "@/components/my-shop/MyshopRegInfo";
 import AuthGuard from "@/components/auth/AuthGuard";
 import PostCard from "@/components/ui/PostCard";
 import SpinnerLoader from "@/components/ui/SpinnerLoader";
+import Link from "next/link";
 
 function Page() {
   const router = useRouter();
   const { shopId } = router.query;
   const [shop, setShop] = useState<any>(null);
   const [notices, setNotices] = useState<any[]>([]);
+  console.log(notices);
   const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [hasMoreNotices, setHasMoreNotices] = useState<boolean>(true);
@@ -149,7 +151,10 @@ function Page() {
             <ul className="post_list">
               {notices.map((noticeItem) => (
                 <li key={noticeItem.id}>
-                  <PostCard data={noticeItem} />
+                  <PostCard
+                    link={`/my-shop/jobs/${shopId}/${noticeItem.id}`}
+                    data={noticeItem}
+                  />
                 </li>
               ))}
             </ul>
