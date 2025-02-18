@@ -1,7 +1,7 @@
 .fileInputContainer {
   display: flex;
   flex-direction: column;
-  margin-bottom: 2.0rem;
+  margin-bottom: 2rem;
 }
 
 .labelText {
@@ -29,8 +29,8 @@
 }
 
 .imagePreview {
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -45,10 +45,10 @@
 }
 
 .noImageText::before {
-  content: '';
+  content: "";
   width: 33px;
   height: 28px;
-  background: url(/img_file_icon.svg)no-repeat center;
+  background: url(/img_file_icon.svg) no-repeat center;
 }
 
 .file_customStyle .fileInputArea {
@@ -57,7 +57,7 @@
 }
 
 .file_customStyle .fileInputArea::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -72,13 +72,13 @@
 }
 
 .file_customStyle .noImageText::before {
-  background: url(/img_file_edit_icon.svg)no-repeat center !important;
+  background: url(/img_file_edit_icon.svg) no-repeat center !important;
 }
 
 .currentImage {
   position: absolute;
   z-index: -1;
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }

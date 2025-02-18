@@ -4,17 +4,15 @@
 }
 
 @media (max-width: 768px) {
-
   .myshopContainer {
     padding: 4rem 0;
   }
-
 }
 
 .myshopForm .inputContainer {
   position: relative;
   display: flex;
-  gap: 0 2.0rem;
+  gap: 0 2rem;
 }
 
 .myshopForm .inputContainer .box {
@@ -32,7 +30,8 @@
   z-index: 9;
 }
 
-.myshopForm .inputContainer .fileEditBox::after {}
+.myshopForm .inputContainer .fileEditBox::after {
+}
 
 .myshopForm .inputContainer .box .labelText {
   display: block;
@@ -43,7 +42,7 @@
 
 .myshopForm .inputContainer .box button {
   display: block;
-  padding: 1.8rem 1.0rem 1.9rem 2.0rem;
+  padding: 1.8rem 1rem 1.9rem 2rem;
 }
 
 .myshopForm textarea {
@@ -57,7 +56,6 @@
 }
 
 @media (max-width: 767px) {
-
   .myshopForm .inputContainer {
     flex-direction: column;
   }
@@ -66,16 +64,15 @@
     width: 100%;
     margin-bottom: 2.4rem;
   }
-
 }
 
 /* 상세 */
 .myshopDetailContainer {
-  margin-bottom: 6.0rem;
+  margin-bottom: 6rem;
   margin-top: 2.4rem;
   padding: 2.4rem;
   display: flex;
-  gap: 0 3.0rem;
+  gap: 0 3rem;
   border-radius: 1.2rem;
   background-color: var(--red-100);
 }
@@ -90,12 +87,14 @@
   text-transform: uppercase;
   font-weight: 700;
   background-color: #fdfcfc;
+  overflow: hidden;
+  border-radius: 12px;
 }
 
 .myshopDetailContainer .detailImgBox img {
   display: block;
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -127,10 +126,10 @@
 }
 
 .myshopDetailContainer .detailTextBox address::before {
-  content: '';
+  content: "";
   width: 1.6rem;
-  height: 2.0rem;
-  background: url(/address_icon.svg)no-repeat center;
+  height: 2rem;
+  background: url(/address_icon.svg) no-repeat center;
 }
 
 .myshopDetailContainer .detailTextBox p {
@@ -153,7 +152,7 @@
 }
 
 .coustomClass {
-  margin: 5.0rem 0 0;
+  margin: 5rem 0 0;
   position: static;
   width: auto;
   height: auto;
@@ -166,7 +165,7 @@
 }
 
 .announcementRegBox::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -177,13 +176,13 @@
 }
 
 .bgBox {
-  padding: 6.0rem 0;
+  padding: 6rem 0;
   position: relative;
   z-index: 1;
 }
 
 .bgBox::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -194,10 +193,9 @@
 }
 
 @media (max-width: 1024px) {
-
   .myshopDetailContainer {
     flex-direction: column;
-    gap: 0 1.0rem
+    gap: 0 1rem;
   }
 
   .myshopDetailContainer .detailImgBox {
@@ -208,17 +206,15 @@
   .myshopDetailContainer .detailTextBox .detailTatle {
     font-size: 2rem;
   }
-
 }
 
 /* 수정 */
 .myshopEditContainer {
   position: relative;
-
 }
 
 .myshopEditContainer::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
