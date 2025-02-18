@@ -189,8 +189,7 @@ const SignupForm = () => {
         />
       </form>
       <div className={style["guide-box"]}>
-        이미 가입하셨나요?
-        <Link href={"/auth/login"}>로그인하기</Link>
+        <Link href={"/auth/login"}>이미 가입하셨나요?</Link>
       </div>
     </div>
   );

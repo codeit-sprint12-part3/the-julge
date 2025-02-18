@@ -107,8 +107,7 @@ function LoginForm() {
         />
       </form>
       <div className={style["guide-box"]}>
-        회원이 아니신가요?
-        <Link href={"/auth/signup"}>회원가입하기</Link>
+        <Link href={"/auth/signup"}>회원이 아니신가요?</Link>
       </div>
     </div>
   );
