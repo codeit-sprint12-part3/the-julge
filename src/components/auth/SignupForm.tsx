@@ -92,11 +92,10 @@ const SignupForm = () => {
       const token = await login(formData.email, formData.password);
 
       if (token) {
-        await loginUser(token); // Zustand에서 로그인 처리
+        await loginUser(token);
         toast("환영합니다 🫶🏻");
         router.push("/");
       } else {
-        // 회원가입 후 자동 로그인에 실패 / 로그인 페이지로 이동
         toast("가입 성공 🎉 자동 로그인 실패 🥹");
         router.push("/auth/login");
       }
@@ -189,8 +188,7 @@ const SignupForm = () => {
         />
       </form>
       <div className={style["guide-box"]}>
-        이미 가입하셨나요?
-        <Link href={"/auth/login"}>로그인하기</Link>
+        <Link href={"/auth/login"}>이미 가입하셨나요?</Link>
       </div>
     </div>
   );
