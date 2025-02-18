@@ -152,6 +152,14 @@
   max-width: none;
 }
 
+.coustomClass {
+  margin: 5.0rem 0 0;
+  position: static;
+  width: auto;
+  height: auto;
+  background-color: var(--gray-100);
+}
+
 .announcementRegBox {
   position: relative;
   padding: 5rem 0;

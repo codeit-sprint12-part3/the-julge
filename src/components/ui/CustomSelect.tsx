@@ -54,13 +54,19 @@ const CustomSelect = ({
     setIsOpen(false);
   };
 
+  const handleBlur = (e: React.FocusEvent<HTMLButtonElement>) => {
+    if (!isOpen) {
+      onBlur?.(e);  // 드롭다운이 열려 있지 않으면 onBlur 처리
+    }
+  };
+
   return (
     <div className={style.selectBox} ref={selectRef}>
       <button
         type={type}
-        className={`${isOpen ? `${style.active}` : ""} ${style.selectBtn}  ${error ? style.errorSelect : ""}`}
+        className={`${isOpen ? `${style.active}` : ""} ${style.selectBtn} ${error ? style.errorSelect : ""}`}
         onClick={toggleDropdown}
-        onBlur={onBlur} // onBlur 이벤트 추가
+        onBlur={handleBlur} // 수정된 onBlur 이벤트 핸들러
       >
         {selectedData || "선택"}
       </button>
