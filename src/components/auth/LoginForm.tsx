@@ -59,7 +59,6 @@ function LoginForm() {
       toast("로그인 성공 🎉");
       router.push("/");
     } catch (error) {
-      // 로그인 실패 / 이메일 또는 비밀번호가 올바르지 않음
       toast("존재하지 않거나 비밀번호가 일치하지 않아요");
     }
   };
@@ -107,8 +106,7 @@ function LoginForm() {
         />
       </form>
       <div className={style["guide-box"]}>
-        회원이 아니신가요?
-        <Link href={"/auth/signup"}>회원가입하기</Link>
+        <Link href={"/auth/signup"}>회원이 아니신가요?</Link>
       </div>
     </div>
   );

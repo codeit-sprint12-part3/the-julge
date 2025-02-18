@@ -46,12 +46,21 @@
   margin-left: 1rem;
 }
 
-.guide-box > a,
-.guide-box > a:link,
-.guide-box > a:visited,
-.guide-box > a:hover,
-.guide-box > a:active {
-  text-decoration: initial;
+.guide-box > a::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 0%;
+  height: 0%;
+  padding: 0;
+  opacity: 0;
+  border-radius: var(--border-radius-md);
+  background-color: var(--gray-200);
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  transition: all 0.2s ease-out;
 }
 
 @media (max-width: 480px) {
